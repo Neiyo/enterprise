@@ -1,0 +1,287 @@
+package com.ylife.utils;
+
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.text.DecimalFormat;
+import java.util.*;
+
+/**
+ * Created by InThEnd on 2016/4/7.
+ * Excel工具类。
+ */
+public class ExcelUtil {
+
+    private static final DecimalFormat format = new DecimalFormat("0.###");
+
+    /**
+     * CSV文件转List<T>
+     *
+     * @param is          输入流
+     * @param clazz       T的类型
+     * @param fieldsIndex T类型与CSV文件的列位置对应
+     * @param ignore      要跳过的记录数
+     */
+    public static <T> List<T> readCsv(InputStream is, Class<T> clazz, String[] fieldsIndex, int ignore) throws IOException {
+        try {
+            Field[] fields = new Field[fieldsIndex.length];
+            for (int i = 0; i < fieldsIndex.length; i++) {
+                fields[i] = clazz.getDeclaredField(fieldsIndex[i]);
+                fields[i].setAccessible(true);
+            }
+            CSVFormat format = CSVFormat.EXCEL;
+            CSVParser parser = new CSVParser(new InputStreamReader(is, "GBK"), format);
+            List<CSVRecord> recordList = parser.getRecords();
+            List<T> list = new ArrayList<>();
+            for (int i = ignore; i < recordList.size(); i++) {
+                CSVRecord record = recordList.get(i);
+                T t = clazz.newInstance();
+                for (int j = 0; j < fields.length; j++) {
+                    String value = record.get(j);
+                    if (value != null && value.equals("")) {
+                        value = null;
+                    }
+                    fields[j].set(t, value);
+                }
+                list.add(t);
+            }
+            return list;
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("fieldsIndex参数与clazz参数不匹配：fieldsIndex参数中\"" + e.getMessage() + "\"字段未在" + clazz.getName() + "类中找到。");
+        } catch (InstantiationException e) {
+            throw new IllegalArgumentException(clazz.getName() + "类中未找到默认无参构造方法。");
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("请保证" + clazz.getName() + "类中默认构造方法可见。");
+        }
+    }
+
+
+    /**
+     * CSV文件转List<T>
+     *
+     * @param is          输入流
+     * @param clazz       T的类型
+     * @param fieldsIndex T类型与CSV文件的列位置对应
+     */
+    public static <T> List<T> readCsv(InputStream is, Class<T> clazz, String[] fieldsIndex) throws IOException {
+        return readCsv(is, clazz, fieldsIndex, 0);
+    }
+
+
+    /**
+     * Excel导出
+     *
+     * @param maps <String,String> maps 属性表，成员属性为KEY，中文名称为VALUE
+     * @param list <T> list 需要导出的数据列表对象
+     * @return true 导出成功 false 导出失败
+     */
+    public static <T> Workbook excelExport(Map<String, String> maps, List<T> list) {
+        try {
+            Workbook wb = new HSSFWorkbook();
+            HSSFFont font = (HSSFFont) wb.createFont();
+            font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+            font.setColor(HSSFColor.VIOLET.index);
+            font.setFontHeightInPoints((short) 12);
+
+            HSSFCellStyle style = (HSSFCellStyle) wb.createCellStyle();
+            style.setFont(font);
+
+            style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+            style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+            style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+            style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+            style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+            style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+            // 把字体应用到当前的样式
+            style.setFont(font);
+            // 生成并设置另一个样式
+            HSSFCellStyle style2 = (HSSFCellStyle) wb.createCellStyle();
+            style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+            style2.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
+            style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+            style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+            style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+            style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+            style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+            // 生成另一个字体
+            HSSFFont font2 = (HSSFFont) wb.createFont();
+            font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+            // 把字体应用到当前的样式
+            style2.setFont(font2);
+
+            CreationHelper createHelper = wb.getCreationHelper();
+            Sheet sheet = wb.createSheet("sheet1");
+            sheet.setDefaultColumnWidth((short) 20);
+            Set<String> sets = maps.keySet();
+            Row row = sheet.createRow(0);
+
+            int i = 0;
+            // 定义表头
+            for (String key : sets) {
+                Cell cell = row.createCell(i++);
+                cell.setCellStyle(style);
+                cell.setCellValue(createHelper.createRichTextString(maps.get(key)));
+            }
+            // 填充表单内容
+            for (int j = 0; j < list.size(); j++) {
+                T p = list.get(j);
+                Class classType = p.getClass();
+                int index = 0;
+                Row row1 = sheet.createRow(j + 1);
+                for (String key : sets) {
+                    Field field = classType.getDeclaredField(key);
+                    field.setAccessible(true);
+                    Cell cell = row1.createCell(index++);
+                    cell.setCellStyle(style2);
+                    Object value = field.get(p);
+                    cell.setCellValue(value == null ? "" : value.toString());
+                }
+            }
+            return wb;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("不可能出现这个错误！");
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("参数错误，输出Excel失败。");
+        }
+    }
+
+    /**
+     * Excel文件转List<List<String>>
+     *
+     * @param is     输入流
+     * @param ignore 要跳过的记录数
+     */
+    public static List<List<String>> readExcel(InputStream is, int ignore) throws IOException, InvalidFormatException {
+        Workbook book = WorkbookFactory.create(is);
+        Sheet sheet = book.getSheetAt(0);
+        List<List<String>> list = new ArrayList<>();
+        Row row1 = sheet.getRow(sheet.getFirstRowNum());
+        int min = row1.getFirstCellNum();
+        int max = row1.getLastCellNum();
+        for (int i = sheet.getFirstRowNum() + ignore; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) {
+                continue;
+            }
+            List<String> contentList = new ArrayList<>();
+            for (int j = min; j < max; j++) {
+                Cell cell = row.getCell(j);
+                String stringValue = readCell(cell);
+                contentList.add(stringValue);
+            }
+            list.add(contentList);
+        }
+        return list;
+    }
+
+    /**
+     * Excel文件转List<List<String>>
+     *
+     * @param is 输入流
+     */
+    public static List<List<String>> readExcel(InputStream is) throws IOException, InvalidFormatException {
+        return readExcel(is, 0);
+    }
+
+    /**
+     * Excel导出
+     *
+     * @param heads    表头
+     * @param contents 表内容
+     */
+    public static Workbook excelExport(List<String> heads, List<List<String>> contents) {
+
+        Workbook wb = new HSSFWorkbook();
+        HSSFFont font = (HSSFFont) wb.createFont();
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        font.setColor(HSSFColor.VIOLET.index);
+        font.setFontHeightInPoints((short) 12);
+
+        HSSFCellStyle style0 = (HSSFCellStyle) wb.createCellStyle();
+        style0.setFont(font);
+        style0.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        style0.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style0.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style0.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style0.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style0.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style0.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+
+        // 把字体应用到当前的样式
+        style0.setFont(font);
+        // 生成并设置另一个样式
+        HSSFCellStyle style1 = (HSSFCellStyle) wb.createCellStyle();
+        style1.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+        style1.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style1.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        // 生成另一个字体
+        HSSFFont font2 = (HSSFFont) wb.createFont();
+        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+        // 把字体应用到当前的样式
+        style1.setFont(font2);
+
+        CreationHelper createHelper = wb.getCreationHelper();
+        Sheet sheet = wb.createSheet("sheet1");
+        sheet.setDefaultColumnWidth((short) 20);
+        Row row = sheet.createRow(0);
+
+        // 定义表头
+        for (int i = 0; i < heads.size(); i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellStyle(style0);
+            cell.setCellValue(createHelper.createRichTextString(heads.get(i)));
+        }
+        // 填充表单内容
+        for (int i = 0; i < contents.size(); i++) {
+            Row row1 = sheet.createRow(i + 1);
+            List<String> content = contents.get(i);
+            for (int j = 0; j < content.size(); j++) {
+                Cell cell = row1.createCell(j);
+                cell.setCellStyle(style1);
+                String value = contents.get(i).get(j);
+                cell.setCellValue(value == null ? "" : value);
+            }
+        }
+        return wb;
+    }
+
+    private static String readCell(Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        int cellType = cell.getCellType();
+        switch (cellType) {
+            case Cell.CELL_TYPE_NUMERIC:
+                return format.format(cell.getNumericCellValue());
+            case Cell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+            default:
+                return "";
+        }
+    }
+
+}

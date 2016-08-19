@@ -1,0 +1,110 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>邮豆系统_登录界面</title>
+    <!-- 主要样式 -->
+    <link rel="stylesheet" href="${bath}/static/css/style.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" href="${bath}/static/css/g.css">
+
+    <link rel="stylesheet" href="${bath}/static/css/xcConfirm.css">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="${bath}/static/bootstrap/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="${bath}/static/bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${bath}/static/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- jPage分页 -->
+    <script src="${bath}/static/js/jPages.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
+</head>
+<style>
+
+</style
+<body>
+
+<div style="width:100%; height:100px; border-bottom:2px solid #dcdcdc; margin-left:20px;">
+  	<span style="font:24px '黑体'; color:#000; display:inline-block; margin-top:15px;margin-bottom:20px;position:relative;">邮豆发放
+      </span>
+    <br  />
+    <span style="display:inline-block; margin:0px 10px 0px 10px;color:black;">批量转账</span>
+    <button class="re_import">重新导入</button>
+</div>
+<div class="containe">
+    <div id="notice">通过CSV导入，实现批量发放，格式：流水号、身份证号、业务类型、邮豆金额、备注。具体发放到用户身份证号对应的账户中，员工来网点激活账户，使用邮豆消费。</div>
+    <div class="row">
+        <div style="text-align:left;font-size:20px;margin-top:2%;font-weight:bold;margin-left:40px;">发放列表(<span id="num"></span>)</div>
+    </div>
+</div>
+<hr style="width:98%;border-bottom:2px solid #dcdcdc;margin-left:22px;margin-top:40px;"/>
+<input type="hidden" id="typeId" value="${typeId}" />
+<table class="table_list" style="width:98%;margin-left:22px;font-size:15px;font-weight:550;border:0;">
+    <thead>
+    <tr style="background-color:#d6d6d6;" class="thead">
+        <script type="text/javascript">
+            var data = ${data};
+            data.data.excel[0].map(function(object){
+                //填充数据
+                var html = '<th>' + object + '</th>';
+                $('.thead').append(html);
+            });
+        </script>
+    </tr>
+    </thead>
+    <tbody id="itemContainer">
+        <script type="text/javascript">
+            for(var i = 1;i < data.data.excel.length;i++){
+                var html = '<tr>';
+                data.data.excel[i].map(function(object){
+                    //填充数据
+                    html += '<td>' + object + '</td>';
+                });
+                html += '</tr>';
+                $('#itemContainer').append(html);
+            }
+            var num="0";
+            $("#itemContainer tr").each(function(){
+                num = parseInt(num) + parseInt($(this).length)
+            })
+            $("#num").html(num);
+        </script>
+    </tbody>
+</table>
+  <span class="footer" style="margin-top:60px;">
+  </span>
+  <span class="buttonGroup" style="display:inline-block;">
+    <button class="ensure" id="ensure">确定转账</button>
+    <button class="cancel" id="cancel">取消</button>
+  </span>
+<div class="pwd">
+    <img id="imgCancel" src="${bath}/static/img/XX.png" width="25px" height="25px" />
+    <span style=" display:inline-block; font-size:22px; margin:30px 0px 30px -50px; color:#000; ">输入支付密码</span><br />
+    <input type="password" name="pwd" placeholder="支付密码" id="list_password"/><br />
+    <span id="confirm">确认支付</span>
+</div>
+
+<div class="success">
+    <span style="left:110px;" ><img src="${bath}/static/img/ok.png" width="40" height="40" />支付成功，<b>3</b>秒后返回邮豆发放页面</span>
+    <a id="detail" style="left:-220px;" >查看发放详情</a>
+    <a id="complete" style="left:-150px;" >完成</a>
+</div>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#cancel").click(function(){
+            window.location.href = 'piliangdaoru';
+        })
+    })
+</script>
+<script src="${bath}/static/js/list.js?version=${VERSION}"></script>

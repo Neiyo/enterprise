@@ -1,0 +1,665 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css"/>
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script src="${bath}/static/js/jPages.js"></script>
+    <title>无标题文档</title>
+    <style type="text/css">
+        .hieSearch{
+            height:40px;
+            margin-left:20px;
+            margin-top:20px;
+        }
+        .hieSearch abbr{
+            display:inline-block;
+            width:350px;
+            height:40px;
+            line-height:40px;
+        }
+        .hieSearch abbr input{
+            width:200px;
+            height:40px;
+            margin-top: -3px;
+            margin-left: -1px;
+            border-style:none;
+            background:#FFF;
+            border:1px solid #ccc;
+            font-size:16px;
+        }
+        .hieSearch abbr input:hover{
+            box-shadow: 2px 0px 8px 0px #dfdfdf;
+        }
+        .hieSearch abbr span{
+            display:inline-block;
+            width:120px;
+            height:40px;
+            border:1px solid #ccc;
+            text-align:center;
+            background:#f1f1f1;
+            color: #333;
+        }
+        #conSearch{
+            width:70px;
+            height:40px;
+            margin-left:20px;
+            margin-top: -2px;
+            border-style:none;
+            background:#24b35f;
+            color:#FFF;
+            box-shadow: 0px 2px 3px 0px #9fa7a5;
+        }
+        #conSearch:hover{
+            background: #00cc55;
+        }
+        #conSearch:active{
+
+            background:#24b35f;
+        }
+
+        #newAccout{
+            width:120px;
+            height:40px;
+            margin-left:20px;
+            margin-top:20px;
+            border-style:none;
+            background:#24b383;
+            color:#FFF;
+            box-shadow: 0px 2px 3px 0px #9fa7a5;
+        }
+        #newAccout:hover{
+            background: #00cc88;
+        }
+        #newAccout:active{
+             background: #009966;
+         }
+        .hie_list{
+            width:98%;
+            margin-left:18px;
+            margin-top:20px;
+            font-size:15px;
+            border:0;
+        }
+        .hie_list th{
+            width:120px;
+            height:40px;
+            color: #fff;
+
+        }
+        .hie_list thead{
+            background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+        }
+
+        .hie_list td{
+            text-align:center;
+            border-bottom:1px solid #999;
+            height:50px;
+            font-size:12px;
+        }
+        .hie_list td select{
+            width: 120px;;
+            height:30px;
+            background:#24b383;
+            border-style: none;
+            padding-left: 20px;
+            padding-top: 5px;
+            color: #fff;
+
+        }
+        .hie_list td option{
+            height:20px;
+            padding-top:8px;
+            padding-left: 20px;
+            background: #fff;
+            color: #999;
+        }
+        .creatAccout{
+            width:680px;
+            height:680px;
+            position:absolute;
+            left:15%;
+            top:15%;
+            background:#FFF;
+            z-index:99;
+            display:none;
+        }
+        .creatAccout ul{
+            width: 650px;
+            margin-left: 15px;
+            border-top:1px solid #e0e0e0;
+            padding-top:50px;
+        }
+        .creatAccout li{
+            height:80px;
+        }
+        .creatAccout li abbr{
+            display:inline-block;
+            width:140px;
+            text-align:left;
+            margin-left: 80px;;
+        }
+        .creatAccout li abbr i{
+            display: inline-block;;
+            vertical-align: middle;
+            margin-right: 10px;
+            color:#ff3300;
+        }
+        .creatAccout li input{
+            width:300px;
+            height:35px;
+            background:#FFF;
+            border:1px solid #ccc;
+            margin-left:50px;
+            border-radius: 3px;
+        }
+        .creatAccout li input[type='radio']{
+            width: 20px;
+            height: 20px;
+        }
+        #creatAccoutSure{
+            width:160px;
+            height:40px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+            margin-left: 80px;
+            border-radius: 3px;
+        }
+        #creatAccoutCancel{
+            width:160px;
+            height:40px;
+            border:1px solid #333;
+            background:#fff;
+            cursor:pointer;
+            margin-left: 200px;
+            border-radius: 3px;
+
+        }
+        .creatAccout li input:hover{
+            box-shadow: 0px 0px 3px 3px #e2e2e2;
+        }
+        #creatAccoutSure:hover{
+            box-shadow: 0px 0px 3px 3px #e2e2e2;
+        }
+        #creatAccoutCancel:hover{
+            box-shadow: 0px 0px 3px 3px #e2e2e2;
+        }
+        #creatAccoutSure:active{
+            background: #008738;
+
+        }
+        #creatAccoutCancel:active{
+            background: #008738;
+            color: #fff;
+        }
+        #xx{
+            display:inline-block;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            width:25px;
+            height:25px;
+            position:relative;
+            left:500px;
+            top:10px;
+            cursor:pointer;
+        }
+        .updateAcount{
+            width:680px;
+            height:790px;
+            position:absolute;
+            left:15%;
+            top:15%;
+            background:#FFF;
+            z-index:99;
+            display:none;
+        }
+        .updateAcount ul{
+            width: 650px;
+            margin-left: 15px;
+            border-top:1px solid #e0e0e0;
+            padding-top: 40px;
+        }
+        .updateAcount li{
+            height:85px;
+        }
+        .updateAcount li abbr{
+            display:inline-block;
+            width:140px;
+            text-align:left;
+            margin-left: 70px;
+        }
+        .updateAcount li abbr i{
+            color:#ff3300;
+        }
+        .updateAcount li input{
+            width:400px;
+            height:32px;
+            background:#FFF;
+            border:1px solid #ccc;
+            margin-left:30px;
+            border-radius: 5px;
+        }
+        .updateAcount li input[type='radio']{
+            width: 20px;
+            height: 20px;
+        }
+        .updateAcount li input:hover{
+            box-shadow: 0px 0px 3px 3px #e2e2e2;
+        }
+        #updateAcountSure{
+            width:160px;
+            height:40px;
+            border:1px solid transparent;
+            border-radius: 3px;
+            background:#24b35f;
+            color:#fff;
+            margin-left: 80px;
+            cursor:pointer;
+
+        }
+        #updateAcountSure:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #updateAcountCancel{
+            width:160px;
+            height:40px;
+            border:1px solid #666666;
+            background:#fff;
+            margin-left: 200px;
+            cursor:pointer;
+            border-radius: 3px;
+        }
+        #updateAcountCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #updateAcountSure:active{
+            background: #008738;
+        }
+        #updateAcountCancel:active{
+            background: #008738;
+            color: #fff;
+        }
+        #xx1{
+            display:inline-block;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            width:25px;
+            height:25px;
+            position:relative;
+            left:500px;
+            top:10px;
+            cursor:pointer;
+        }
+        .deleteAccout{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:99;
+            display:none;
+        }
+        .deleteAccout li{
+            height:70px;
+            line-height:70px;
+            padding-left:20px;
+        }
+        #xx2{
+            display:inline-block;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            width:25px;
+            height:25px;
+            position:relative;
+            left:400px;
+            top:10px;
+            cursor:pointer;
+        }
+        #deleteAcountSure{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            border-radius: 3px;
+            background:#24b35f;
+            color:#fff;
+            margin-left: 80px;
+            cursor:pointer;
+
+        }
+        #deleteAcountCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #CCC;
+            border-radius: 3px;
+            background:#fff;
+            margin-left: 110px;
+            cursor:pointer;
+        }
+        #deleteAcountSure:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #deleteAcountCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #deleteAcountSure:active{
+            background: #008738;
+
+        }
+        #deleteAcountCancel:active{
+               background: #008738;
+
+        }
+        .deleteError{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display:none;
+        }
+        .deleteError li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #deleteAcountError{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #deleteAcountError:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #deleteAcountError:active{
+            background: #008738;
+
+        }
+        .accessControl{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:99;
+            display:none;
+        }
+        .accessControl li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #xx3{
+            display:inline-block;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            width:25px;
+            height:25px;
+            position:relative;
+            left:400px;
+            top:10px;
+            cursor:pointer;
+        }
+        #accessControlSure{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            margin-left: 90px;
+            cursor:pointer;
+
+        }
+        #accessControlCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #CCC;
+            background:#fff;
+            margin-left: 100px;
+            cursor:pointer;
+        }
+        #accessControlSure:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #accessControlSure:active{
+            background: #008738;
+
+        }
+        #accessControlCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #accessControlCancel:active{
+            background: #008738;
+
+        }
+        .update{
+            width:95px;
+            height:32px;
+            background:#24b383;
+            color:white;
+            border:1px solid #ccc;
+            position:absolute;
+            left:60px;
+            top:20px;
+
+        }
+        .update:hover{
+            box-shadow: 0px 3px 3px 0px #849790;
+        }
+        .update:active{
+            background: #009966;
+            color: #fff;
+        }
+
+        .arrow{
+            display:inline-block;
+            background:url(${bath}/static/img/com_btn_arrow_bg_down.png) center no-repeat;
+            width:20px;
+            height:38px;
+            position:absolute;
+            left:157px;
+            top:17px;
+
+        }
+        .delete{
+            width:95px;
+            height:32px;
+            background:#f1f1f1;
+            color:999;
+            border:1px solid #999;
+            position:absolute;
+            left:60px;
+            top:52px;
+            z-index: 1;
+            display: none;
+        }
+        .control{
+            width:95px;
+            height:32px;
+            background:#f1f1f1;
+            color:999;
+            border:1px solid #999;
+            position:absolute;
+            left:60px;
+            top:82px;
+            z-index: 1;
+            display: none;
+
+        }
+
+        div.holder a{
+            display: inline-block;
+            line-height: 30px;
+            text-align: center;
+            border:0;
+            background-color: #fff;
+            border-radius: 3px;
+            width:80px;
+            height:30px;
+            color:gray;
+            font-weight: bold;
+            margin-left: 15px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .holder{
+
+            margin-top: 60px;
+
+        }
+        .jp-current{
+            background-color: #24b35f!important;
+            color: #fff!important;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+        moveWindow.apply($('.creatAccout'));
+        moveWindow.apply($(".updateAcount"));
+        moveWindow.apply($(".deleteAccout"));
+        moveWindow.apply($(".accessControl"));
+    });
+
+    $(document).on("click",".arrow",function(){
+        var accval=$(this).val()
+        $(this).siblings(".delete,.control").slideToggle();
+        if(accval==0){
+            $(this).css("background", "url(${bath}/static/img/com_btn_arrow_bg_up.png) center no-repeat")
+            $(this).val("1")
+        }else if(accval==1){
+            $(this).css("background", "url(${bath}/static/img/com_btn_arrow_bg_down.png) center no-repeat")
+            $(this).val("0")
+        }
+    })
+    </script>
+
+
+
+</head>
+
+<body>
+
+<div style="width:100%; height: 70px; border-bottom:2px solid #dcdcdc; margin-left:20px;">
+	<span style="font:30px '黑体'; color:#000; display:inline-block;display: inline-block; line-height: 70px; ">层级管理
+    </span>
+</div>
+
+<div class="hieSearch">
+    <abbr><span>下级公司名称</span><input type="text" id="keywords" /></abbr><input id="conSearch" type="button" value="搜索"/>
+</div>
+
+<input onclick="coverHtml()" id="newAccout" type="button" value="新建下级账号"/>
+<div class="accoutTable">
+    <table class="hie_list" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>下级公司</th>
+            <th>登录账号</th>
+            <th>网点名称</th>
+            <th>联系地址</th>
+            <th>联系人</th>
+            <th>联系方式</th>
+            <th>网点折扣比例</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="itemContainer">
+        <#list enterprises as son>
+            <tr style="height: 80px;">
+                <td class="updateName">${son.enterpriseName}</td>
+                <td>${son.username}</td>
+                <td>${son.accountName}</td>
+                <td>${son.address}</td>
+                <td>${son.linkman}</td>
+                <td>${son.linkMobile}</td>
+                <td style="display: none">${son.enterpriseId}</td>
+                <td>${son.discountPct}</td>
+                <td style="position: relative;">
+                        <input class="update" type="button" value="编辑账号" /><a value="0" class="arrow"></a>
+                        <input class="delete" type="button" value="删除账号" />
+                        <input class="control" type="button" value="控制权限" />
+                </td>
+                <td class="unPrimary" style="display: none"><#if son.getEnd()>0<#else>1</#if></td>
+                <td class="getHasPermit" style="display: none"><#if son.getHasPermit()>0<#else>1</#if></td>
+
+        </tr>
+        </#list>
+        </tbody>
+    </table>
+    <div class="holder"></div>
+</div>
+
+
+<div class="creatAccout">
+    <div style=" height:50px; line-height:50px; padding-left:20px; color:#000; font-size:20px;">新建下级账号<i onclick="discoverHtml()" id="xx"></i></div>
+    <ul>
+        <li><abbr><i>*</i>下级公司名称:</abbr><input type="text" /></li>
+        <li><abbr><i>*</i>登录账号:</abbr><input type="text" /></li>
+        <li><abbr><i>*</i>网点折扣比例:</abbr><input type="text" /></li>
+        <li><abbr><i>*</i>登录密码:</abbr><input maxlength="16" type="password" /></li>
+        <li><abbr><i>*</i>确认密码:</abbr><input maxlength="16" type="password" /></li>
+        <li><abbr><i>*</i>是否为网点:</abbr><input value="0" type="radio" name="unPrimary"/>是<input checked="checked" value="1" type="radio" name="unPrimary"/>否</li>
+    </ul>
+    <div style=" height:80px;"><input type="button" value="确定" id="creatAccoutSure"/><input onclick="discoverHtml()" type="button" value="取消" id="creatAccoutCancel" /></div>
+</div>
+
+<div class="updateAcount">
+    <div style=" height:70px; line-height:70px; padding-left:20px; color:#000; font-size:20px;">编辑账号<i onclick="discoverHtml()" id="xx1"></i></div>
+    <ul>
+        <li><abbr><i>*</i>下级公司名称:</abbr><input type="text" id="updateAcountName" /></li>
+        <li><abbr><i>*</i>网点折扣比例:</abbr><input type="text" id="updateAcountSale" /></li>
+        <li><abbr><i>*</i>登录密码:</abbr><input maxlength="16" type="password" /></li>
+        <li><abbr><i>*</i>确认密码:</abbr><input maxlength="16" type="password" /></li>
+        <li><abbr><i>*</i>支付密码:</abbr><input maxlength="6" type="password" /></li>
+        <li><abbr><i>*</i>确认密码:</abbr><input maxlength="6" type="password" /></li>
+        <li style="display: none;"><input type="hidden" id="enterpriseId"/></li>
+        <li><abbr><i>*</i>是否为网点:</abbr><input value="0" type="radio" name="undatePrimary"/>是<input checked="checked" value="1" type="radio" name="undatePrimary"/>否</li>
+    </ul>
+    <div style=" height:80px;margin-top: 20px;"><input type="button" value="确定" id="updateAcountSure"/><input onclick="discoverHtml()" type="button" value="取消" id="updateAcountCancel" /></div>
+</div>
+
+
+
+
+<div class="deleteAccout">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">确认提示<i onclick="discoverHtml()" id="xx2"></i></li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">您确定删除该账号吗？</li>
+        <input type="hidden" id="deleteAccout_enterpriseId" />
+        <li><input type="button" id="deleteAcountSure" value="确定" /><input onclick="discoverHtml()" type="button" id="deleteAcountCancel" value="取消" /></li>
+    </ul>
+</div>
+
+<div class="deleteError">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">确认提示</li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">数据中存在异常，无法删除</li>
+        <li style="text-align: center;"><input onclick="discoverHtml()" type="button" id="deleteAcountError" value="确定" /></li>
+    </ul>
+</div>
+
+
+<div class="accessControl">
+    <ul>
+        <input type="hidden" id="permission_enterpriseId" />
+        <li style="font-size:24px; padding-left:30px;">权限控制<i onclick="discoverHtml()" id="xx3"></i></li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">代客下单付款免验证：<input style="margin:0px 20px" value="0" type="radio" name="laissez_passer" />是 <input style="margin:0px 20px" type="radio" value="1" name="laissez_passer" checked="checked" />否</li>
+        <li><input type="button" id="accessControlSure" value="确定" /><input onclick="discoverHtml()" type="button" id="accessControlCancel" value="取消" /></li>
+    </ul>
+</div>
+<script src="${bath}/static/js/hieManager.js?version=${VERSION}"></script>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+</body>
+</html>

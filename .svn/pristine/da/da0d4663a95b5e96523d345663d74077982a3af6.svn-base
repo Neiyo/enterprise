@@ -1,0 +1,75 @@
+$(document).ready(function(){
+    $.post("../web/api/valet/getGoodsInfo",{
+        goodsInfoId:goodsInfoId
+    },function( data ){
+        if( data.response == 'success' ){
+            $("#itemPrice").html( data.data.goodsInfoPreferPrice );
+        }
+    });
+
+
+
+    var initType=$(".itemColorOn").html()
+    $("#itemColor").html(initType)
+    $(".imglist span img").mouseover(function(){
+        var src=$(this).attr("src");
+        $(this).parent().parent().parent().siblings(".showImg").children("img").prop("src",src);
+    })
+    $(".changeLeft").click(function(){
+        var left=parseInt($(this).siblings("s").children("span").css("left"));
+        var imgNum=$(this).siblings("s").children("span").children("img").length
+        console.log(imgNum)
+        if(left>0-(imgNum-3)*60){
+            $(this).siblings("s").children("span").animate({"left":left-60},100);
+        }
+    })
+    $(".changeRight").click(function(){
+        var left=parseInt($(this).siblings("s").children("span").css("left"));
+        console.log(left)
+        if(left<0){
+            $(this).siblings("s").children("span").animate({"left":left+60},100);
+        }
+    })
+    var type=""
+    $(document).on("click",".detail",function(){
+        $(this).addClass("itemColorOn").siblings().removeClass("itemColorOn")
+            $(".itemColorOn").each(function(){
+                type += '"'+ $(this).html() + '"' + " "
+            })
+        $("#itemColor").html(type);
+        type = ""
+    })
+
+    $("#itemNumAdd").click(function(){
+        var num=parseInt($(this).siblings("input[name='itemNum']").val())
+        $("input[name='itemNum']").val(num+1);
+    })
+    $("#itemNumReduce").click(function(){
+        var num=parseInt($(this).siblings("input[name='itemNum']").val())
+        if(num>1){
+            $("input[name='itemNum']").val(num-1);
+        }
+    })
+    $(".itemListbodyHead li").click(function(){
+        $(this).addClass("listOn").siblings().removeClass("listOn");
+        var lival=$(this).val()
+        if(lival==0){
+            $(".itemListdetail").hide()
+            $(".itemListIntorduce").show()
+        }else if(lival==1){
+            $(".itemListdetail").show()
+            $(".itemListIntorduce").hide()
+        }
+    });
+
+    $("#itemBuy").click(function(){
+        var id = goodsInfoId;
+        var str = /^[1-9]*[1-9][0-9]*$/;
+        var count = $("input[name='itemNum']").val();
+        if( str.test(count) ) {
+            window.location.href = 'OrderSure?id=' + id + '&count=' + count;
+        }else{
+            data_type_alert("请填写正确的数量","error");
+        }
+        });
+});

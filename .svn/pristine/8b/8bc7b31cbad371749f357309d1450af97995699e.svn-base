@@ -1,0 +1,27 @@
+$(document).ready(function(){
+    $("#sub").click(function(){
+        var deliveryCode = $("input[name='billNumber']").val();
+        $.post("../web/api/valet/getByDeliveryCode",{
+            deliveryCode:deliveryCode
+        },function(data){
+            if( data.response == 'success' ){
+                window.location.href = 'UserGetList?deliveryCode=' + deliveryCode;
+            }
+            else if(data.data.errorcode == '9'){
+                console.log(deliveryCode);
+                window.location.href = 'UserGetList?deliveryCode=' + deliveryCode;
+            }else{
+                response_ensure_alert('error',data.data.text,function(){
+
+                },function(){
+
+                });
+            }
+        },'json');
+    });
+
+    //for UserGetList
+
+
+
+});

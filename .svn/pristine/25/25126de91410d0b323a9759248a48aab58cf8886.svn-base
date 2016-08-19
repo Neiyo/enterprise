@@ -1,0 +1,175 @@
+$(document).ready(function(e) {
+    var keyUpLock = true;
+    $("div.holder").jPages({
+        containerID : "itemContainer"
+    });
+
+
+    $("#BudGo").click(function(){
+        coverHtml();
+        $(".Budget").fadeIn(500);
+        $(".CashAssign").fadeOut(500);
+        $(".CashPwd").fadeOut(500);
+    })
+    $(".Budget li i").click(function(){
+        discoverHtml()
+        $(".Budget").fadeOut(500);
+    })
+    $("#CashGo").click(function(){
+        coverHtml()
+        $(".CashAssign").fadeIn(500);
+        $(".Budget").fadeOut(500);
+        $(".CashPwd").fadeOut(500);
+    })
+    $(".CashAssign h1 i").click(function(){
+        discoverHtml()
+        $(".CashAssign").fadeOut(500);
+    })
+    $("#Cashsub").click(function(){
+        var checkNum1 =/^[0-9]*[1-9][0-9]*$/
+        val1=$("#checkval").val()
+        if(checkNum1.test(val1)){
+            $(".CashAssign").fadeOut(500);
+            $("#CashPwd").val("");
+            $(".CashPwd").fadeIn(500);
+        }else{
+            data_type_alert("没有金额","error")
+        }
+    })
+    $("#CashCancel").click(function(){
+        discoverHtml();
+        $(".CashPwd").fadeOut(500);
+    })
+    $(".CashChkbox").click(function() {
+        var temp = 0;
+        $(".CashChkbox").each(function(){
+
+            if($(this).is(':checked')) {
+                temp = temp + Number($(this).siblings(".Cashtext").val());
+            }
+            $("#checkval").attr("value",temp);
+        });
+    })
+    $(".Cashtext").keyup(function(){
+        var temp = 0;
+        var _this = this;
+        var checkNum =/^[0-9]*[1-9][0-9]*$/
+        val=$(this).val()
+        if(checkNum.test(val) || val == ""){
+            var checkval=$("#checkval").val();
+            $(".CashChkbox").each(function(){
+
+                if($(this).is(':checked')) {
+                    temp = temp + Number($(this).siblings(".Cashtext").val());
+                }
+                $("#checkval").attr("value",temp);
+            });
+        }else{
+            if( keyUpLock == true ){
+                response_ensure_alert("error","请输入正确的数字",function(){
+                    keyUpLock = true;
+                    $(_this).removeAttr("disabled");
+                });
+                $(this).prop("disabled","disabled");
+                keyUpLock = false;
+            }
+
+        }
+    })
+});
+
+$(document).ready(function(){
+    $("#Ucoinsub").click(function(){
+        console.log(1);
+        var value = $("#BudAmout").val();
+        var reason = $("#BudReason").val();
+        var flag = '';
+        flag = Ucoinsubmit(value);
+        if( flag ){
+            $.post("../web/api/wealth/requisition",{
+                'amount': value,
+                'reason': reason
+            },function(data){
+                if( data.response == 'success' ){
+                    discoverHtml();
+                    response_ensure_alert("success","申请预算成功",function(){
+                        window.location.href = 'UCoinManager';
+                    });
+                }
+                else{
+                    discoverHtml();
+                    response_ensure_alert("success",data.data.text,function(){
+                        window.location.href = 'UCoinManager';
+                    });
+                }
+            },'json');
+        }
+    });
+    $("#CashPwdSub").click(function(){
+        var paykey = $("#CashPwd").val();
+        var str = '{';
+        var length = $("#CashAssign li").length;
+        var _this = this;
+        for(var i = 0;i<length;i++){
+            var id_dom = $("#CashAssign li input[type='checkbox']")[i];
+            var value_dom = $("#CashAssign li input[type='text']")[i]
+            if( id_dom.checked ){
+                var id = id_dom.value;
+                var value = value_dom.value;
+                str += '"';
+                str += id;
+                str += '":';
+                str += value;
+                str += ',';
+            }
+        }
+        str = str.substring(0,str.length-1);
+        str += '}';
+        console.log(str);
+        $.post("../web/api/wealth/allocation",{
+            'paykey':paykey ,
+            'allocationJson':str
+        },function( data ){
+            if( data.response == 'success' ){
+                $("#CashPwd").val("");
+                discoverHtml();
+                ensure_alert('UCoinManager');
+
+            }
+            else{
+                $("#CashPwd").val("");
+                if ( data.data.errorcode == 14 ){
+                    money_error_alert('UCoinManager');
+                    discoverHtml();
+                }
+                if (data.data.errorcode == 18){
+                    password_alert();
+
+                }
+            }
+        },'json');
+    });
+
+    //处理表格占比
+    $(".percent").html(function(){
+        var percent = '0%';
+        var sonWealth = $(this).data("son");
+        var totalWealth = $(this).data("total");
+        if( sonWealth != 0 ){
+            percent = (sonWealth/totalWealth*100).toFixed() + '%';
+        }
+        return percent;
+    });
+});
+
+
+function Ucoinsubmit(val){
+    var checkNum2 =/^[0-9]*[1-9][0-9]*$/
+    if(checkNum2.test(val)){
+        return true;
+    }else{
+        data_type_alert("请输入正确的金额","error")
+        return false;
+    }
+}
+

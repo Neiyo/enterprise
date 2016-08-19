@@ -1,0 +1,80 @@
+package com.ylife.form.service.FormFuncImpl;
+
+import com.ylife.data.page.Page;
+import com.ylife.data.page.PageImpl;
+import com.ylife.data.page.Pageable;
+import com.ylife.form.mapper.FormFuncMapper;
+import com.ylife.form.model.FormFunc;
+import com.ylife.form.service.FormFuncService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2016/8/5.
+ */
+@Service
+public class FormFuncServiceImpl implements FormFuncService {
+
+    @Resource
+    private FormFuncMapper formFuncMapper;
+
+    @Override
+    public FormFunc getReportInfoByTime(Long maxCatalog, Long minCatalog, Date start, Date end) {
+        return formFuncMapper.selectReportInfoByTime(maxCatalog, minCatalog, start, end);
+    }
+
+    @Override
+    public List<FormFunc> getReportInfoEveryDay(Long maxCatalog, Long minCatalog, Date start, Date end) {
+        return formFuncMapper.selectReportByDay(maxCatalog,minCatalog,start,end);
+    }
+
+    @Override
+    public List<FormFunc> newCustomerAmount(Long maxCatalog, Long minCatalog, Date start, Date end) {
+        return formFuncMapper.selectNewcustomerAmount(maxCatalog,minCatalog,start,end);
+    }
+
+    @Override
+    public Page<FormFunc> getucoinGrandForm(String idCard, Long maxCatalog, Long minCatalog, Date start, Date end,Pageable pageable) {
+        List<FormFunc> formFuncs=formFuncMapper.selectUcoinGrand(idCard,maxCatalog,minCatalog,start,end,pageable);
+        int totalElements=formFuncMapper.countUcoinGrandForm(idCard,maxCatalog,minCatalog,start,end);
+        return new PageImpl<>(pageable,totalElements,formFuncs);
+    }
+
+    @Override
+    public Page<FormFunc> getDetailGrandForm(String idCard, Long maxCatalog, Long minCatalog, Date start, Date end,Pageable pageable) {
+        List<FormFunc> formFuncs=formFuncMapper.selectDetailUcoinGrand(idCard,maxCatalog,minCatalog,start,end,pageable);
+        int totalElements=formFuncMapper.countDetailUcoinGrand(idCard,maxCatalog,minCatalog,start,end);
+        return new PageImpl<>(pageable,totalElements,formFuncs);
+    }
+
+    @Override
+    public Page<FormFunc> getCustomerConsume(String idCard, Long maxCatalog, Long minCatalog, Date start, Date end, Pageable pageable) {
+        List<FormFunc> formFuncs=formFuncMapper.selectCustomerConsume(idCard,maxCatalog,minCatalog,start,end,pageable);
+        int totalElements=formFuncMapper.countCustomerConsume(idCard,maxCatalog,minCatalog,start,end);
+        return new PageImpl<>(pageable,totalElements,formFuncs);
+    }
+
+    @Override
+    public Page<FormFunc> getDetailConsume(String idCard, Long maxCatalog, Long minCatalog, Date start, Date end, Pageable pageable) {
+        List<FormFunc> consume=formFuncMapper.selectDetailConsume(idCard,maxCatalog,minCatalog,start,end,pageable);
+        int totalConsume=formFuncMapper.countDetailConsume(idCard,maxCatalog,minCatalog,start,end);
+        List<FormFunc> refund=formFuncMapper.selectDetailRefund(idCard,maxCatalog,minCatalog,start,end,pageable);
+        int totalRefund=formFuncMapper.countDetailRefund(idCard,maxCatalog,minCatalog,start,end);
+        for (FormFunc formFunc:refund){consume.add(formFunc);}
+        int totalElements=totalConsume+totalRefund;
+        return  new PageImpl<>(pageable,totalElements,consume);
+    }
+
+
+
+    @Override
+    public Page<FormFunc> getNetdata(Long maxCatalog, Long minCatalog, Date start, Date end, Pageable pageable) {
+        List<FormFunc> formFuncs=formFuncMapper.selectNetData(maxCatalog,minCatalog,start,end,pageable);
+        int totalElements=formFuncMapper.countNetData(maxCatalog,minCatalog,start,end);
+        return new PageImpl<>(pageable,totalElements,formFuncs);
+    }
+}

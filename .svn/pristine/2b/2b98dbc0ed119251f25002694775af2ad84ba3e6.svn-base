@@ -1,0 +1,87 @@
+package com.math.gson;
+
+import com.ylife.data.json.json.Parser;
+import com.ylife.data.json.json.Renderer;
+import com.ylife.data.json.json.SimpleParser;
+import com.ylife.data.json.json.SimpleRenderer;
+import com.ylife.data.order.Generator;
+import com.ylife.data.order.IdGeneratorFactory;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Created by InThEnd on 2016/5/27.
+ * test
+ */
+public class TestCompare {
+
+    private Parser parser = new SimpleParser();
+
+    private Renderer renderer = new SimpleRenderer();
+
+    @Test
+    public void testCompare() {
+
+        BigDecimal remain = new BigDecimal(20);
+        BigDecimal resePrice = new BigDecimal(30);
+        int result = resePrice.compareTo(remain);
+        if (result > 0) {
+            System.out.println("大于");
+        } else if (result == 0) {
+            System.out.println("等于");
+
+        } else {
+            System.out.println("小于");
+        }
+        System.out.println(new java.text.DecimalFormat("0.00").format(4.014));
+    }
+
+
+
+    @Test
+    public void testGenerate() throws InterruptedException {
+        Set<Long> set = new HashSet<>();
+        Generator generator1 = IdGeneratorFactory.create("test");
+        for (int i = 0; i < 1005; i++) {
+            long id = generator1.generate();
+            if (set.contains(id)) {
+                System.out.print("炸！");
+            }
+            set.add(id);
+        }
+    }
+
+
+
+    public static class TestRun implements Runnable {
+
+        private Generator generator;
+
+        private Set<Long> set;
+
+        private int number;
+
+        public TestRun(Generator generator, Set set, int i) {
+            this.generator = generator;
+            this.set = set;
+            this.number = i;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 1000; i++) {
+                long id = generator.generate();
+                if (set.contains(id)) {
+                    throw new RuntimeException("重复了！");
+                }
+                set.add(id);
+            }
+        }
+    }
+}
+

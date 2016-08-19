@@ -1,0 +1,46 @@
+package com.ylife.chinapost.security.service.impl;
+
+import com.ylife.authority.mapper.AuthorityResoucePageMapper;
+import com.ylife.authority.mapper.ManagerAuthorityMapper;
+import com.ylife.authority.model.AuthorityPageKey;
+import com.ylife.authority.model.ManagerAuthorityKey;
+import com.ylife.enterprise.mapper.EnterpriseManagerMapper;
+import com.ylife.enterprise.model.EnterpriseManager;
+import com.ylife.chinapost.security.service.EnterpriseSecurityService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * Created by InThEnd on 2016/4/9.
+ */
+@Service
+public class EnterpriseSecurityServiceImpl implements EnterpriseSecurityService {
+
+    @Resource
+    private AuthorityResoucePageMapper authorityResoucePageMapper;
+    @Resource
+    private EnterpriseManagerMapper enterpriseManagerMapper;
+    @Resource
+    private ManagerAuthorityMapper managerAuthorityMapper;
+
+    @Override
+    public EnterpriseManager findByLoginName(String username) {
+        return enterpriseManagerMapper.selectByUsername(username);
+    }
+
+    @Override
+    public Long getAuthorityId(Long managerId) {
+        ManagerAuthorityKey key = managerAuthorityMapper.selectByManagerId(managerId);
+        if (key == null) {
+            return null;
+        }
+        return key.getAuthorityId();
+    }
+
+    @Override
+    public boolean check(long authorityId, long resourceId) {
+        return authorityResoucePageMapper.exist(new AuthorityPageKey(authorityId, resourceId));
+    }
+
+}

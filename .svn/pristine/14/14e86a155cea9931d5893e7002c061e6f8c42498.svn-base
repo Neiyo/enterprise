@@ -1,0 +1,13 @@
+package com.ylife.address.mapper;
+
+import com.ylife.address.model.City;
+
+import java.util.List;
+
+public interface CityMapper {
+
+    City selectByPrimaryKey(Long cityId);
+
+    List<City> selectByProvinceId(Long provinceId);
+
+}

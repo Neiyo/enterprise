@@ -1,0 +1,72 @@
+package com.ylife.chinapost.service.impl;
+
+import com.ylife.chinapost.service.CurrentLoginService;
+import com.ylife.chinapost.service.HierarchyManageService;
+import com.ylife.enterprise.mapper.EnterpriseManagerMapper;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.enterprise.model.EnterpriseInfo;
+import com.ylife.enterprise.model.EnterpriseManager;
+import com.ylife.enterprise.service.EnterpriseInfoService;
+import com.ylife.enterprise.service.EnterpriseManagerService;
+import com.ylife.enterprise.service.EnterpriseService;
+import com.ylife.exception.ServerInternalException;
+import com.ylife.exception.UserOperationException;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * Created by InThEnd on 2016/4/14.
+ * HierarchyManagerServiceImpl
+ */
+@Service
+public class HierarchyManageServiceImpl implements HierarchyManageService {
+
+    @Resource
+    private EnterpriseService enterpriseService;
+    @Resource
+    private CurrentLoginService currentLoginService;
+    @Resource
+    private EnterpriseManagerMapper enterpriseManagerMapper;
+    @Resource
+    private EnterpriseManagerService enterpriseManagerService;
+    @Resource
+    private EnterpriseInfoService enterpriseInfoService;
+
+    @Override
+    public List<EnterpriseInfo> getSonEnterpriseInfo() {
+        return enterpriseInfoService.getEnterpriseInfos(currentLoginService.getCurrentLoginEnterpriseId());
+    }
+
+    @Override
+    public void addSonEnterprise(String name, BigDecimal discountPct, boolean end, String username, String password) {
+        EnterpriseFunction function = currentLoginService.getCurrentLoginEnterpriseFunc();
+        if (function.getEnd()) {
+            throw new UserOperationException("此节点为网点，无法创建子账号。");
+        }
+        enterpriseService.addEnterprise(function.getId(), discountPct, end, name, username, password);
+    }
+
+    @Override
+    public void editEnterprise(long enterpriseId, BigDecimal discountPct, Boolean end, String name, String password, String paykey) {
+        enterpriseService.editEnterprise(enterpriseId, discountPct, end, name, paykey);
+        EnterpriseManager enterpriseManager = enterpriseManagerService.getPrimaryManager(enterpriseId);
+        if (enterpriseManager == null) {
+            throw new ServerInternalException("管理员爆！炸！了！！");
+        }
+        enterpriseManager.setPassword(password);
+        enterpriseManagerMapper.updateByPrimaryKeySelective(enterpriseManager);
+    }
+
+    @Override
+    public void deleteEnterprise(long enterpriseId) {
+        enterpriseService.deleteEnterprise(enterpriseId);
+    }
+
+    @Override
+    public void setPermission(long enterpriseId, boolean hasPermit) {
+        enterpriseService.setHasPermit(enterpriseId, hasPermit);
+    }
+}

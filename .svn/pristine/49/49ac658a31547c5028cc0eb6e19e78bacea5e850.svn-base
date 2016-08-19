@@ -1,0 +1,255 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>邮豆系统_登录界面</title>
+    <!-- 主要样式 -->
+    <link rel="stylesheet" href="${bath}/static/css/style.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" href="${bath}/static/css/g.css">
+
+    <link rel="stylesheet" href="${bath}/static/css/xcConfirm.css">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="${bath}/static/bootstrap/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="${bath}/static/bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${bath}/static/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- jPage分页 -->
+    <script src="${bath}/static/js/jPages.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
+</head>
+<style>
+    .showError{
+        color:#ff3300!important;
+        position:relative;
+    }
+    #autoWarning{
+        width: auto;
+        height: auto;
+        z-index: 2;
+        position: fixed;
+        display: none;
+    }
+    #arrow{
+        width: 16px;
+        height: 16px;
+        z-index: 3;
+        position: relative;
+        left: 20px;
+        top: -2.5px;
+        background:url(${bath}/static/img/warningArrow.png) center no-repeat;
+    }
+    #massageShow{
+        padding: 10px;
+        border: 2px solid #666;
+        z-index: 2;
+        background: #fff;
+    }
+    .importLog{
+        width:680px;
+        height:680px;
+        position:fixed;
+        left:15%;
+        top:15%;
+        background:#FFF;
+        box-shadow: 5px 5px 5px 5px #999;
+        z-index:99;
+        display:block;
+    }
+    .importLog ul{
+        width: 650px;
+        margin-left: 15px;
+        border-top:1px solid #e0e0e0;
+        padding-top:50px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .importLog li{
+        height:40px;
+        margin-top: 14px;
+    }
+    .importLog li div{
+        font-size: 14px;
+        text-align:left;
+        margin-left: 80px;
+    }
+    #xx{
+        display:inline-block;
+        background:url(${bath}/static/img/XX.png) center no-repeat;
+        width:25px;
+        height:25px;
+        position:relative;
+        left:440px;
+        top:10px;
+        cursor:pointer;
+    }
+</style
+<body>
+
+<div style="width:100%; height:100px; border-bottom:2px solid #dcdcdc; margin-left:20px;">
+  	<span style="font:24px '黑体'; color:#000; display:inline-block; margin-top:15px;margin-bottom:20px;position:relative;">邮豆发放
+      </span>
+    <br  />
+    <span style="display:inline-block; margin:0px 10px 0px 10px;color:black;">批量转账</span>
+    <button class="re_import">重新导入</button>
+</div>
+<div class="containe">
+    <div id="notice">通过CSV导入，实现批量发放，格式：流水号、身份证号、业务类型、邮豆金额、备注。具体发放到用户身份证号对应的账户中，员工来网点激活账户，使用邮豆消费。</div>
+    <div class="row">
+        <div style="text-align:left;font-size:20px;margin-top:2%;font-weight:bold;margin-left:40px;">发放列表(<span id="num"></span>)</div>
+    </div>
+</div>
+<hr style="width:98%;border-bottom:2px solid #dcdcdc;margin-left:22px;margin-top:40px;"/>
+<input type="hidden" id="typeId" value="${typeId}" />
+<table class="table_list" style="width:98%;margin-left:22px;font-size:15px;font-weight:550;border:0;">
+    <thead>
+    <tr style="background-color:#d6d6d6;" class="thead">
+        <script type="text/javascript">
+            //禁止后退键 作用于Firefox、Opera
+            document.onkeypress = forbidBackSpace;
+            //禁止后退键  作用于IE、Chrome
+            document.onkeydown = forbidBackSpace;
+            var data = ${data};
+            data.data.excel[1][0].map(function(object){
+                //填充数据
+                var html = '<th>' + object + '</th>';
+                $('.thead').append(html);
+            });
+        </script>
+    </tr>
+    </thead>
+    <tbody id="itemContainer">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                //移动窗口
+                $( ".importLog" ).draggable();
+                $("#xx").click(function(){
+                   $(".importLog").css("display","none");
+                });
+
+                //填充信息
+                for(var i = 1;i < data.data.excel[1].length;i++){
+                    var html = '<tr>';
+                    data.data.excel[1][i].map(function(object){
+                        //填充数据
+                        html += '<td class="">' + object + '</td>';
+                    });
+                    html += '</tr>';
+                    $('#itemContainer').append(html);
+                }
+
+                //定位并加入错误信息
+                var trCount = 0;
+                var errLogHtml = '';
+                data.data.excel[2].map(function(arr){
+                    trCount++;
+                    if(arr != []){
+                        console.log(arr);
+                        for( var i = 0;i < arr.length;i++ ){
+                            var args = arr[i].split("-");
+                            var index = args[0];
+                            var errorContent = args[1];
+                            $($($("tbody tr")[i]).children()[index]).addClass("showError");
+                            $($($("tbody tr")[i]).children()[index]).attr("value",errorContent);
+
+                            //显示错误日志
+                            errLogHtml += '<li>';
+                            console.log(trCount);
+                            errLogHtml += '<div class="errorIndex">' + '第' + trCount + '行 - ' + '第' + (parseInt(index) + 1) + '个单元格错误原因' + '</div>';
+                            errLogHtml += '<div class="errorContent">' + '错误原因:' + errorContent + '</div>';
+                            errLogHtml += '</li>';
+                        }
+                    }
+                });
+                if( errLogHtml == '' ){
+                    errLogHtml = '导入正确';
+                }
+                $(".importLog ul").append(errLogHtml);
+
+                //列表总数
+                var num="0";
+                $("#itemContainer tr").each(function(){
+                    num = parseInt(num) + parseInt($(this).length)
+                })
+                $("#num").html(num);
+
+                //绘制canvas
+                $(".showError").mouseover(function(){
+                    $("#autoWarning").show()
+                    var left = $(this)[0].offsetLeft
+                    var top = $(this)[0].offsetTop
+//                    var width = $(this).css("width");
+//                    var height = $(this).css("height");
+//                    var html = '<canvas id="myCanvas" style="z-index: 999;position: absolute;top:-20px;left: ' + width + ';"></canvas>';
+//                    $(this).append(html);
+//                    var canvas = document.getElementById("myCanvas");
+                    var text = $(this).attr("value");
+                    $("#massageShow").html(text);
+                    $("#autoWarning").css({left:left+50,top:top-50});
+//                    if(canvas.getContext){
+//                        //获取对应的CanvasRenderingContext2D对象(画笔)
+//                        var ctx = canvas.getContext("2d");
+//                        //设置字体样式
+//                        ctx.font = "22px Courier New";
+//                        //设置字体填充颜色
+//                        ctx.fillStyle = "#ff3300";
+//                        //从坐标点(50,50)开始绘制文字
+//                        ctx.fillText(text, 10, 10);
+//                    }
+                });
+                $(".showError").mouseout(function(){
+                    $("#autoWarning").hide()
+                   $("#myCanvas").remove();
+                });
+            });
+
+        </script>
+    </tbody>
+</table>
+  <span class="footer" style="margin-top:60px;">
+  </span>
+  <span class="buttonGroup" style="display:inline-block;">
+    <button class="ensure" id="ensure">确定转账</button>
+    <button class="cancel" id="cancel">取消</button>
+  </span>
+<div class="pwd">
+    <img id="imgCancel" src="${bath}/static/img/XX.png" width="25px" height="25px" />
+    <span style=" display:inline-block; font-size:22px; margin:30px 0px 30px -50px; color:#000; ">输入支付密码</span><br />
+    <input type="password" name="pwd" placeholder="支付密码" id="list_password"/><br />
+    <span id="confirm">确认支付</span>
+</div>
+
+<div class="success">
+    <span style="left:110px;" ><img src="${bath}/static/img/ok.png" width="40" height="40" />支付成功，<b>3</b>秒后返回邮豆发放页面</span>
+    <a id="detail" style="left:-220px;" >查看发放详情</a>
+    <a id="complete" style="left:-150px;" >完成</a>
+</div>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+<div id="autoWarning">
+    <div id="massageShow"></div>
+    <div id="arrow"></div>
+</div>
+<div class="importLog">
+    <div style=" height:50px; line-height:50px; padding-left:20px; color:#000; font-size:20px;">导入错误信息汇总<i onclick="discoverHtml()" id="xx"></i></div>
+    <ul style="height:90%;"></ul>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#cancel").click(function(){
+            window.location.href = 'piliangdaoru';
+        })
+    })
+</script>
+<script src="${bath}/static/js/list.js?version=${VERSION}"></script>

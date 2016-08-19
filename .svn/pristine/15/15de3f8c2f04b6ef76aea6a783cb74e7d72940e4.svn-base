@@ -1,0 +1,385 @@
+$(document).ready(function(){
+    $("#date_start").click(function(e){
+        $("#datetimepicker_start").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_start").trigger("focus");
+    })
+    $("#datetimepicker_start").blur(function(){
+        $("#datetimepicker_start").datetimepicker('destroy');
+    });
+
+    $("#date_end").click(function(e){
+        $("#datetimepicker_end").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_end").trigger("focus");
+    })
+    $("#datetimepicker_end").blur(function(){
+        $("#datetimepicker_end").datetimepicker('destroy');
+    });
+
+
+    //以下是会员邮豆发放统计报表JS
+    $("#userDetailList").draggable();
+    $("#userDetailList h1 i").click(function(){
+        discoverHtml();
+        $("#userDetailList").hide()
+    });
+
+
+    //首页JS
+    $(".dateSpan").click(function(){
+        var start = '';
+        var end = '';
+        var today = new Date().getTime();
+        var lastWeek = new Date( today - 3600*24*7*1000 ).Format("yyyy-MM-dd");
+        var yestarDay = new Date( today - 3600*24*1000 ).Format("yyyy-MM-dd");
+        if( $(this).html() == '最近一周' ){
+            start = lastWeek;
+            end = yestarDay;
+            $.post("../web/api/report/getReportInfo",{
+                start:start,
+                end:end
+            },function(data){
+               if( data.response == 'success' ){
+
+                   //var ColumnArray = data.data.dayList.map(function(object){
+                   //    return object.sumPrice;
+                   //});
+                   //var ColumnCategoriesArray = data.data.dayList.map(function(object){
+                   //    return object.everyDay;
+                   //});
+
+                   //chart1
+                   var marketPrice = data.data.marketPrice;
+                   var salePrice = data.data.salePrice;
+                   var priceByTime = data.data.priceBytime;
+                   var priceByYear = data.data.priceByYear;
+                   var priceByDay = data.data.priceByDay;
+
+                   //期间发放邮豆
+                   $(".duringUcoin").html( ( priceByTime == undefined ) ? 0 : priceByTime );
+                   //今年发放邮豆
+                   $(".allUcoin").html( ( priceByYear == undefined ) ? 0 : priceByYear );
+                   //今日发放邮豆
+                   $(".todayUcoin").html( ( priceByDay == undefined ) ? 0 : priceByDay );
+
+                   var ChartData = {
+                       Column:{
+                           title:'',
+                           Ytitle:'',
+                           contentArray:data.data.dayList.map(function(object){
+                               return object.sumPrice;
+                           }),
+                           categoriesArray:data.data.dayList.map(function(object){
+                               return object.everyDay;
+                           }),
+                           callback:function(){
+                               $("#chartFirst svg").css("margin-top","40px");
+                           }
+                       },
+                       Circle:{
+                           title: '',
+                           contentArray: [
+                               ['营销邮豆金额 :' + data.data.marketPrice,  (marketPrice*10000)/((marketPrice + salePrice)*100)],
+                               ['促销邮豆金额 :' + data.data.salePrice,  (salePrice*10000)/((marketPrice + salePrice)*100)]
+                           ],
+                           seriesName: '',
+                           callback:  function(){
+
+                           }
+                       },
+                       Line:{
+                           title: '',
+                           Ytitle:  '',
+                           lineWidth: 2,
+                           hoverLineWidth: 3,
+                           contentArray: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+                               7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+                               8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+                               7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+                               3.0, 3.0],
+                           callback:  function(){
+
+                           }
+                       }
+                   };
+                   ChartColumn.apply($("#chartFirst"),[ChartData]);
+                   ChartCircle.apply($("#chartSecond"),[ChartData]);
+                   ChartLine.apply($("#chartThird"),[ChartData]);
+                   ChartLine.apply($("#chartForth"),[ChartData]);
+               }
+            });
+
+        }
+        else if( $(this).html() == '最近一个月' ){
+            $.post("../web/api/report/getReportInfo",{
+                start:11,
+                end:11
+            },function(data){
+                if( data.response == 'success' ){
+                    var ChartData = {
+                        Column:{
+                            title:'',
+                            Ytitle:'',
+                            contentArray:[
+                                1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+                            ],
+                            categoriesArray:[
+                                7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21,7.21
+                            ],
+                            callback:function(){
+                                $("#chartFirst svg").css("margin-top","40px");
+                            }
+                        },
+                        Circle:{
+                            title: '',
+                            contentArray: [
+                                ['营销邮豆金额 :1135000.00',  85],
+                                ['促销邮豆金额 :195000.00',  11]
+                            ],
+                            seriesName: '',
+                            callback:  function(){
+
+                            }
+                        },
+                        Line:{
+                            title: '',
+                            Ytitle:  '',
+                            lineWidth: 2,
+                            hoverLineWidth: 3,
+                            contentArray: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+                                7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+                                8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+                                7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+                                3.0, 3.0],
+                            callback:  function(){
+
+                            }
+                        }
+                    };
+                    ChartColumn.apply($("#chartFirst"),[ChartData]);
+                    ChartCircle.apply($("#chartSecond"),[ChartData]);
+                    ChartLine.apply($("#chartThird"),[ChartData]);
+                    ChartLine.apply($("#chartForth"),[ChartData]);
+                }
+            });
+        }
+        $(this).css("background-color","#54b3e3");
+        $(this).siblings().css("background-color","#fff")
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //以下是会员邮豆扣减统计报表JS
+    $("#userDetailListReduce").draggable();
+    $("#userDetailListReduce h1 i").click(function(){
+        discoverHtml();
+        $("#userDetailListReduce").hide()
+    });
+
+
+    /**
+     * data:{
+     *   Column:{
+     *      title:标题,
+     *      Ytitle:  Y轴标题,
+     *      categoriesArray:  X轴上的坐标类别,
+     *      contentArray: 数据
+     *      callback:  回调方法,
+     *   },
+     *   Circle:{
+     *      title:标题,
+     *      seriesName: 系数名称,
+     *      contentArray: 数据,
+     *      callback:  回调方法,
+     *   },
+     *   Line:{
+     *      title:标题,
+     *      Ytitle:  Y轴标题,
+     *      lineWidth: 折线宽度数值
+     *      hoverLineWidth: hover加粗数值,
+     *      contentArray: 数据,
+     *      callback:  回调方法,
+     *   }
+     * }
+     */
+    var ChartColumn = function(data){
+        $(this).highcharts({
+            chart: {
+                type: 'column',
+                margin: [ 50, 50, 100, 80]
+            },
+            title: {
+                text: data.Column.title
+            },
+            xAxis: {
+                categories: data.Column.categoriesArray,
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        fontSize: '8px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: data.Column.Ytitle
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '<b>millions</b>',
+            },
+            series: [{
+                data: data.Column.contentArray,
+                dataLabels: {
+                    enabled: false,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    x: 2,
+                    y: 10,
+                    style: {
+                        fontSize: '4px',
+                        fontFamily: 'Verdana, sans-serif',
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }]
+        });
+        data.Column.callback();
+    };
+    var ChartCircle = function(data){
+        $(this).highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: data.Circle.title
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: data.Circle.seriesName,
+                data: data.Circle.contentArray
+            }]
+        });
+        data.Circle.callback();
+    };
+    var ChartLine = function(data){
+        $(this).highcharts({
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: data.Line.title
+            },
+            subtitle: {
+                text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: data.Line.Ytitle
+                },
+                min: 0,
+                minorGridLineWidth: 0,
+                gridLineWidth: 0,
+                alternateGridColor: null
+            },
+            plotOptions: {
+                spline: {
+                    lineWidth: data.Line.lineWidth,
+                    states: {
+                        hover: {
+                            lineWidth: data.Line.hoverLineWidth
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    pointInterval: 3600000, // one hour
+                    pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+                }
+            },
+            series: [{
+                name: 'Hestavollane',
+                data: data.Line.contentArray
+
+            }],
+            navigation: {
+                menuItemStyle: {
+                    fontSize: '10px'
+                }
+            }
+        });
+        data.Line.callback();
+    };
+
+    //以下是网点基础数据统计报表JS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //以下是邮豆发放记录表JS
+});

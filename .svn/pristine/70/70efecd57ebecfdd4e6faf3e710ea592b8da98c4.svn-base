@@ -1,0 +1,113 @@
+package com.math.gson;
+
+import com.googlecode.aviator.AviatorEvaluator;
+import com.googlecode.aviator.Expression;
+import com.ylife.inventory.mapper.InventoryMapper;
+import com.ylife.inventory.model.Inventory;
+import com.ylife.inventory.model.InventoryKey;
+import com.ylife.order.model.BackOrderGoods;
+import com.ylife.order.model.CreditOrder;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.product.mapper.GoodsInfoMapper;
+import com.ylife.product.model.GoodsInfo;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2016/6/2.
+ */
+
+@ContextConfiguration(value = {"classpath:applicationContext-common.xml", "classpath:applicationContext-mybatis.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class TestAviator {
+
+    @Resource
+    private InventoryMapper inventoryMapper;
+    @Resource
+    private CreditOrderService creditOrderService;
+
+    @Test
+    public void testAviator() {
+        String expression="id*(b-c)*10";
+        Expression compile=AviatorEvaluator.compile(expression);
+        Map<String,Object> env=new HashMap<>();
+        long avalue=10;
+        long bvalue=50;
+        long cvalue=30;
+        env.put("id",avalue);
+        env.put("b",bvalue);
+        env.put("c",cvalue);
+        Object result=compile.execute(env);
+        System.out.println(result);
+
+        int a=12;
+        String b=String.valueOf(a);
+        System.out.println(b);
+    }
+
+
+    @Test
+    public void testBianLiang() {
+
+        //传入公式编译
+        String expression = "inventory*10+available*12+200";
+        Expression compile = AviatorEvaluator.compile(expression);
+
+        InventoryKey key=new InventoryKey(1l,3754l);
+       // GoodsInfo goodsInfo=goodsInfoMapper.selectByPrimaryKey(3754l);
+        //System.out.println(goodsInfo.getGoodsInfoName());
+
+        Inventory inventory =inventoryMapper.selectByPrimaryKey(key);
+        Map<String, Object> env = new HashMap<String, Object>();
+        long inventor=inventory.getInventory();
+        long available=inventory.getAvailable();
+
+        env.put("inventory", inventor);
+        env.put("available",available);
+        String result = compile.execute(env).toString();
+        System.out.println(result);
+    }
+
+
+    @Test
+    public  void testTrim(){
+        CreditOrder backOrder = creditOrderService.selectByCreditOrderCode(1607200233942000l);
+
+        List<BackOrderGoods> backOrderGoodses = backOrder.getBackOrderGoods();
+        String backGoodsName="";
+        for (BackOrderGoods backOrderGoods : backOrderGoodses) {
+            String goodsINfoName = backOrderGoods.getGoodsInfoName() + "(" + backOrderGoods.getGoodsNum() + ")";
+            backGoodsName += goodsINfoName +",";
+        }
+
+        int length=backGoodsName.length();
+        backGoodsName=backGoodsName.substring(0,length-1);
+        System.out.println(backGoodsName);
+        System.out.println(backGoodsName.length());
+        System.out.println(backGoodsName.indexOf(1));
+    }
+
+
+    @Test
+    public void testBigDecimal(){
+        BigDecimal a=new BigDecimal("4.105");
+        DecimalFormat df=new DecimalFormat("#.00");
+        String b=df.format(a);
+        System.out.println(b);
+
+        BigDecimal c= a.setScale(2,BigDecimal.ROUND_HALF_UP);
+        System.out.println(c);
+
+    }
+
+
+}

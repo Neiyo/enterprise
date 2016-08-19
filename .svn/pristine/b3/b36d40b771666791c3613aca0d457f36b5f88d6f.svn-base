@@ -1,0 +1,60 @@
+package com.ylife.chinapost.security;
+
+import com.ylife.chinapost.security.service.EnterpriseSecurityService;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.util.AntPathRequestMatcher;
+import org.springframework.security.web.util.RequestMatcher;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.util.*;
+
+/**
+ * 用于生成securityMetadataSource。
+ */
+public class EnterpriseSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+
+    //缓存资源URL和ID的对应关系
+    private static Map<String, Long> resourceMap = new HashMap<>();
+    private RequestMatcher pathMatcher;
+
+    @Resource
+    private EnterpriseSecurityService enterpriseSecurityService;
+
+    @Override
+    public Collection<ConfigAttribute> getAllConfigAttributes() {
+        return new ArrayList<ConfigAttribute>();
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return true;
+    }
+
+    //获取资源所需权限。这里仅仅放入资源的ID
+    @Override
+    public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        Iterator<String> it = resourceMap.keySet().iterator();
+        while (it.hasNext()) {
+            String resURL = it.next();
+            pathMatcher = new AntPathRequestMatcher(resURL);
+            if (pathMatcher.matches(((FilterInvocation) object).getRequest())) {
+                long resourseId = resourceMap.get(resURL);
+                List<ConfigAttribute> configAttributes = new ArrayList<>();
+                ConfigAttribute configAttribute = new SecurityConfig("" + resourseId);
+                configAttributes.add(configAttribute);
+                return configAttributes;
+            }
+        }
+        return null;
+    }
+
+    @PostConstruct
+    public void init() {
+
+    }
+
+}

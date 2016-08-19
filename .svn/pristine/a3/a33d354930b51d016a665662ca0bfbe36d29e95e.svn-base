@@ -1,0 +1,95 @@
+package com.ylife.chinapost.controller.api;
+
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.HierarchyManageService;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.security.annotation.SecurityResource;
+import com.ylife.utils.Assert;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+
+/**
+ * Created by InThEnd on 2016/4/14.
+ * <p/>
+ * 层级管理控制器。
+ */
+@Controller
+@SecurityResource(parent = "/web/hiemanager", primary = false)
+@RequestMapping(value = "/web/api/hierarchy", produces = "application/json;charset=utf-8")
+public class HierarchyManageAPIController {
+
+    @Resource
+    private HierarchyManageService hierarchyManageService;
+
+    /**
+     * 添加。
+     *
+     * @param name     企业名称
+     * @param username 用户名
+     * @param password 支付密码
+     */
+    @RequestMapping("/addSon")
+    @ResponseBody
+    public String addSon(@RequestParam("name") String name,
+                         @RequestParam("username") String username,
+                         @RequestParam("password") String password,
+                         @RequestParam("discountPct") BigDecimal discountPct,
+                         @RequestParam("end") boolean end) {
+        Assert.isTrue(discountPct.compareTo(BigDecimal.ZERO) == 1 || discountPct.compareTo(BigDecimal.ONE) <= 0, "网点折扣比例必须大于0小于等于1.");
+        Assert.hasLength(name, username, password);
+        hierarchyManageService.addSonEnterprise(name, discountPct, end, username, password);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 编辑。
+     *
+     * @param enterpriseId 企业ID
+     * @param name         企业名称
+     * @param password     登录密码
+     * @param paykey       支付密码
+     */
+    @RequestMapping("/editSon")
+    @ResponseBody
+    public String editSon(@RequestParam("enterpriseId") Long enterpriseId,
+                          @RequestParam("name") String name,
+                          @RequestParam(value = "discountPct", required = false) BigDecimal discountPct,
+                          @RequestParam(value = "end", required = false) Boolean end,
+                          @RequestParam(value = "password", required = false) String password,
+                          @RequestParam(value = "paykey", required = false) String paykey) {
+        if (discountPct != null) {
+            Assert.isTrue(discountPct.compareTo(BigDecimal.ZERO) == 1 || discountPct.compareTo(BigDecimal.ONE) <= 0, "网点折扣比例必须大于0小于等于1.");
+        }
+        Assert.hasLength(name);
+        String password1 = Constants.nullOrNotBlank(password);
+        String paykey1 = Constants.nullOrNotBlank(paykey);
+        hierarchyManageService.editEnterprise(enterpriseId, discountPct, end, name, password1, paykey1);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 删除。
+     */
+    @RequestMapping("/deleteSon")
+    @ResponseBody
+    public String deleteSon(@RequestParam("enterpriseId") Long enterpriseId) {
+        hierarchyManageService.deleteEnterprise(enterpriseId);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 设置权限。
+     */
+    @RequestMapping("/setPermit")
+    @ResponseBody
+    public String setPermit(@RequestParam("enterpriseId") Long enterpriseId,
+                            @RequestParam("hasPermit") boolean hasPermit) {
+        hierarchyManageService.setPermission(enterpriseId, hasPermit);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+}

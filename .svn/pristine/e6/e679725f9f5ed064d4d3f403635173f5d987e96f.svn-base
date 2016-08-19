@@ -1,0 +1,60 @@
+$(document).ready(function(){
+    $("#sub").click(function(){
+        var deliveryCode = $("input[name='billNumber']").val();
+        $.post("../web/api/valet/getByDeliveryCode",{
+            deliveryCode:deliveryCode
+        },function(data){
+            if( data.response == 'success' ){
+                window.location.href = 'UserGetList?deliveryCode=' + deliveryCode;
+            }
+            else{
+                response_ensure_alert('warning',data.data.text,function(){
+
+                });
+            }
+        },'json');
+    });
+
+    //for UserGetList
+
+    if($("input[type='hidden']").val() == 0){
+        $(".goods_type").html("待提货");
+    }
+    else if( $("input[type='hidden']").val() == 1 ){
+        $(".goods_type").html("已完成");
+    }
+    else if( $("input[type='hidden']").val() == 2 ){
+        $(".goods_type").html("已完成");
+    }
+
+    //查看发放详情
+    $("#detail").click(function(){
+
+    });
+    //完成
+    $("#complete").click(function(){
+        window
+    });
+
+    //用户提货
+    $("#ensure").click(function(){
+        var orderCode = $("#orderNumber").html();
+        console.log(orderCode);
+        $.post("../web/api/valet/pickUpOrder",{
+            orderCode:orderCode
+        },function(data){
+            if( data.response == 'success' ){
+                response_ensure_alert("success","提货成功",function(){
+                    window.location.href = 'UserGet';
+                });
+            }
+            else{
+                data_type_alert(data.data.text,'error');
+            }
+        });
+    });
+    $(".clsBtn").click(function(){
+        window.location.href = 'UserGet';
+    });
+
+});

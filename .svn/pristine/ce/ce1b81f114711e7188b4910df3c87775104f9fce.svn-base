@@ -1,0 +1,841 @@
+package com.ylife.chinapost.controller;
+
+import com.ylife.authority.mapper.pojo.AuthWithMAmountResult;
+import com.ylife.authority.model.ResourcePage;
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.*;
+import com.ylife.chinapost.service.pojo.WealthManageResult;
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.customer.model.ChinapostTag;
+import com.ylife.customer.service.ChinapostCustomerService;
+import com.ylife.customer.service.ChinapostTagService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.mapper.pojo.ManagerWithAuthNameResult;
+import com.ylife.enterprise.model.Enterprise;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.enterprise.model.EnterpriseInfo;
+import com.ylife.enterprise.model.EnterpriseManager;
+import com.ylife.exception.UserNotLoginException;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import com.ylife.inventory.mapper.pojo.InventoryGoodsResult;
+import com.ylife.inventory.model.InventoryBill;
+import com.ylife.order.model.*;
+import com.ylife.product.model.GoodsInfo;
+import com.ylife.security.annotation.SecurityResource;
+import com.ylife.system.model.BusinessType;
+import com.ylife.ucoin.model.CustomerUcoinHistory;
+import com.ylife.wealth.model.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2016/4/5.
+ * Main
+ */
+@Controller
+@RequestMapping("/web")
+public class MainController {
+
+    @Resource
+    private UcoinGrandService ucoinGrandService;
+    @Resource
+    private WealthManageService wealthManageService;
+    @Resource
+    private CurrentLoginService currentLoginService;
+    @Resource
+    private HierarchyManageService hierarchyManageService;
+    @Resource
+    private UcoinQueryService ucoinQueryService;
+    @Resource
+    private RoleManageService roleManageService;
+    @Resource
+    private RequisitionManageService requisitionManageService;
+    @Resource
+    private CustomerManageService customerManageService;
+    @Resource
+    private AccountCenterService accountCenterService;
+    @Resource
+    private InventoryManageService inventoryGoodsService;
+    @Resource
+    private UcoinBillManageService ucoinBillManageService;
+    @Resource
+    private GoodsManageService goodsManageService;
+    @Resource
+    private ValetOrderService valetOrderService;
+    @Resource
+    private OrderManageService orderManageService;
+    @Resource
+    private ChinapostCustomerService chinapostCustomerService;
+    @Resource
+    private ChinapostTagService chinapostTagService;
+    @Resource
+    private SystemManageService systemManageService;
+    @Resource
+    private InventoryManageService inventoryManageService;
+
+
+    @ExceptionHandler(UserNotLoginException.class)
+    public String handlerUserNotLoginException() {
+        return "redirect:/web/logError";
+    }
+
+
+    /**
+     * 跳转main页面
+     */
+    @RequestMapping("/main")
+    public String goToMain(HttpServletRequest request) {
+        EnterpriseManager enterpriseManager = accountCenterService.getEnterpriseManagerInfo();
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        request.setAttribute("enterpriseManager", enterpriseManager);
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        return "main";
+    }
+
+    /**
+     * 跳转LogError页面
+     */
+    @RequestMapping("/logError")
+    public String goToLogError(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "logError";
+    }
+
+    /**
+     * 跳转mainleft页面
+     */
+    @RequestMapping("/mainleft")
+    public String goToMainLeft(HttpServletRequest request) {
+        List<ResourcePage> currentPages = currentLoginService.getCurrentPages();
+        request.setAttribute("currentPages",currentPages);
+
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "mainleft";
+    }
+
+    /**
+     * 跳转mainright页面
+     */
+    @RequestMapping("/mainright")
+    public String goToMainRight(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "mainright";
+    }
+
+    /**
+     * 跳转reimburse页面
+     */
+    @RequestMapping("/reimburse")
+    public String goToreimburse(HttpServletRequest request, @RequestParam(value = "id", required = false) String id, @RequestParam(value = "status", required = false) String status) {
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("status", status);
+        Page<InventoryGoodsResult> inventoryGoodsResult = inventoryGoodsService.getGoods(null, null, null, null, new Pageable(1, 100));
+        request.setAttribute("totalElements", inventoryGoodsResult.getTotalElements());
+
+
+        if (id != null && !id.equals("")) {
+            InventoryBill inventorybill = inventoryManageService.getBillById(Integer.parseInt(id));
+            request.setAttribute("inventorybill", inventorybill);
+        }
+
+        request.setAttribute("isTop", currentLoginService.isPrimaryEnterprise());
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "reimburse";
+    }
+
+    /**
+     * 跳转replenishment页面
+     */
+    @RequestMapping("/replenishment")
+    public String goToreplenishment(HttpServletRequest request, @RequestParam(value = "id", required = false) String id, @RequestParam(value = "status", required = false) String status) {
+        Page<InventoryGoodsResult> inventoryGoodsResult = inventoryGoodsService.getGoods(null, null, null, null, new Pageable(1, 100));
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("totalElements", inventoryGoodsResult.getTotalElements());
+        request.setAttribute("status", status);
+        if (id != null && !id.equals("")) {
+            InventoryBill inventorybill = inventoryManageService.getBillById(Integer.parseInt(id));
+            request.setAttribute("inventorybill", inventorybill);
+        }
+
+        request.setAttribute("isTop", currentLoginService.isPrimaryEnterprise());
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "replenishment";
+    }
+
+    /**
+     * 跳转allocation页面
+     */
+    @RequestMapping("/allocation")
+    public String goToallocation(HttpServletRequest request, @RequestParam(value = "id", required = false) Long id, @RequestParam(value = "status", required = false) String status) {
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        EnterpriseInfo enterprise = accountCenterService.getTopEnterpriseInfo();
+        Boolean isEnd = currentLoginService.getCurrentLoginEnterpriseFunc().getEnd();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("enterprise", enterprise);
+        request.setAttribute("status", status);
+        if (id != null) {
+            InventoryBill inventorybill = inventoryManageService.getBillById(id);
+            request.setAttribute("inventorybill", inventorybill);
+        }
+
+        request.setAttribute("isTop", currentLoginService.isPrimaryEnterprise());
+        request.setAttribute("isEnd", isEnd);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "allocation";
+    }
+
+    /**
+     * 跳转UbaoSend页面
+     */
+    @RequestMapping("/UbaoSend")
+    @SecurityResource(name = "邮豆发放", description = "", priority = 7)
+    public String goToUbaoSend(HttpServletRequest request) {
+        List<BusinessType> businessType = ucoinGrandService.getBusinessType();
+        request.setAttribute("businessType", businessType);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UbaoSend";
+    }
+
+    /**
+     * 跳转piliangdaoru页面
+     */
+    @RequestMapping("/piliangdaoru")
+    public String goToPLDR(HttpServletRequest request) {
+        List<BusinessType> businessTypes = ucoinGrandService.getBusinessType();
+
+        request.setAttribute("businessTypes", businessTypes);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "piliangdaoru";
+    }
+
+    /**
+     * 跳转oldUser页面
+     */
+    @RequestMapping("/oldUser")
+    public String goToOldUser(@RequestParam(value = "idCard", required = true) String idCard, HttpServletRequest request) {
+        ChinapostCustomer customer = ucoinGrandService.getCustomer(idCard);
+        List<BusinessType> businessType = ucoinGrandService.getBusinessType();
+
+        request.setAttribute("enterpriseId",currentLoginService.getCurrentLoginEnterpriseId());
+        request.setAttribute("businessType", businessType);
+        if( customer.getTags().size() > 0 ){
+            request.setAttribute("ChinapostTag", customer.getTags());
+        }
+        request.setAttribute("idCardNo", customer.getIdcardNo());
+        request.setAttribute("FullName", customer.getFullname());
+        request.setAttribute("PhoneNo", customer.getContactPhone());
+        request.setAttribute("UCoin", customer.getTotalUcoin());
+        request.setAttribute("ContactAddr", customer.getContactAddr());
+        request.setAttribute("ManagerNo", customer.getManagerNo());
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "oldUser";
+    }
+
+    /**
+     * 跳转newUser页面
+     */
+    @RequestMapping("/newUser")
+    public String goToNewUser(@RequestParam(value = "idCard", required = true) String idCard, HttpServletRequest request) {
+        request.setAttribute("idCard", idCard);
+        List<BusinessType> businessType = ucoinGrandService.getBusinessType();
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+
+        request.setAttribute("enterpriseInfo",enterpriseInfo);
+        request.setAttribute("enterpriseId",currentLoginService.getCurrentLoginEnterpriseId());
+        request.setAttribute("businessType", businessType);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "newUser";
+    }
+
+    /**
+     * 跳转list页面
+     */
+    @RequestMapping("/list")
+    public String goToList(@RequestParam(value="typeId",required = true)long typeId,@RequestParam(value = "data", required = true) String data, HttpServletRequest request) {
+        request.setAttribute("data", data);
+        request.setAttribute("typeId",typeId);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "list";
+    }
+
+    /**
+     * 跳转UCoinManager页面
+     */
+    @RequestMapping("/UCoinManager")
+    @SecurityResource(name = "财富管理", description = "", priority = 6)
+    public String goToUCoinManager(HttpServletRequest request) {
+        WealthManageResult result = wealthManageService.getManangeResult();
+        Boolean flag = currentLoginService.isPrimaryEnterprise();
+        BigDecimal wealth_total = result.getTotalWealth();
+        BigDecimal wealth_do = result.getAllocatedWealth();
+        BigDecimal wealth_undo = result.getUnAllocatedWealth();
+
+        List<WealthManageResult.SonWealth> sonWealthResult = result.getSonWealths();
+        Long enterpriseId = result.getEnterpriseId();
+        String enterpriseName = result.getEnterpriseName();
+        BigDecimal myUCoin = wealthManageService.getUcoinWealth();
+        EnterpriseManager enterpriseManager = accountCenterService.getEnterpriseManagerInfo();
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+
+        request.setAttribute("enterpriseManager", enterpriseManager);
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("wealth_total", wealth_total);
+        if (flag) {
+            request.setAttribute("flag", "true");
+        } else {
+            request.setAttribute("flag", "false");
+        }
+        request.setAttribute("wealth_do", wealth_do);
+        request.setAttribute("wealth_undo", wealth_undo);
+        request.setAttribute("SonWealthResult", sonWealthResult);
+        request.setAttribute("SonTotalWealth", result.getSonsTotalWealth());
+        request.setAttribute("enterpriseId", enterpriseId);
+        request.setAttribute("enterpriseName", enterpriseName);
+        request.setAttribute("myUCoin", myUCoin);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UCoinManager";
+    }
+
+    /**
+     * 跳转UCoinManager页面
+     */
+    @RequestMapping("/hiemanager")
+    @SecurityResource(name = "层级管理", description = "", priority = 2)
+    public String goToHieManager(HttpServletRequest request) {
+        List<EnterpriseInfo> enterprises = hierarchyManageService.getSonEnterpriseInfo();
+        request.setAttribute("enterprises", enterprises);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "hieManager";
+    }
+
+    /**
+     * 跳转inventoryInquiry页面
+     */
+    @RequestMapping("/inventoryInquiry")
+    public String goToinventoryInquiry(HttpServletRequest request) {
+        List<EnterpriseInfo> enterprises = hierarchyManageService.getSonEnterpriseInfo();
+        Map<String, Object> mapEnterprise = inventoryManageService.sonEnterprise();
+
+        request.setAttribute("enterprises", enterprises);
+        request.setAttribute("mapEnterprise", mapEnterprise);
+
+        //enterpriseId
+        request.setAttribute("enterprise", currentLoginService.getCurrentLoginEnterprise());
+        boolean flag = currentLoginService.isPrimaryEnterprise();
+        if (flag) {
+            request.setAttribute("isTop", "true");
+        } else {
+            request.setAttribute("isTop", "false");
+        }
+        request.setAttribute("isEnd", currentLoginService.getCurrentLoginEnterpriseFunc().getEnd());
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "inventoryInquiry";
+    }
+
+    /**
+     * 跳转login页面
+     */
+    @RequestMapping("/login.htm")
+    public String goToLogin(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "login";
+    }
+
+    /**
+     * 跳转businessType页面
+     */
+    @RequestMapping("/businessType")
+    @SecurityResource(name = "系统设置", description = "", priority = 14)
+    public String goTobusinessType(@RequestParam(value = "action", required = false) String action, HttpServletRequest request) {
+        List<BusinessType> allType = systemManageService.getAll();
+
+        if (action == null) {
+            request.setAttribute("action", "none");
+        } else {
+            request.setAttribute("action", action);
+        }
+        request.setAttribute("allType", allType);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "businessType";
+    }
+
+
+    /**
+     * 跳转companyAccount页面
+     */
+    @RequestMapping("/companyAccount")
+    public String goToCompanyAccount(HttpServletRequest request) {
+        EnterpriseInfo enterprise = accountCenterService.getTopEnterpriseInfo();
+        Boolean flag = currentLoginService.isPrimaryEnterprise();
+
+        if (flag) {
+            request.setAttribute("flag", "true");
+        } else {
+            request.setAttribute("flag", "false");
+        }
+        request.setAttribute("enterprise", enterprise);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "companyAccount";
+    }
+
+    /**
+     * 跳转Account页面
+     */
+    @RequestMapping("/Account")
+    @SecurityResource(name = "账号中心", description = "", priority = 1)
+    public String goToAccount(HttpServletRequest request) {
+        EnterpriseManager enterpriseManager = accountCenterService.getEnterpriseManagerInfo();
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        EnterpriseFunction enterprisefunction = currentLoginService.getCurrentLoginEnterpriseFunc();
+        Boolean flag = currentLoginService.getCurrentLoginEnterpriseManager().getIsPrimary();
+        if (flag) {
+            request.setAttribute("isEmp", "true");
+        } else {
+            request.setAttribute("isEmp", "false");
+        }
+        request.setAttribute("enterprisefunction", enterprisefunction);
+        request.setAttribute("enterpriseManager", enterpriseManager);
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "Account";
+    }
+
+    /**
+     * 跳转Ubao_Search页面
+     */
+    @RequestMapping("/Ubao_Search")
+    public String goToUbaoSearch(@RequestParam(value = "idCard", required = true) String idCard, HttpServletRequest request) {
+        Long userId = ucoinQueryService.getCustomerId(idCard);
+        ChinapostCustomer customer = ucoinGrandService.getCustomer(idCard);
+        request.setAttribute("idCard", idCard);
+        request.setAttribute("userId", userId);
+        request.setAttribute("user", customer);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "Ubao_Search";
+    }
+
+    /**
+     * 跳转Ubao_List页面
+     */
+    @RequestMapping("/UbaoList")
+    public String goToUbaoList(@RequestParam(value = "userId", required = true) Long userId, HttpServletRequest request) {
+        Page<CustomerUcoinHistory> page = ucoinQueryService.getCustomerUcoinHistories(userId, new Pageable(1, 5));
+        List<CustomerUcoinHistory> uHistory = page.getContent();
+        request.setAttribute("userId", userId);
+        request.setAttribute("uHistory", uHistory);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UbaoList";
+    }
+
+    /**
+     * 跳转UbaoGet页面
+     */
+    @RequestMapping("/UserGet")
+    @SecurityResource(name = "用户提货", description = "", priority = 8)
+    public String goToUserGet(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UserGet";
+    }
+
+    /**
+     * 跳转voucherManager页面
+     */
+    @RequestMapping("/voucherManager")
+    public String goTovoucherManager(HttpServletRequest request) {
+
+        boolean flag = currentLoginService.isPrimaryEnterprise();
+
+        boolean isEnd = currentLoginService.getCurrentLoginEnterpriseFunc().getEnd();
+        request.setAttribute("isTop", flag);
+        request.setAttribute("isEnd", isEnd);
+
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "voucherManager";
+    }
+
+
+    /**
+     * 跳转UserGetList页面
+     */
+    @RequestMapping(value = "/UserGetList")
+    public String goToUserGetList(HttpServletRequest request, @RequestParam(value = "deliveryCode", required = true) String deliveryCode) {
+        Order order = valetOrderService.getOrderByDeliveryCode(deliveryCode);
+        request.setAttribute("order", order);
+
+        //获取用户信息
+        ChinapostCustomer customer = chinapostCustomerService.getCustomer(order.getCustomerId());
+        request.setAttribute("customer", customer);
+
+        EnterpriseInfo enterpriseInfo = currentLoginService.getCurrentLoginEnterpriseInfo();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UserGetList";
+    }
+
+    /**
+     * 跳转UserList页面
+     */
+    @RequestMapping("/UserList")
+    public String goToUserList(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UserList";
+    }
+
+
+    /**
+     * 跳转BillManager页面
+     */
+    @RequestMapping("/BillManager")
+    @SecurityResource(name = "账单管理", description = "", priority = 11)
+    public String goToBillManager(HttpServletRequest request) {
+        Page<EnterpriseAllocation> total_elements_up = ucoinBillManageService.getParentAllocations(null, null, null, new Pageable(1, 100));
+        Page<EnterpriseBatchAllocation> total_elements_allocation = ucoinBillManageService.getMyAllocations(null, null, null, new Pageable(1, 100));
+        Page<EnterpriseBatchGrand> total_elements_send = ucoinBillManageService.getGrands(null, null, null, new Pageable(1, 100));
+        Page<CustomerUcoinHistory> total_elements_reduce = ucoinBillManageService.getDeducts(null, null, null, new Pageable(1, 100));
+        Boolean isTop = currentLoginService.isPrimaryEnterprise();
+        String enterpriseName = currentLoginService.getCurrentLoginEnterprise().getEnterpriseName();
+        if (isTop) {
+            request.setAttribute("isTop", "true");
+        } else {
+            request.setAttribute("isTop", "false");
+        }
+        request.setAttribute("enterpriseName", enterpriseName);
+        request.setAttribute("total_elements_up", total_elements_up.getTotalElements());
+        request.setAttribute("total_elements_allocation", total_elements_allocation.getTotalElements());
+        request.setAttribute("total_elements_send", total_elements_send.getTotalElements());
+        request.setAttribute("total_elements_reduce", total_elements_reduce.getTotalElements());
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "BillManager";
+    }
+
+    /**
+     * 跳转InverntoryManager页面
+     */
+    @RequestMapping("/InventoryManager")
+    @SecurityResource(name = "库存管理", description = "", priority = 12)
+    public String goToInventoryManager(HttpServletRequest request) {
+        Page<InventoryGoodsResult> inventoryGoodsResult = inventoryGoodsService.getInventoryGoodsResult(null, null, null, null, new Pageable(1, 100));
+        List<GoodsManagerResult> brandResult = goodsManageService.selectBrand();
+        List<GoodsManagerResult> typeResult = goodsManageService.selectType();
+        List<GoodsManagerResult> thirdNameResult = goodsManageService.selectThirdName();
+        int warningNo = inventoryGoodsService.getWarning();
+        boolean flag = currentLoginService.isPrimaryEnterprise();
+
+        boolean isEnd = currentLoginService.getCurrentLoginEnterpriseFunc().getEnd();
+
+        request.setAttribute("warningNo", warningNo);
+        request.setAttribute("total_elements", inventoryGoodsResult.getTotalElements());
+        request.setAttribute("brandResult", brandResult);
+        request.setAttribute("typeResult", typeResult);
+        request.setAttribute("thirdNameResult", thirdNameResult);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        request.setAttribute("enterprise", currentLoginService.getCurrentLoginEnterprise());
+        if (flag) {
+            request.setAttribute("isTop", "true");
+        } else {
+            request.setAttribute("isTop", "false");
+        }
+
+
+        request.setAttribute("isEnd", isEnd);
+        if (!isEnd && !flag) {
+            return "inventoryInquiry";
+        } else {
+            return "InventoryManager";
+        }
+    }
+
+    /**
+     * 跳转addInverntor页面
+     */
+    @RequestMapping("/AddInventory")
+    public String goToAddInventor(HttpServletRequest request) {
+        Page<InventoryGoodsResult> inventoryGoodsResult = inventoryGoodsService.getGoods(null, null, null, null, new Pageable(1, 100));
+        List<GoodsManagerResult> brandResult = goodsManageService.selectBrand();
+        List<GoodsManagerResult> thirdNameResult = goodsManageService.selectThirdName();
+
+
+        request.setAttribute("totalElements", inventoryGoodsResult.getTotalElements());
+        request.setAttribute("brandResult", brandResult);
+        request.setAttribute("thirdNameResult", thirdNameResult);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "AddInventory";
+    }
+
+    /**
+     * 跳转roleManager页面
+     */
+    @RequestMapping("/RoleManager")
+    @SecurityResource(name = "角色管理", description = "", priority = 3)
+    public String goToRoleManager(HttpServletRequest request) {
+        List<AuthWithMAmountResult> authWithMAmountResults = roleManageService.selectAuthResultByEnterpriseId();
+        List<ResourcePage> resourcePages = roleManageService.getTopPages();
+        List<ResourcePage> topPages = roleManageService.getTopPages();
+        Map<String, List<ResourcePage>> pagesMap = new HashMap<>();
+        for (ResourcePage resourcePage : topPages) {
+            String parentPage = resourcePage.getId() + "," + resourcePage.getDesignation();
+            pagesMap.put(parentPage, roleManageService.getSonPages(resourcePage.getId()));
+        }
+
+        request.setAttribute("pagesMap", pagesMap);
+        request.setAttribute("resourcePages", resourcePages);
+        request.setAttribute("authWithMAmountResults", authWithMAmountResults);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "RoleManager";
+    }
+
+
+    /**
+     * 跳转employeeManager页面
+     */
+    @RequestMapping("/employeeManager")
+    public String goToemployeeManager(HttpServletRequest request) {
+        List<ManagerWithAuthNameResult> managerWithAuthNameResults = roleManageService.getMyManagerInfo();
+        List<AuthWithMAmountResult> authWithMAmountResults = roleManageService.selectAuthResultByEnterpriseId();
+
+        request.setAttribute("managerAuthorityResults", managerWithAuthNameResults);
+        request.setAttribute("authWithMAmountResults", authWithMAmountResults);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "employeeManager";
+    }
+
+    /**
+     * 跳转goodsManager页面
+     */
+    @RequestMapping("/goodsManager")
+    public String goToGoodsManager(HttpServletRequest request) {
+        //List<GoodsManagerResult> brandResults = goodsManageService.selectBrand();
+        //List<GoodsManagerResult> typeResults = goodsManageService.selectType();
+        //List<GoodsManagerResult> thirdNameResults = goodsManageService.getThirdName();
+
+//        request.setAttribute("brandResults",brandResults);
+//        request.setAttribute("typeResults",typeResults);
+//        request.setAttribute("thirdNameResults",thirdNameResults);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "goodsManager";
+    }
+
+    /**
+     * 跳转itemList页面
+     */
+    @RequestMapping("/itemList")
+    public String goToitemList(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "itemList";
+    }
+
+    /**
+     * 跳转olderManager页面
+     */
+    @RequestMapping("/olderManager")
+    public String goToolderManager(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "olderManager";
+    }
+
+
+    /**
+     * 跳转itemListDetail页面
+     */
+    @RequestMapping("/itemListDetail")
+    public String goToitemListDetail(@RequestParam(value = "id", required = true) Long id, HttpServletRequest request) {
+        GoodsInfo goodInfo = valetOrderService.getValetGoodsByGoodsInfoId(id);
+        request.setAttribute("goodInfo", goodInfo);
+        request.setAttribute("id", id);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "itemListDetail";
+    }
+
+    /**
+     * 跳转UCoinCount页面
+     */
+    @RequestMapping("/UCoinCount")
+    public String goToUCoinCount(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "UCoinCount";
+    }
+
+    /**
+     * 跳转Outlets页面
+     */
+    @RequestMapping("/Outlets")
+    @SecurityResource(name = "网点请货", description = "", priority = 13)
+    public String goToOutlets(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "Outlets";
+    }
+
+
+    /**
+     * 跳转accountManager页面
+     */
+    @RequestMapping("/accountManager")
+    @SecurityResource(name = "订单管理", description = "", priority = 9)
+    public String goToaccountManager(HttpServletRequest request) {
+        Boolean flag = currentLoginService.isPrimaryEnterprise();
+        OrderStatus[] orderStatuses = orderManageService.getOrderStatuses();
+
+        request.setAttribute("credential", CredentialType.values());
+        request.setAttribute("backReason",CreditOrderReason.values());
+        request.setAttribute("orderStatus", orderStatuses);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        if (flag) {
+            return "accountManager";
+        } else {
+            return "accountManagerUntop";
+        }
+    }
+
+    /**
+     * 根据是否是顶级账号，跳转退单页面
+     */
+    @RequestMapping("/accountReturn")
+    public String goToaccountReturn(HttpServletRequest request) {
+        Boolean flag = currentLoginService.isPrimaryEnterprise();
+        CreditOrderStatus[] status = orderManageService.getStatuses();
+        request.setAttribute("status", status);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        if (flag) {
+            request.setAttribute("isTop", true);
+            return "accountReturn";
+        } else {
+            request.setAttribute("isTop", false);
+            return "accountReturnUntop";
+        }
+    }
+
+    /**
+     * 跳转Requisition页面
+     */
+    @RequestMapping("/Requisition")
+    @SecurityResource(name = "请款单据", description = "", priority = 10)
+    public String goToRequisition(HttpServletRequest request) {
+        Page<EnterpriseRequisition> enterpriseRequisitionPage_myRequest = requisitionManageService.getMyRequisition(null, null, null, null, new Pageable(1, 100));
+        request.setAttribute("total_elements_myRequest", enterpriseRequisitionPage_myRequest.getTotalElements());
+
+        Page<EnterpriseRequisition> enterpriseRequisitionPage_myRequestTodo = requisitionManageService.getNotHandleRequisition(null, null, null, null, new Pageable(1, 100));
+        request.setAttribute("total_elements_myRequest_todo", enterpriseRequisitionPage_myRequestTodo.getTotalElements());
+
+        Page<EnterpriseRequisition> enterpriseRequisitionPage_myRequestDone = requisitionManageService.getHandledRequisition(null, null, null, null, new Pageable(1, 100));
+        request.setAttribute("total_elements_myRequest_done", enterpriseRequisitionPage_myRequestDone.getTotalElements());
+
+        Boolean flag = currentLoginService.isPrimaryEnterprise();
+        if (flag) {
+            request.setAttribute("isTop", "true");
+        } else {
+            request.setAttribute("isTop", "false");
+        }
+
+        Map<String, String> statusMap = new HashMap<>();
+
+        for (RequisitionStatus status : RequisitionStatus.values()) {
+            statusMap.put(status.name(), status.getName());
+        }
+
+        request.setAttribute("statusMap", statusMap);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "requisition";
+    }
+
+    /**
+     * 跳转memberManager页面
+     */
+    @RequestMapping("/memberManager")
+    @SecurityResource(name = "会员管理", description = "", priority = 4)
+    public String goToMemberManager(HttpServletRequest request) {
+        Page<ChinapostCustomer> page = customerManageService.getCustomers(null, null, null, null, null, null, new Pageable(1, 100));
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("total_elements_memberManager", page.getTotalElements());
+        request.setAttribute("total_pages_memberManager", page.getTotalPages());
+
+        List<ChinapostTag> tagList = chinapostTagService.getTags();
+        request.setAttribute("tagList", tagList);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "memberManager";
+    }
+
+    /**
+     * 跳转itemManager页面
+     */
+    @RequestMapping("/itemManager")
+    @SecurityResource(name = "商品管理", description = "", priority = 5)
+    public String goToitemManager(HttpServletRequest request) {
+        List<GoodsManagerResult> brandResult = goodsManageService.selectBrand();
+        List<GoodsManagerResult> typeResult = goodsManageService.selectType();
+        List<GoodsManagerResult> thirdNameResult = goodsManageService.selectThirdName();
+        Boolean isTop = currentLoginService.isPrimaryEnterprise();
+        if (isTop) {
+            request.setAttribute("isTop", "true");
+        } else {
+            request.setAttribute("isTop", "false");
+        }
+        request.setAttribute("brandResult", brandResult);
+        request.setAttribute("typeResult", typeResult);
+        request.setAttribute("thirdNameResult", thirdNameResult);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "itemManager";
+    }
+
+    /**
+     * 跳转memberSpending页面
+     */
+    @RequestMapping("/memberSpending")
+    public String goToMemberSpending(HttpServletRequest request) {
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "memberSpending";
+    }
+
+    /**
+     * 跳转order_sure页面
+     */
+    @RequestMapping("/OrderSure")
+    public String goToOrderSure(@RequestParam(value = "id", required = true) Long id, @RequestParam(value = "count", required = true) Long count, HttpServletRequest request) {
+        GoodsInfo goodInfo = valetOrderService.getGoodsInfo(id);
+        Boolean hasValet = valetOrderService.hasInventory(id);
+        EnterpriseInfo enterpriseInfo = accountCenterService.getEnterpriseInfo();
+        request.setAttribute("enterpriseInfo", enterpriseInfo);
+        request.setAttribute("id", id);
+        request.setAttribute("hasValet", hasValet);
+        request.setAttribute("count", count);
+        request.setAttribute("goodInfo", goodInfo);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        return "order_sure";
+    }
+
+    /**
+     * 跳转payConfirm页面
+     */
+    @RequestMapping("/payConfirm")
+    public String goToConfirm(@RequestParam(value = "idCard" , required = true)String idCard  ,@RequestParam(value = "payOrder", required = false) String payOrder, @RequestParam(value = "orderPrice", required = false) String orderPrice, HttpServletRequest request) {
+        boolean judge = valetOrderService.hasPermit();
+        String contactPhone = chinapostCustomerService.getCustomer(idCard).getPhoneNo();
+        if (judge) {
+            request.setAttribute("judge", "block");
+        } else {
+            request.setAttribute("judge", "none");
+        }
+        BigDecimal orderP = new BigDecimal(orderPrice);
+        orderP = orderP.setScale(2, BigDecimal.ROUND_HALF_UP);
+        request.setAttribute("orderPrice", orderP);
+        request.setAttribute("payOrder", payOrder);
+        request.setAttribute("VERSION", Constants.JS_VERSION);
+        request.setAttribute("contactPhone",contactPhone);
+        return "payConfirm";
+    }
+}
+

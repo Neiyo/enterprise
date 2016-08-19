@@ -1,0 +1,53 @@
+package com.ylife.chinapost.mobile.service.impl;
+
+import com.ylife.chinapost.mobile.service.PlaceBackOrderService;
+import com.ylife.order.model.CredentialType;
+import com.ylife.order.model.CreditOrderReason;
+import com.ylife.order.model.CreditOrderStatus;
+import com.ylife.order.model.OrderStatus;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.order.service.OrderService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+
+/**
+ * Created by Administrator on 2016/5/18.
+ */
+@Service
+public class PlaceBackOrderServiceImpl implements PlaceBackOrderService {
+    @Resource
+    private CreditOrderService creditOrderService;
+
+    @Resource
+    private OrderService orderService;
+
+    @Override
+    @Transactional
+    public void applyBackMoney(long orderNo, CreditOrderReason reason, CredentialType credential, String credentialDoc, String remark) {
+
+        //1、提交退款申请
+        creditOrderService.createRefundOrder(orderNo,reason,credential,credentialDoc,remark);
+        //2、修改订单状态为申请退款
+        orderService.editStatus(orderNo, OrderStatus.REFUND_APPLIED);
+    }
+
+    @Override
+    @Transactional
+    public void applyBackGoods(long orderNo, String backGoodsId, CreditOrderReason reason, CredentialType credential, String credentialDoc, String remark,String backWay) {
+        //1、提交退货申请
+        creditOrderService.createCreditOrder(orderNo, backGoodsId, reason, credential, credentialDoc, remark,backWay,CreditOrderStatus.RETURN_APPLIED);
+        //2、修改订单状态申请退货
+        orderService.editStatus(orderNo, OrderStatus.RETURN_APPLIED);
+    }
+
+    @Override
+    @Transactional
+    public void saveBackOrderGeneral(String wlname, String wlno, long orderNo) {
+        //1、填写物流信息,修改退单状态为商家待收货
+        creditOrderService.editDeliveryNo(orderNo, wlno, wlname);
+        //2、修改订单状态为待收货
+        orderService.editStatus(orderNo,OrderStatus.RETURN_WAIT_DENIED);
+    }
+}

@@ -1,0 +1,43 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css?version=${VERSION}"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/formCenter.css"/>
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
+    <script src="${bath}/static/js/jPages.js"></script>
+</head>
+<body>
+
+<div style="width:100%; height:70px;line-height:70px;border-bottom:2px solid #dcdcdc; margin-left:20px;font-size:16px;color:#333333;">
+    <span style="color: #333">首页</span>
+    |
+    <a style="color:#24b35f;" href="memberUbaoSendForm">会员邮豆发放统计报表</a>
+    |
+    <a style="color:#24b35f;" href="memberUbaoReduceForm">会员邮豆消耗统计报表</a>
+    |
+    <a style="color:#24b35f;" href="BaseDataform">网点基础数据统计报表</a>
+    |
+    <a style="color:#24b35f;" href="ubaoSendForm">邮豆发放记录表</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="${bath}/static/js/formCenter.js?version=${VERSION}"></script>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+</body>

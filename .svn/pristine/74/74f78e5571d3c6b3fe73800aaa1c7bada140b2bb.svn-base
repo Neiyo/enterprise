@@ -1,0 +1,41 @@
+package com.ylife.client.service;
+
+import com.ylife.utils.DateUtil;
+import com.ylife.utils.HttpUtil;
+import com.ylife.utils.MD5Util;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * Created by InThEnd on 2016/5/6.
+ * <p/>
+ * 开放平台客户端。
+ */
+public class PlatformClient {
+
+    private static final String USERNAME_KEY = "userName";
+    private static final String SIGN_KEY = "sign";
+    private static final String TIME_KEY = "timestamp";
+    private static final String URL_KEY = "http://demo.ylife.cn/open/";
+
+
+    public static String post(final String url, final Map<String, String> values) throws IOException {
+        addSecretKey(values);
+        return HttpUtil.doPost(URL_KEY + url, values);
+    }
+
+    public static String get(final String url, final Map<String, String> values) throws IOException {
+        addSecretKey(values);
+        return HttpUtil.doGet(URL_KEY + url, values);
+    }
+
+    private static void addSecretKey(final Map<String, String> values) {
+        values.put(USERNAME_KEY, "youzheng");
+        values.put(SIGN_KEY, MD5Util.md5Hex("youzheng" + DateUtil.formatToString(new Date(), "yyyyMMddHHmmss") + "WRINCCRFCYCDVSNTPVLV"));
+        values.put(TIME_KEY, DateUtil.formatToString(new Date(), "yyyyMMddHHmmss"));
+    }
+
+
+}

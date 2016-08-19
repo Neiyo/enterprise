@@ -1,0 +1,37 @@
+package com.ylife.customer.service;
+
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.customer.model.CustomerWithUcoinInfo;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+
+/**
+ * Created by Administrator on 2016/4/29.
+ */
+public interface CustomerWithUcoinInfoService {
+
+
+    /**
+     * 根据身份证号获取用户信息。
+     *
+     * @param idCardNo 身份证号
+     */
+    ChinapostCustomer getInfo(String idCardNo);
+
+    /**
+     * 根据身份证号获取用户信息。
+     *
+     * @param customerId 客户ID
+     */
+    ChinapostCustomer getInfo(Long customerId);
+
+
+    /**
+     * 根据模型提供的信息获取用户信息。
+     *
+     * @param queryModel 查询模型
+     * @param pageable   分页信息
+     */
+    Page<ChinapostCustomer> getInfos(ChinapostCustomer queryModel, Pageable pageable);
+
+}

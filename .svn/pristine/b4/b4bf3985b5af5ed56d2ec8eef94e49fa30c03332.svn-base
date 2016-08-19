@@ -1,0 +1,301 @@
+package com.ylife.form.model;
+
+import com.ylife.ucoin.model.HistoryType;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * Created by Administrator on 2016/8/5.
+ */
+public class FormFunc {
+
+    //会员id
+    private Long customerId;
+   //总促销邮豆邮豆
+    private BigDecimal totalSalePrice;
+   //总营销邮豆邮豆
+    private BigDecimal totalMarketPrice;
+   //总发放邮豆=营销邮豆+促销邮豆
+    private BigDecimal totalPrice;
+    //会员退款总邮豆
+    private BigDecimal totalRefundPrice;
+    //会员消费总邮豆
+    private BigDecimal totalConsumePrice;
+//   会员消费笔数
+    private Long consumeAmount;
+//    会员退款笔数
+    private Long refundAmount;
+    //订单编号
+    private Long orderCode;
+
+//    会员账户余额
+    private BigDecimal totalBalance;
+    //邮豆历史记录类型
+    private HistoryType type;
+     //订单金额
+    private BigDecimal orderPrice;
+     //退单金额
+    private BigDecimal backPrice;
+    //支出笔数
+    private Long expenditure;
+    //新增会员数量
+    private Long increaseCustomerAmount;
+    //连续日期
+    private Date dateDay;
+  //邮豆历史记录连续日期，精确到天
+    private Date historyDay;
+   //创建会员的连续日期，精确到天
+    private Date customerDay;
+    //企业名称
+    private String  enterpriseName;
+
+    private Long historyId;
+    //身份证号
+    private String idCard;
+   //会员姓名
+    private String name;
+   //企业id
+    private Long enterpriseId;
+    //发放时间
+    private String grandTime;
+    //发放企业名称
+    private String grandEnterprise;
+   //营销邮豆金额
+    private BigDecimal marketPrice;
+   //促销邮豆金额
+    private BigDecimal salePrice;
+    //发放邮豆金额
+    private BigDecimal price;
+
+    public Long getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(Long orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public BigDecimal getBackPrice() {
+        return backPrice;
+    }
+
+    public void setBackPrice(BigDecimal backPrice) {
+        this.backPrice = backPrice;
+    }
+
+    public HistoryType getType() {
+        return type;
+    }
+
+    public void setType(HistoryType type) {
+        this.type = type;
+    }
+
+    public BigDecimal getTotalBalance() {
+        return totalBalance;
+    }
+
+    public void setTotalBalance(BigDecimal totalBalance) {
+        this.totalBalance = totalBalance;
+    }
+
+    public BigDecimal getTotalConsumePrice() {
+        return totalConsumePrice;
+    }
+
+    public void setTotalConsumePrice(BigDecimal totalConsumePrice) {
+        this.totalConsumePrice = totalConsumePrice;
+    }
+
+    public Long getConsumeAmount() {
+        return consumeAmount;
+    }
+
+    public void setConsumeAmount(Long consumeAmount) {
+        this.consumeAmount = consumeAmount;
+    }
+
+    public Long getRefundAmount() {
+        return refundAmount;
+    }
+
+    public void setRefundAmount(Long refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+
+    public BigDecimal getTotalRefundPrice() {
+        return totalRefundPrice;
+    }
+
+    public void setTotalRefundPrice(BigDecimal totalRefundPrice) {
+        this.totalRefundPrice = totalRefundPrice;
+    }
+
+    public Long getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public void setEnterpriseId(Long enterpriseId) {
+        this.enterpriseId = enterpriseId;
+    }
+
+    public Long getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(Long historyId) {
+        this.historyId = historyId;
+    }
+
+
+    public String getGrandTime() {
+        return grandTime;
+    }
+
+    public void setGrandTime(String grandTime) {
+        this.grandTime = grandTime;
+    }
+
+    public String getGrandEnterprise() {
+        return grandEnterprise;
+    }
+
+    public void setGrandEnterprise(String grandEnterprise) {
+        this.grandEnterprise = grandEnterprise;
+    }
+
+    public BigDecimal getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(BigDecimal marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public BigDecimal getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(BigDecimal salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+
+    public Date getHistoryDay() {
+        return historyDay;
+    }
+
+    public void setHistoryDay(Date historyDay) {
+        this.historyDay = historyDay;
+    }
+
+    public Date getCustomerDay() {
+        return customerDay;
+    }
+
+    public void setCustomerDay(Date customerDay) {
+        this.customerDay = customerDay;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEnterpriseName() {
+        return enterpriseName;
+    }
+
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
+    }
+
+
+    public BigDecimal getTotalSalePrice() {
+        return totalSalePrice;
+    }
+
+    public void setTotalSalePrice(BigDecimal totalSalePrice) {
+        this.totalSalePrice = totalSalePrice;
+    }
+
+    public BigDecimal getTotalMarketPrice() {
+        return totalMarketPrice;
+    }
+
+    public void setTotalMarketPrice(BigDecimal totalMarketPrice) {
+        this.totalMarketPrice = totalMarketPrice;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Long getExpenditure() {
+        return expenditure;
+    }
+
+    public void setExpenditure(Long expenditure) {
+        this.expenditure = expenditure;
+    }
+
+    public Long getIncreaseCustomerAmount() {
+        return increaseCustomerAmount;
+    }
+
+    public void setIncreaseCustomerAmount(Long increaseCustomerAmount) {
+        this.increaseCustomerAmount = increaseCustomerAmount;
+    }
+
+    public Date getDateDay() {
+        return dateDay;
+    }
+
+    public void setDateDay(Date dateDay) {
+        this.dateDay = dateDay;
+    }
+
+
+
+}

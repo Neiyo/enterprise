@@ -1,0 +1,573 @@
+$(document).ready(function(){
+    //登录验证
+    var logStatus = sessionStorage['logStatus'];
+    var flag = $("#loginUrl").val();
+    if( logStatus != 'Using' && logStatus != 'logOut' && flag != 'login'){
+        sessionStorage['logStatus'] = 'logOut';
+        window.location.href = 'logError';
+    }
+});
+
+function coverHtml(){
+    $(parent.document.getElementById("cover")).show();
+    $(parent.document.getElementById("cover2")).show();
+    $("#cover1").show();
+}
+function discoverHtml(){
+    $(parent.document.getElementById("cover")).hide();
+    $(parent.document.getElementById("cover2")).hide();
+    $("#cover1").hide();
+}
+
+function delete_warning_alert(){
+    var txt = "您确认要删除吗";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+}
+function password_alert(){
+    var txt = "密码输入有误，请重新输入";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+}
+
+function money_error_alert(url){
+    var txt=  "余额不足";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error,{
+            onOk:function(){
+                window.location.href = url;
+            }
+        }
+    );
+}
+
+function data_error_alert(text){
+    data_type_alert(text,'warning');
+}
+
+function data_type_alert(txt,type){
+    if(type == 'success'){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+    }
+    else if( type == 'warning' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+    }
+    else if( type == 'error' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
+    }
+}
+
+function createDuplicate_alert(){
+    var txt = "创建失败，账号重复";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+}
+
+function captcha_alert(){
+    var txt = "验证码输入有误，请重新输入";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+}
+
+
+function password_alert(){
+    var txt = "密码输入有误，请重新输入";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
+}
+
+function ensure_alert(url){
+    var txt=  "操作成功";
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success,{
+            onOk:function(){
+                discoverHtml();
+                window.location.href = url;
+            }
+        }
+    );
+}
+function error_alert(url){
+    type_alert(url,"操作失败",'error')
+}
+
+function type_alert(url,txt,type){
+    var option = {
+            title: "提示",
+            btn: parseInt("0011",2),
+        onOk: function(){
+            window.location.href = url;
+        }
+    }
+    window.wxc.xcConfirm(txt,type,option);
+}
+
+function input_alert(url){
+    var txt=  "输入不能为空";
+    var option = {
+        title: "提示",
+        btn: parseInt("0011",2),
+        onOk: function(){
+            window.location.href = url;
+        }
+    }
+    window.wxc.xcConfirm(txt, "warning", option);
+}
+
+function input_error_alert(txt,fun){
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error,{
+        onOk:function(){
+            discoverHtml();
+            fun();
+        }
+    });
+}
+
+function response_ensure_alert(type,txt,fun){
+    if( type == 'success' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success,{
+            onOk:function(){
+                discoverHtml();
+                fun();
+            }
+        });
+    }
+    if( type == 'error' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error,{
+            onOk:function(){
+                discoverHtml();
+                fun();
+            }
+        });
+    }
+    if( type == 'warning' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning,{
+            onOk:function(){
+                discoverHtml();
+                fun();
+            }
+        });
+    }
+}
+
+function response_OkCancel_alert(type,txt,okFun,cancelFun){
+    if( type == 'success' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success,{
+            onOk:function(){
+                discoverHtml();
+                okFun();
+            },
+            onCancel:function(){
+                discoverHtml();
+                cancelFun();
+            }
+        });
+    }
+    if( type == 'error' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error,{
+            onOk:function(){
+                discoverHtml();
+                okFun();
+            },
+            onCancle:function(){
+                discoverHtml();
+                cancelFun();
+            }
+        });
+    }
+    if( type == 'warning' ){
+        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning,{
+            onOk:function(){
+                discoverHtml();
+                okFun();
+            },
+            onCancle:function(){
+                discoverHtml();
+                cancelFun();
+            }
+        });
+    }
+}
+
+function user_error_alert(url){
+    var txt=  "该用户不存在";
+    var option = {
+        title: "提示",
+        btn: parseInt("0011",2),
+        onOk: function(){
+            window.location.href = url;
+        }
+    }
+    window.wxc.xcConfirm(txt, "error", option);
+}
+
+
+function handleDate_prev(time){
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var day = time.getDate();
+    if( month < 9 ){
+        month = '0' + month;
+    }
+    if( day < 10 ){
+        day = '0' + day;
+    }
+    return year + '-' + month + '-' + day;
+}
+
+function handleDate_next(time){
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    if(minute < 10){
+        minute = '0' + minute;
+    }
+    return hour + ':' + minute;
+}
+
+function backCheck_Handle(num){
+    if( num == 0){
+        return '退货申请';
+    }
+    if( num == 1){
+        return '同意退货';
+    }
+    if( num == 2){
+        return '拒绝退货';
+    }
+    if( num == 3){
+        return '待收货';
+    }
+    if( num == 4){
+        return '退单结束';
+    }
+    if( num == 6){
+        return '审核退款';
+    }
+    if( num == 7){
+        return '拒绝退款';
+    }
+    if( num == 8){
+        return '收货失败';
+    }
+    if( num == 9){
+        return '带客户填写物流地址';
+    }
+    if( num == 10 ){
+        return '退款成功';
+    }
+    if( num == 11 ){
+        return '退货待退款';
+    }
+    if( num == 12 ){
+        return '退款待退款';
+    }
+}
+
+function orderStatus_backHandle(str){
+    if( str == '待付款'){
+        return 'SUBMITED';
+    }
+    if( str == '待发货'){
+        return 'PAYED';
+    }
+    if( str == '已发货'){
+        return 'DELIVERED';
+    }
+    if( str == '已完成'){
+        return 'RECIEVED';
+    }
+    if( str == '已取消'){
+        return 'CANCELED';
+    }
+    if( str == '待发货'){
+        return 'WAIT_DELIVER';
+    }
+    if( str == '待提货'){
+        return 'WAIT_PICKUP';
+    }
+    if( str == '全部订单' ){
+        return '';
+    }
+}
+
+function orderStatus_handle(str){
+    if( str == 'REFUND_APPLIED' ){
+        return '同意退款';
+    }
+    if( str == 'SUBMITED'){
+        return '待付款';
+    }
+    if( str == 'PAYED'){
+        return '待发货';
+    }
+    if( str == 'DELIVERED'){
+        return '已发货';
+    }
+    if( str == 'RECIEVED'){
+        return '已完成';
+    }
+    if( str == 'CANCELED'){
+        return '已取消';
+    }
+    if( str == 'WAIT_DELIVER'){
+        return '待发货';
+    }
+    if( str == 'WAIT_PICKUP'){
+        return '待提货';
+    }
+}
+
+function handlebackCheck(str){
+    if( str == 'RETURN_APPLIED'){
+        return '退货申请';
+    }
+    if( str == 'RETURN_AGREED'){
+        return '同意退货';
+    }
+    if( str == 'RETURN_DENIED'){
+        return '拒绝退货';
+    }
+    if( str == 'RETURN_DELIVERING'){
+        return '待收货';
+    }
+    if( str == 'RETURN_FINISHED'){
+        return '退单结束';
+    }
+    if( str == 'REFUND_APPLIED'){
+        return '审核退款';
+    }
+    if( str == 'REFUND_DENIED'){
+        return '拒绝退款';
+    }
+    if( str == 'RETURN_DELIVER_FAILURE'){
+        return '收货失败';
+    }
+    if( str == 'RETURN_WAIT_DELIVER_INFO'){
+        return '待客户填写物流地址';
+    }
+    if( str == 'REFUND_FINISHED' ){
+        return '退款成功';
+    }
+    if( str == 'RETURN_WAIT_REFUND' ){
+        return '退货待退款';
+    }
+    if( str == 'REFUND_AGREED' ){
+        return '退款待退款';
+    }
+}
+
+function handleBackWay(type){
+    if( type == 0 ){
+        return '快递';
+    }
+    if( type == 1 ){
+        return
+    }
+}
+
+function handleUndefined(str){
+    if( str == undefined ){
+        return '';
+    }
+    else{
+        return str;
+    }
+}
+
+
+Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+    }
+    return -1;
+};
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
+
+Number.prototype.toFixed = function(){
+    var a = this;
+    var str = a + '';
+    a = str.split(".");
+    if( typeof a[1] != 'undefined' ){
+        if( a[1].length == 1 && a[1] != '0'){
+            return a[0] + '.' + a[1] + '0';
+        }
+        else if( a[1].length == 1 && a[1] == '0' ){
+            return a[0];
+        }
+        else if( a[1].length == 2 && a[1] != '00'){
+            return a[0] + '.' + a[1];
+        }
+        else if( a[1].length == 2 && a[1] == '00' ){
+            return a[0];
+        }
+        else if( a[1].length > 2 ){
+            var flag = a[1].substring(0,2);
+            if( flag == '00' ){
+                return a[0];
+            }
+            else{
+                var last = a[1].substring(2,3);
+                var lower = a[1].substring(0,2);
+                if( last > 4 ){
+                    lower = parseInt(lower) + 1;
+                }
+                return a[0] + '.' + lower;
+            }
+
+        }
+    }
+    else{
+        return a[0];
+    }
+};
+
+
+function moveWindow(event){
+    var inputLock = true;
+
+    var windowHeight = window.parent.window.screen.height;
+    var domHeight = $(this).css("height");
+    domHeight = parseInt(domHeight.substring(0,domHeight.length-2));
+
+    var windowWidth = window.parent.window.screen.width;
+    var domWidth = $(this).css("width");
+    domWidth = parseInt(domWidth.substring(0,domWidth.length-2));
+
+    var top = (windowHeight - domHeight)/2 - 250 + 'px';
+    var left = (windowWidth - domWidth)/2 - 150 + 'px';
+    console.log(top,left);
+
+    //固定窗口位置
+    $(this).addClass("moveWindow");
+    $(".moveWindow").css("position","fixed");
+    $(".moveWindow").css("top",'150px');
+    $(".moveWindow").css("left",left);
+
+
+    $("input").focus(function(){
+        inputLock = false;
+    }).blur(function(){
+        inputLock = true;
+    });
+    $("textarea").focus(function(){
+        inputLock = false;
+    }).blur(function(){
+        inputLock = true;
+    });
+    $("select").focus(function(){
+        inputLock = false;
+    }).blur(function(){
+        inputLock = true;
+    });
+
+
+    //限定可拖动窗口位置
+    $(this).mousedown(function (event) {
+        var _this = $(this);
+        var isMove = true;
+        var abs_x = event.pageX - $(_this).offset().left;
+        var abs_y = event.pageY - $(_this).offset().top;
+
+        console.log(event.pageX,event.pageY);
+        console.log($(_this).offset().left,$(_this).offset().top);
+        $(document).mousemove(function (event) {
+            if (isMove && inputLock ) {
+                var obj = $(_this);
+                obj.css({'left':event.pageX - abs_x, 'top':event.pageY - abs_y});
+            }
+        }).mouseup(
+            function () {
+                isMove = false;
+            }
+        );
+    });
+}
+
+function handleParameter(a){
+    if( a == 0 ){
+        return 'TYPE_ENUM';
+    }
+    else if( a == 1 ){
+        return 'TYPE_FLOAT';
+    }
+    else if( a == 2 ){
+        return 'TYPE_TXT';
+    }
+}
+function handleParameterRequired(a){
+    if( a == 0 ){
+        return false;
+    }
+    if( a == 1 ){
+        return true;
+    }
+}
+
+function JsonGroup(data,key){
+    var arr = [];
+    var response = '';
+    data.map(function(object){
+        if(key == object[0]){
+            response = object[1];
+        }
+    });
+
+    return response;
+}
+
+function handleSpecString(data){
+    //规格处理
+    var content = '';
+    var h = '';
+    console.log(data);
+    var array = data.split(",");
+    for ( var j = 0; j < array.length;j++){
+        var text= /(?:null)/;
+        var flag = text.test(array[j]);
+        if ( !flag ){
+            h = array[j];
+            if( array.length > 1 ){
+                h += '...';
+            }
+            break;
+        }
+
+    }
+    for(var a = 0;a < array.length;a++){
+        var text= /(?:null)/;
+        var flag = text.test(array[a]);
+        if ( !flag ){
+            content += array[a] + '\n';
+        }
+    }
+    return [h,content];
+}
+
+function consoleNowTime(){
+    return new Date().toString();
+}
+
+
+function xround(x, num){
+    Math.round(x * Math.pow(10, num)) / Math.pow(10, num) ;
+}
+
+function handleCredential(txt){
+    if( txt == 'NO_CREDENTIAL' ){
+        return '无凭据';
+    }
+    if( txt == 'INVOICE' ){
+        return '有发票';
+    }
+    if( txt == 'QUALITY_REPORT' ){
+        return '有质检报告';
+    }
+}
+
+function tryUndefined(a){
+    try{
+        a
+        return a;
+    }
+    catch(e){
+        console.log(e);
+    }
+}

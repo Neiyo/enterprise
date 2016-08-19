@@ -1,0 +1,74 @@
+package com.math.gson;
+
+import com.googlecode.aviator.AviatorEvaluator;
+import com.googlecode.aviator.Expression;
+import com.ylife.inventory.mapper.InventoryMapper;
+import com.ylife.inventory.model.Inventory;
+import com.ylife.inventory.model.InventoryKey;
+import com.ylife.product.mapper.GoodsInfoMapper;
+import com.ylife.product.model.GoodsInfo;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2016/6/2.
+ */
+
+@ContextConfiguration(value = {"classpath:applicationContext-common.xml", "classpath:applicationContext-mybatis.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class TestAviator {
+
+    @Resource
+    private InventoryMapper inventoryMapper;
+
+    @Test
+    public void testAviator() {
+        String expression="id*(b-c)*10";
+        Expression compile=AviatorEvaluator.compile(expression);
+        Map<String,Object> env=new HashMap<>();
+        long avalue=10;
+        long bvalue=50;
+        long cvalue=30;
+        env.put("id",avalue);
+        env.put("b",bvalue);
+        env.put("c",cvalue);
+        Object result=compile.execute(env);
+        System.out.println(result);
+
+        int a=12;
+        String b=String.valueOf(a);
+        System.out.println(b);
+    }
+
+
+    @Test
+    public void testBianLiang() {
+
+        //传入公式编译
+        String expression = "inventory*10+available*12+200";
+        Expression compile = AviatorEvaluator.compile(expression);
+
+        InventoryKey key=new InventoryKey(1l,3754l);
+       // GoodsInfo goodsInfo=goodsInfoMapper.selectByPrimaryKey(3754l);
+        //System.out.println(goodsInfo.getGoodsInfoName());
+
+        Inventory inventory =inventoryMapper.selectByPrimaryKey(key);
+        Map<String, Object> env = new HashMap<String, Object>();
+        long inventor=inventory.getInventory();
+        long available=inventory.getAvailable();
+
+        env.put("inventory", inventor);
+        env.put("available",available);
+        String result = compile.execute(env).toString();
+        System.out.println(result);
+
+
+    }
+
+}

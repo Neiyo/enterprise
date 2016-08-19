@@ -1,0 +1,103 @@
+package com.ylife.system.service.impl;
+
+import com.ylife.exception.UserOperationException;
+import com.ylife.system.mapper.ParamMapper;
+import com.ylife.system.mapper.ParamValueMapper;
+import com.ylife.system.model.Param;
+import com.ylife.system.model.ParamType;
+import com.ylife.system.model.ParamValue;
+import com.ylife.system.service.ParamValueService;
+import com.ylife.utils.Assert;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by InThEnd on 2016/6/6.
+ * ParamValueServiceImpl
+ */
+@Service
+public class ParamValueServiceImpl implements ParamValueService {
+
+    @Resource
+    private ParamValueMapper paramValueMapper;
+    @Resource
+    private ParamMapper paramMapper;
+
+    @Override
+    public void updateSerialNo(Map<Integer, Integer> map) {
+        for (Integer id : map.keySet()) {
+            ParamValue model = new ParamValue();
+            model.setParamValueId(id);
+            model.setSerialNo(map.get(id));
+            paramValueMapper.updateByPrimaryKeySelective(model);
+        }
+    }
+
+    @Override
+    @Transactional
+    public ParamValue createParamValue(int paramId, String name, BigDecimal value, Integer serialNo) {
+        Param param = paramMapper.selectByPrimaryKey(paramId);
+        Assert.notNull(param, "此参数不存在。");
+        if (param.getParamType() != ParamType.TYPE_ENUM) {
+            throw new UserOperationException("此参数非选项类型，无法添加参数。");
+        }
+        Assert.notNull(name, value);
+        ParamValue value1 = paramValueMapper.selectByParamIdAndNameForUpdate(paramId, name);
+        if (value1 != null) {
+            throw new UserOperationException("此参数名已存在。");
+        }
+        ParamValue model = new ParamValue();
+        model.setParamId(paramId);
+        model.setParamValueName(name);
+        model.setParamValue(value);
+        model.setSerialNo(serialNo);
+        paramValueMapper.insertSelective(model);
+        return model;
+    }
+
+    @Override
+    @Transactional
+    public void editParamValue(int valueId, String name, BigDecimal value) {
+        ParamValue v = paramValueMapper.selectByPrimaryKey(valueId);
+        Assert.notNull(v, "此参数名不存在。");
+        ParamValue value1 = paramValueMapper.selectByParamIdAndNameForUpdate(v.getParamId(), name);
+        if (value1 != null) {
+            throw new UserOperationException("此参数名已存在。");
+        }
+        ParamValue model = new ParamValue();
+        model.setParamValueId(valueId);
+        model.setParamValue(value);
+        model.setParamValueName(name);
+        paramValueMapper.updateByPrimaryKeySelective(model);
+    }
+
+    @Override
+    public void deleteParamValue(int valueId) {
+        paramValueMapper.deleteByPrimaryKey(valueId);
+    }
+
+    @Override
+    public List<ParamValue> getByParamId(int paramId) {
+        return paramValueMapper.selectByParamId(paramId);
+    }
+
+    @Override
+    public ParamValue getParamValue(int paramValueId) {
+        return paramValueMapper.selectByPrimaryKey(paramValueId);
+    }
+
+    @Override
+    public void deleteByParamId(int paramId) {
+        paramValueMapper.deleteByParamId(paramId);
+    }
+
+    @Override
+    public ParamValue getByValueNameAndId(int paramId, String paramValueName) {
+        return paramValueMapper.selectByValueNameAndId(paramId,paramValueName);
+    }
+}

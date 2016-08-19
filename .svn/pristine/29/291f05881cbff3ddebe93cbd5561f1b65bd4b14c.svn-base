@@ -1,0 +1,454 @@
+package com.ylife.chinapost.controller.api;
+
+import com.google.gson.reflect.TypeToken;
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.CurrentLoginService;
+import com.ylife.chinapost.service.InventoryManageService;
+import com.ylife.data.json.json.Parser;
+import com.ylife.data.json.json.SimpleParser;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.model.Enterprise;
+import com.ylife.enterprise.service.EnterpriseService;
+import com.ylife.inventory.mapper.InventoryMapper;
+import com.ylife.inventory.mapper.pojo.InventoryGoodsResult;
+import com.ylife.inventory.model.BillType;
+import com.ylife.inventory.model.InventoryBill;
+import com.ylife.security.annotation.SecurityResource;
+import com.ylife.utils.Assert;
+import com.ylife.utils.StringUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2016/4/23.
+ * 库存API控制器
+ */
+@Controller
+@SecurityResource(parent = "/web/InventoryManager", primary = false)
+@RequestMapping(value = "web/api/inventory", produces = "application/json;charset=utf-8")
+public class InventoryManageAPIController {
+    private Parser parser = new SimpleParser();
+    @Resource
+    InventoryManageService inventoryManageService;
+    @Resource
+    CurrentLoginService currentLoginService;
+    @Resource
+    InventoryMapper inventoryMapper;
+    @Resource
+    private EnterpriseService enterpriseService;
+
+
+    @RequestMapping("/getSonEnterprise")
+    @ResponseBody
+    public String getSonEnterprise() {
+        Map<String, Object> map = inventoryManageService.sonEnterprise();
+        return new JsonResponseBean(map).toJson();
+    }
+
+
+    @RequestMapping("/getInventoryGoods")
+    @ResponseBody
+    public String getInventoryGoods(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                    @RequestParam(value = "goodsInfoItemNo", required = false) String goodsNumber,
+                                    @RequestParam(value = "brandId", required = false) Long brandId,
+                                    @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                    @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                    @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsNumber = Constants.nullOrNotBlank(goodsNumber);
+        Page<InventoryGoodsResult> inventoryGoodsResultPage = inventoryManageService.getInventoryGoodsResult(goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResultPage).toJson();
+    }
+
+    @RequestMapping("/getOutInventoryGoods")
+    @ResponseBody
+    public String getOutInventoryGoods(@RequestParam(value = "enterpriseId") Long enterpriseId,
+                                       @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                       @RequestParam(value = "goodsInfoItemNo", required = false) String goodsNumber,
+                                       @RequestParam(value = "brandId", required = false) Long brandId,
+                                       @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                       @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                       @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsNumber = Constants.nullOrNotBlank(goodsNumber);
+        Page<InventoryGoodsResult> inventoryGoodsResultPage = inventoryManageService.getInventoryGoodsResultBYEnterpriseId(enterpriseId, goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResultPage).toJson();
+    }
+
+
+    @RequestMapping("/addInventoryGoods")
+    @ResponseBody
+    public String addinventoryGoods(@RequestParam("goodsJson") String goodsJson) {
+        Map<Long, Integer> map = parser.parseJSON(goodsJson, new TypeToken<Map<Long, Integer>>() {
+        });
+        inventoryManageService.addGoods(map);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    @RequestMapping("/addInventory")
+    @ResponseBody
+    public String addInventory(@RequestParam("goodsInfoId") long goodsInfoId, @RequestParam("inventory") int inventory) {
+        Assert.isTrue(inventory > 0, "增加的库存必须大于0。");
+        inventoryManageService.addInventory(goodsInfoId, inventory);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    @RequestMapping(value = "/editInventory", method = RequestMethod.POST)
+    @ResponseBody
+    public String editInventory(@RequestParam("goodsInfoId") long goodsId, @RequestParam("inventory") int inventory) {
+        Assert.isTrue(inventory >= 0, "增加的库存必须大于等于0。");
+        inventoryManageService.editInventory(goodsId, inventory);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+
+    @RequestMapping("/deleteInventory")
+    @ResponseBody
+    public String deleteInventory(@RequestParam("goodsInfoId") long goodsId) {
+        inventoryManageService.deleteGoods(goodsId);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    @RequestMapping("/getGoods")
+    @ResponseBody
+    public String getGoods(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                           @RequestParam(value = "goodsInfoItemNo", required = false) String goodsNumber,
+                           @RequestParam(value = "brandId", required = false) Long brandId,
+                           @RequestParam(value = "thirdId", required = false) Long thirdId,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                           @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsNumber = Constants.nullOrNotBlank(goodsNumber);
+
+        Page<InventoryGoodsResult> inventoryGoodsResultPage = inventoryManageService.getGoods(goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResultPage).toJson();
+    }
+
+    @RequestMapping("/getWarningGoods")
+    @ResponseBody
+    public String getWarninggoods(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                  @RequestParam(value = "goodsInfoItemNo", required = false) String goodsNumber,
+                                  @RequestParam(value = "brandId", required = false) Long brandId,
+                                  @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsNumber = Constants.nullOrNotBlank(goodsNumber);
+        Page<InventoryGoodsResult> inventoryGoodsResultPage = inventoryManageService.getWarningGoods(goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResultPage).toJson();
+    }
+
+    @RequestMapping("/setWarning")
+    @ResponseBody
+    public String setWarning(@RequestParam("warning") int warning) {
+        inventoryManageService.setWarning(warning);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    @RequestMapping("/getWarning")
+    @ResponseBody
+    public String getWarning() {
+        int warning = inventoryManageService.getWarning();
+        return new JsonResponseBean(warning).toJson();
+    }
+
+
+    @RequestMapping("/getSonEnterpriseInfo")
+    @ResponseBody
+    public String getSonEnterpriseInfo(@RequestParam("enterpriseId") Long enterpriseId) {
+        List<Enterprise> enterprises = enterpriseService.getEnterprises(enterpriseId);
+        return new JsonResponseBean(enterprises).toJson();
+    }
+
+
+    @RequestMapping("/getByInventory")
+    @ResponseBody
+    public String getByInventory(@RequestParam("enterpriseId") long enterpriseId,
+                                 @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                 @RequestParam(value = "goodsNumber", required = false) String goodsNumber,
+                                 @RequestParam(value = "brandId", required = false) Long brandId,
+                                 @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                 @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = StringUtil.nullOrNotBlank(goodsInfoName);
+        goodsNumber = StringUtil.nullOrNotBlank(goodsNumber);
+        Page<List<InventoryGoodsResult>> inventoryGoodsResults = inventoryManageService.queryByInventory(enterpriseId, goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResults).toJson();
+    }
+
+    @RequestMapping("/getByGoodsInfo")
+    @ResponseBody
+    public String getByGoodsInfo(@RequestParam("enterpriseId") long enterpriseId,
+                                 @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                 @RequestParam(value = "goodsNumber", required = false) String goodsNumber,
+                                 @RequestParam(value = "brandId", required = false) Long brandId,
+                                 @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                 @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = StringUtil.nullOrNotBlank(goodsInfoName);
+        goodsNumber = StringUtil.nullOrNotBlank(goodsNumber);
+        Page<InventoryGoodsResult> inventoryGoodsResults = inventoryManageService.queryByGoodsInfo(enterpriseId, goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResults).toJson();
+    }
+
+
+    @RequestMapping("/getGoodsInventory")
+    @ResponseBody
+    public String getGoodsInventory(@RequestParam(value = "enterpriseId", required = false) Long enterpriseId,
+                                    @RequestParam(value = "goodsInfoId", required = false) Long goodsInfoId,
+                                    @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                    @RequestParam(value = "goodsInfoItemNo", required = false) String goodsNumber,
+                                    @RequestParam(value = "brandId", required = false) Long brandId,
+                                    @RequestParam(value = "thirdId", required = false) Long thirdId,
+                                    @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                    @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsNumber = Constants.nullOrNotBlank(goodsNumber);
+
+        Page<InventoryGoodsResult> inventoryGoodsResultPage = inventoryManageService.getGoodsAndInventory(enterpriseId, goodsInfoId, goodsInfoName, goodsNumber, brandId, thirdId, new Pageable(page, size));
+        return new JsonResponseBean(inventoryGoodsResultPage).toJson();
+    }
+
+    /*****************************************************************************************************************************/
+    /*****************************************************请货，调拨，报损、报溢*****************************************************/
+    /*****************************************************************************************************************************/
+
+    /**
+     * 根据id获取单据。
+     *
+     * @param billId 单据ID
+     */
+    @RequestMapping("/getBillById")
+    @ResponseBody
+    public String getBillById(@RequestParam(value = "billId") long billId) {
+        InventoryBill bill = inventoryManageService.getBillById(billId);
+        return new JsonResponseBean(bill).toJson();
+    }
+
+    /**
+     * 根据code获取单据。
+     *
+     * @param code 单据编号
+     */
+    @RequestMapping("/getBillByCode")
+    @ResponseBody
+    public String getBillByCode(@RequestParam(value = "code") long code) {
+        InventoryBill bill = inventoryManageService.getBillByCode(code);
+        return new JsonResponseBean(bill).toJson();
+    }
+
+    /**
+     * 获取创建的单据。
+     */
+    @RequestMapping("/getCreatedBills")
+    @ResponseBody
+    public String getCreatedBills(@RequestParam(value = "code", required = false) Long code,
+                                  @RequestParam(value = "creatorName", required = false) String creatorName,
+                                  @RequestParam(value = "start", required = false) String start,
+                                  @RequestParam(value = "end", required = false) String end,
+                                  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        Date startTime = Constants.nullOrMorning(start);
+        Date endTime = Constants.nullOrNight(end);
+        Pageable pageable = new Pageable(page, size);
+        Page<InventoryBill> page1 = inventoryManageService.getCreatedBills(code, creatorName, startTime, endTime, pageable);
+        return new JsonResponseBean(page1).toJson();
+    }
+
+    /**
+     * 获取已处理的单据。
+     */
+    @RequestMapping("/getHandledBills")
+    @ResponseBody
+    public String getHandledBills(@RequestParam(value = "code", required = false) Long code,
+                                  @RequestParam(value = "creatorName", required = false) String creatorName,
+                                  @RequestParam(value = "start", required = false) String start,
+                                  @RequestParam(value = "end", required = false) String end,
+                                  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        Pageable pageable = new Pageable(page, size);
+        Date startTime = Constants.nullOrMorning(start);
+        Date endTime = Constants.nullOrNight(end);
+        Page<InventoryBill> page1 = inventoryManageService.getHandledBills(code, creatorName, startTime, endTime, pageable);
+        return new JsonResponseBean(page1).toJson();
+    }
+
+    /**
+     * 获取待处理单据。
+     */
+    @RequestMapping("/getUnHandleBills")
+    @ResponseBody
+    public String getUnHandleBills(@RequestParam(value = "code", required = false) Long code,
+                                   @RequestParam(value = "creatorName", required = false) String creatorName,
+                                   @RequestParam(value = "start", required = false) String start,
+                                   @RequestParam(value = "end", required = false) String end,
+                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                   @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        Date startTime = Constants.nullOrMorning(start);
+        Date endTime = Constants.nullOrNight(end);
+        Pageable pageable = new Pageable(page, size);
+        Page<InventoryBill> page1 = inventoryManageService.getUnHandleBills(code, creatorName, startTime, endTime, pageable);
+        return new JsonResponseBean(page1).toJson();
+    }
+
+    /**
+     * 创建单据
+     *
+     * @param type    单据类型
+     * @param outId   出库点ID
+     * @param inId    入库点ID
+     * @param reason  申请原因
+     * @param skuJson 商品SKU
+     */
+    @RequestMapping("/createBill")
+    @ResponseBody
+    public String createBill(@RequestParam(value = "type") BillType type,
+                             @RequestParam(value = "outId", required = false) Long outId,
+                             @RequestParam(value = "inId", required = false) Long inId,
+                             @RequestParam(value = "reason") String reason,
+                             @RequestParam(value = "skuJson") String skuJson) {
+        Map<Long, Integer> sku = Constants.SIMPLE_PARSER.parseJSON(skuJson, new TypeToken<Map<Long, Integer>>() {
+        });
+
+        inventoryManageService.createBill(type, outId, inId, reason, sku);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 批准单据
+     *
+     * @param billId      ID
+     * @param comment     流转意见
+     * @param amountsJson 审核数量表
+     */
+    @RequestMapping("/approveBill")
+    @ResponseBody
+    public String approveBill(@RequestParam(value = "billId") long billId,
+                              @RequestParam(value = "comment", required = false) String comment,
+                              @RequestParam(value = "amountsJson") String amountsJson) {
+        Map<Long, Integer> amounts = Constants.SIMPLE_PARSER.parseJSON(amountsJson, new TypeToken<Map<Long, Integer>>() {
+        });
+        inventoryManageService.approveBill(billId, comment, amounts);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 同意单据
+     *
+     * @param billId  ID
+     * @param comment 流转意见
+     * @param skuJson 商品SKU
+     */
+    @RequestMapping("/agreeBill")
+    @ResponseBody
+    public String agreeBill(@RequestParam(value = "billId") long billId,
+                            @RequestParam(value = "comment", required = false) String comment,
+                            @RequestParam(value = "skuJson", required = false) String skuJson) {
+        Map<Long, Integer> sku = Constants.SIMPLE_PARSER.parseJSON(skuJson, new TypeToken<Map<Long, Integer>>() {
+        });
+        inventoryManageService.agreeBill(billId, comment, sku);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 终止单据
+     *
+     * @param billId  ID
+     * @param comment 流转意见
+     */
+    @RequestMapping("/terminateBill")
+    @ResponseBody
+    public String terminateBill(@RequestParam(value = "billId") long billId,
+                                @RequestParam(value = "comment", required = false) String comment) {
+        inventoryManageService.terminateBill(billId, comment);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 完成单据
+     *
+     * @param billId ID
+     */
+    @RequestMapping("/finishBill")
+    @ResponseBody
+    public String finishBill(@RequestParam(value = "billId") long billId) {
+        inventoryManageService.finishBill(billId);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 退回单据
+     *
+     * @param billId  ID
+     * @param comment 流转意见
+     */
+    @RequestMapping("/backBill")
+    @ResponseBody
+    public String backBill(@RequestParam(value = "billId") long billId,
+                           @RequestParam(value = "comment", required = false) String comment) {
+        inventoryManageService.backBill(billId, comment);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 提交单据（报损报溢单经过退回，修改后重新提交。）
+     *
+     * @param billId  单据ID
+     * @param comment 流转意见
+     * @param skuJson 货品SKU
+     */
+    @RequestMapping("/submitBill")
+    @ResponseBody
+    public String submitBill(@RequestParam(value = "billId") long billId,
+                             @RequestParam(value = "comment", required = false) String comment,
+                             @RequestParam(value = "skuJson", required = false) String skuJson) {
+        Map<Long, Integer> sku = Constants.SIMPLE_PARSER.parseJSON(skuJson, new TypeToken<Map<Long, Integer>>() {
+        });
+        inventoryManageService.submitBill(billId, comment, sku);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 发货
+     *
+     * @param billId  ID
+     * @param comment 流转意见
+     * @param skuJson 商品SKU
+     */
+    @RequestMapping("/deliveryBill")
+    @ResponseBody
+    public String deliveryBill(@RequestParam(value = "billId") long billId,
+                               @RequestParam(value = "comment", required = false) String comment,
+                               @RequestParam(value = "skuJson") String skuJson) {
+        Map<Long, Integer> sku = Constants.SIMPLE_PARSER.parseJSON(skuJson, new TypeToken<Map<Long, Integer>>() {
+        });
+        inventoryManageService.deliveryBill(billId, comment, sku);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 收货
+     *
+     * @param billId  ID
+     * @param comment 流转意见
+     */
+    @RequestMapping("/receiptBill")
+    @ResponseBody
+    public String receiptBill(@RequestParam(value = "billId") long billId,
+                              @RequestParam(value = "comment", required = false) String comment) {
+        inventoryManageService.receiptBill(billId, comment);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+}
+

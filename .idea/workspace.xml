@@ -1,0 +1,2112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/zrj_ajaxPages.js" />
+    <bookmark url="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/accountReturn.js" />
+    <bookmark url="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/allocation.ftl" />
+    <bookmark url="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/oldUser.js" line="243" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="610193b2-8c62-431c-8e9f-ad5547a491dc" name="Default" comment="" />
+    <ignored path="chinapost.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/ylife-core/target/" />
+    <ignored path="$PROJECT_DIR$/ylife-common/target/" />
+    <ignored path="$PROJECT_DIR$/ucoin-platform-client/target/" />
+    <ignored path="$PROJECT_DIR$/ucoin-core/target/" />
+    <ignored path="$PROJECT_DIR$/chinapost-enterprise/target/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DatabaseView">
+    <option name="FLATTEN" value="false" />
+    <option name="GROUP_BY_TYPE" value="true" />
+    <option name="SORT_CHILDREN" value="false" />
+    <option name="SHOW_TABLE_CONSTRAINTS" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="chinapost" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="UbaoSend.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/UbaoSend.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1577" max-vertical-offset="8130">
+              <caret line="84" column="56" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
+              <folding>
+                <marker date="1471055433811" expanded="true" signature="5178:5227" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="piliangdaoru.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/piliangdaoru.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="962" max-vertical-offset="3420">
+              <caret line="47" column="37" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="piliangdaoru.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/piliangdaoru.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5129" max-vertical-offset="7170">
+              <caret line="184" column="67" selection-start-line="184" selection-start-column="67" selection-end-line="184" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.466667" vertical-offset="6946" max-vertical-offset="30840">
+              <caret line="287" column="43" selection-start-line="287" selection-start-column="43" selection-end-line="287" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CaptchaController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/CaptchaController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/utils/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.57757646" vertical-offset="180" max-vertical-offset="2580">
+              <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/list.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2940">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/list.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3947" max-vertical-offset="9870">
+              <caret line="143" column="47" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/UserGetListDetail.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/UserList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/voucherManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/RoleManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/companyAccount.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/oldUser.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/employeeManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/memberManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/businesType.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/InventoryManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/businessType.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/requisition.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/UCoinManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/exporting.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/highcharts.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/memberUbaoSendForm.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/BaseDataform.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/memberUbaoReduceForm.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/jquery.datetimepicker.full.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/ExcelExportController.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/memberManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/orderManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/addInventory.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/formCenter.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/accountReturn.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/UCoinManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/oldUser.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/UbaoSend.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/formCenter.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/ubaoSendForm.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/itemManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/UbaoSend.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/login.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/css/g.css" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/css/CheckSystem.css" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/CheckSystem.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/login.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/common.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/hieManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/reimburse.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/allocation.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/replenishment.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/voucherManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/InventoryManageAPIController.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/zrj_ajaxPages.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/piliangdaoru.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/list.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/list.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/piliangdaoru.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/utils/Constants.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="ylife-common" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="ylife-common" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="ucoin-core" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="ucoin-core" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Lifecycle" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="chinapost-enterprise" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
+  </component>
+  <component name="MavenRunner">
+    <option name="vmOptions" value="-Dmaven.multiModuleProjectDirectory=$M2_HOME" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-enterprise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/chinapost-enterprise/pom.xml" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="166" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="324" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="185" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="53" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="127" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="978" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="171" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="178" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="177" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="171" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="172" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="964" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\js" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\img" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\css" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\WEB-INF\view" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\img" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\js" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\css" />
+      <recent name="E:\chinapost\chinapost-enterprise\src\main\webapp\static\css\images" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.localhost">
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="localhost" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.35" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
+      <option name="UPDATING_POLICY" value="update-resources" />
+      <deployment>
+        <artifact name="chinapost-enterprise:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="enterprise" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_chinapost_3" />
+        <option name="JNDI_PORT" value="1097" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Cover" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="4142" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="chinapost-enterprise:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.localhost" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost" />
+          <option name="myCopyRoot" value="E:\chinapost" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost\chinapost-enterprise" />
+          <option name="myCopyRoot" value="E:\chinapost\chinapost-enterprise" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost\ucoin-core" />
+          <option name="myCopyRoot" value="E:\chinapost\ucoin-core" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost\ucoin-platform-client" />
+          <option name="myCopyRoot" value="E:\chinapost\ucoin-platform-client" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost\ylife-common" />
+          <option name="myCopyRoot" value="E:\chinapost\ylife-common" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost\ylife-core" />
+          <option name="myCopyRoot" value="E:\chinapost\ylife-core" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\chinapost" />
+          <option name="myCopyRoot" value="E:\chinapost" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="610193b2-8c62-431c-8e9f-ad5547a491dc" name="Default" comment="" />
+      <created>1460683217938</created>
+      <option name="number" value="Default" />
+      <updated>1460683217938</updated>
+      <workItem from="1460683219532" duration="16222000" />
+      <workItem from="1460769497657" duration="24159000" />
+      <workItem from="1460940715166" duration="23170000" />
+      <workItem from="1461026544216" duration="13604000" />
+      <workItem from="1461045765851" duration="135000" />
+      <workItem from="1461046261600" duration="8438000" />
+      <workItem from="1461113563295" duration="20133000" />
+      <workItem from="1461198723431" duration="25650000" />
+      <workItem from="1461284037381" duration="24596000" />
+      <workItem from="1461371215469" duration="15874000" />
+      <workItem from="1461550443271" duration="4896000" />
+      <workItem from="1461562303494" duration="13367000" />
+      <workItem from="1461630022226" duration="41295000" />
+      <workItem from="1461716075846" duration="21430000" />
+      <workItem from="1461803037409" duration="38227000" />
+      <workItem from="1461890895365" duration="24654000" />
+      <workItem from="1461976452058" duration="14257000" />
+      <workItem from="1462061890158" duration="21951000" />
+      <workItem from="1462090180379" duration="905000" />
+      <workItem from="1462153573906" duration="1626000" />
+      <workItem from="1462168169121" duration="7039000" />
+      <workItem from="1462234902131" duration="11847000" />
+      <workItem from="1462324689404" duration="31408000" />
+      <workItem from="1462407064330" duration="14887000" />
+      <workItem from="1462422257463" duration="24172000" />
+      <workItem from="1462494643985" duration="29843000" />
+      <workItem from="1462581247089" duration="16816000" />
+      <workItem from="1462680227685" duration="14796000" />
+      <workItem from="1462754028260" duration="37553000" />
+      <workItem from="1462840895497" duration="264000" />
+      <workItem from="1462841878529" duration="32152000" />
+      <workItem from="1462926174687" duration="24775000" />
+      <workItem from="1463013802561" duration="24400000" />
+      <workItem from="1463099854722" duration="4103000" />
+      <workItem from="1463106682706" duration="26278000" />
+      <workItem from="1463187100745" duration="15003000" />
+      <workItem from="1463360177684" duration="10052000" />
+      <workItem from="1463624356931" duration="37556000" />
+      <workItem from="1463972912885" duration="5870000" />
+      <workItem from="1464057092588" duration="16730000" />
+      <workItem from="1464134632717" duration="10771000" />
+      <workItem from="1464223292760" duration="11818000" />
+      <workItem from="1464309469951" duration="14230000" />
+      <workItem from="1464568506566" duration="19878000" />
+      <workItem from="1464656849989" duration="19861000" />
+      <workItem from="1464743739565" duration="18821000" />
+      <workItem from="1464828913109" duration="15746000" />
+      <workItem from="1464915320036" duration="10769000" />
+      <workItem from="1465173942012" duration="8759000" />
+      <workItem from="1465261631826" duration="26014000" />
+      <workItem from="1465344668042" duration="25046000" />
+      <workItem from="1465779353426" duration="4492000" />
+      <workItem from="1465865795854" duration="8180000" />
+      <workItem from="1465953090926" duration="16342000" />
+      <workItem from="1466039095543" duration="21884000" />
+      <workItem from="1466125514638" duration="26369000" />
+      <workItem from="1466211178928" duration="15998000" />
+      <workItem from="1466384378299" duration="21414000" />
+      <workItem from="1466469359852" duration="19257000" />
+      <workItem from="1466501842403" duration="1265000" />
+      <workItem from="1466555892974" duration="15953000" />
+      <workItem from="1466588179561" duration="3740000" />
+      <workItem from="1466644427152" duration="20889000" />
+      <workItem from="1466729982211" duration="5415000" />
+      <workItem from="1466816875599" duration="12417000" />
+      <workItem from="1466990905296" duration="12135000" />
+      <workItem from="1467074555382" duration="17933000" />
+      <workItem from="1467163070042" duration="25683000" />
+      <workItem from="1467205776123" duration="128000" />
+      <workItem from="1467250143052" duration="18519000" />
+      <workItem from="1467339829797" duration="4545000" />
+      <workItem from="1467422658574" duration="15027000" />
+      <workItem from="1467592222364" duration="5427000" />
+      <workItem from="1467598743061" duration="17132000" />
+      <workItem from="1467678453731" duration="18892000" />
+      <workItem from="1467706113110" duration="2059000" />
+      <workItem from="1467770922449" duration="5704000" />
+      <workItem from="1467854482799" duration="256000" />
+      <workItem from="1467856005806" duration="4335000" />
+      <workItem from="1467941658521" duration="8131000" />
+      <workItem from="1468025021913" duration="14374000" />
+      <workItem from="1468199672613" duration="20309000" />
+      <workItem from="1468287866279" duration="12236000" />
+      <workItem from="1468371837328" duration="23409000" />
+      <workItem from="1468456749910" duration="21174000" />
+      <workItem from="1468493495485" duration="4066000" />
+      <workItem from="1468546331511" duration="11449000" />
+      <workItem from="1468571243110" duration="6441000" />
+      <workItem from="1468631449375" duration="6675000" />
+      <workItem from="1468808467852" duration="20661000" />
+      <workItem from="1468837113777" duration="2883000" />
+      <workItem from="1468889415265" duration="9656000" />
+      <workItem from="1468906672247" duration="7766000" />
+      <workItem from="1468976751713" duration="15044000" />
+      <workItem from="1469064304297" duration="5683000" />
+      <workItem from="1469150759481" duration="9229000" />
+      <workItem from="1469237065865" duration="14442000" />
+      <workItem from="1469409336289" duration="10833000" />
+      <workItem from="1469582062809" duration="12914000" />
+      <workItem from="1469693563501" duration="3323000" />
+      <workItem from="1469756803526" duration="17691000" />
+      <workItem from="1469858965488" duration="3886000" />
+      <workItem from="1469867130779" duration="537000" />
+      <workItem from="1469871339582" duration="639000" />
+      <workItem from="1470011132047" duration="24765000" />
+      <workItem from="1470105831914" duration="10458000" />
+      <workItem from="1470185930192" duration="9059000" />
+      <workItem from="1470270821296" duration="9726000" />
+      <workItem from="1470444856114" duration="14581000" />
+      <workItem from="1470619909455" duration="11054000" />
+      <workItem from="1470702056345" duration="22578000" />
+      <workItem from="1470789924063" duration="21322000" />
+      <workItem from="1470878537713" duration="16477000" />
+      <workItem from="1470962629005" duration="7942000" />
+      <workItem from="1471049936873" duration="9345000" />
+      <workItem from="1471243068407" duration="861000" />
+      <workItem from="1471251441657" duration="1244000" />
+      <workItem from="1471310180162" duration="10736000" />
+      <workItem from="1471399237889" duration="15653000" />
+      <workItem from="1471481972567" duration="2722000" />
+      <workItem from="1471568109940" duration="6629000" />
+      <workItem from="1471593172763" duration="645000" />
+    </task>
+    <task id="LOCAL-00022">
+      <created>1470128401748</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1470128401748</updated>
+    </task>
+    <task id="LOCAL-00023">
+      <created>1470128803178</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1470128803178</updated>
+    </task>
+    <task id="LOCAL-00024">
+      <created>1470191587061</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1470191587061</updated>
+    </task>
+    <task id="LOCAL-00025">
+      <created>1470206561627</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1470206561627</updated>
+    </task>
+    <task id="LOCAL-00026">
+      <created>1470207127885</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1470207127885</updated>
+    </task>
+    <task id="LOCAL-00027">
+      <created>1470215283682</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1470215283682</updated>
+    </task>
+    <task id="LOCAL-00028">
+      <created>1470215322112</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1470215322112</updated>
+    </task>
+    <task id="LOCAL-00029">
+      <created>1470276430236</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1470276430236</updated>
+    </task>
+    <task id="LOCAL-00030">
+      <created>1470278768242</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1470278768242</updated>
+    </task>
+    <task id="LOCAL-00031">
+      <created>1470292532681</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1470292532681</updated>
+    </task>
+    <task id="LOCAL-00032">
+      <created>1470293496326</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1470293496326</updated>
+    </task>
+    <task id="LOCAL-00033">
+      <created>1470295167591</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1470295167591</updated>
+    </task>
+    <task id="LOCAL-00034">
+      <created>1470445601596</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1470445601596</updated>
+    </task>
+    <task id="LOCAL-00035">
+      <created>1470458093998</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1470458093998</updated>
+    </task>
+    <task id="LOCAL-00036">
+      <created>1470469467552</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1470469467552</updated>
+    </task>
+    <task id="LOCAL-00037">
+      <created>1470795365156</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1470795365156</updated>
+    </task>
+    <task id="LOCAL-00038">
+      <created>1470804013674</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1470804013674</updated>
+    </task>
+    <task id="LOCAL-00039">
+      <created>1470813724819</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1470813724819</updated>
+    </task>
+    <task id="LOCAL-00040">
+      <created>1470814438987</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1470814438987</updated>
+    </task>
+    <task id="LOCAL-00041">
+      <created>1470818787336</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1470818787336</updated>
+    </task>
+    <task id="LOCAL-00042">
+      <created>1470880670658</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1470880670658</updated>
+    </task>
+    <task id="LOCAL-00043">
+      <created>1470883281408</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1470883281408</updated>
+    </task>
+    <task id="LOCAL-00044">
+      <created>1470885846455</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1470885846455</updated>
+    </task>
+    <task id="LOCAL-00045">
+      <created>1470897701507</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1470897701507</updated>
+    </task>
+    <task id="LOCAL-00046">
+      <created>1470902653761</created>
+      <option name="number" value="00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1470902653761</updated>
+    </task>
+    <task id="LOCAL-00047">
+      <created>1470970957467</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1470970957467</updated>
+    </task>
+    <task id="LOCAL-00048">
+      <created>1470992442608</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1470992442608</updated>
+    </task>
+    <task id="LOCAL-00049">
+      <created>1470993845330</created>
+      <option name="number" value="00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1470993845330</updated>
+    </task>
+    <task id="LOCAL-00050">
+      <created>1471050910800</created>
+      <option name="number" value="00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1471050910801</updated>
+    </task>
+    <task id="LOCAL-00051">
+      <created>1471051796164</created>
+      <option name="number" value="00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1471051796164</updated>
+    </task>
+    <task id="LOCAL-00052">
+      <created>1471054572433</created>
+      <option name="number" value="00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1471054572433</updated>
+    </task>
+    <task id="LOCAL-00053">
+      <created>1471054899456</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1471054899457</updated>
+    </task>
+    <task id="LOCAL-00054">
+      <created>1471055449097</created>
+      <option name="number" value="00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1471055449097</updated>
+    </task>
+    <task id="LOCAL-00055">
+      <created>1471065898610</created>
+      <option name="number" value="00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1471065898610</updated>
+    </task>
+    <task id="LOCAL-00056">
+      <created>1471311186964</created>
+      <option name="number" value="00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1471311186964</updated>
+    </task>
+    <task id="LOCAL-00057">
+      <created>1471314583471</created>
+      <option name="number" value="00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1471314583471</updated>
+    </task>
+    <task id="LOCAL-00058">
+      <created>1471316609157</created>
+      <option name="number" value="00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1471316609157</updated>
+    </task>
+    <task id="LOCAL-00059">
+      <created>1471316854729</created>
+      <option name="number" value="00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1471316854729</updated>
+    </task>
+    <task id="LOCAL-00060">
+      <created>1471339924686</created>
+      <option name="number" value="00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1471339924687</updated>
+    </task>
+    <task id="LOCAL-00061">
+      <created>1471401460369</created>
+      <option name="number" value="00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1471401460378</updated>
+    </task>
+    <task id="LOCAL-00062">
+      <created>1471412032535</created>
+      <option name="number" value="00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1471412032535</updated>
+    </task>
+    <task id="LOCAL-00063">
+      <created>1471513121511</created>
+      <option name="number" value="00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1471513121539</updated>
+    </task>
+    <task id="LOCAL-00064">
+      <created>1471513464182</created>
+      <option name="number" value="00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1471513464182</updated>
+    </task>
+    <task id="LOCAL-00065">
+      <created>1471570492024</created>
+      <option name="number" value="00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1471570492025</updated>
+    </task>
+    <task id="LOCAL-00066">
+      <created>1471571555425</created>
+      <option name="number" value="00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1471571555425</updated>
+    </task>
+    <task id="LOCAL-00067">
+      <created>1471572363892</created>
+      <option name="number" value="00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1471572363892</updated>
+    </task>
+    <task id="LOCAL-00068">
+      <created>1471578373309</created>
+      <option name="number" value="00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1471578373309</updated>
+    </task>
+    <task id="LOCAL-00069">
+      <created>1471578626232</created>
+      <option name="number" value="00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1471578626232</updated>
+    </task>
+    <task id="LOCAL-00070">
+      <created>1471593613724</created>
+      <option name="number" value="00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1471593613734</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1722484000" />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.55027026" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32540542" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50054055" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19349681" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33945945" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2707889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29637527" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4227027" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33405405" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="CHANGE_BROWSER_SETTINGS">
+      <map>
+        <entry key="svn">
+          <value>
+            <ChangeBrowserSettings />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ylife-core/src/main/java/com/ylife/order/service/impl/OrderServiceImpl.java</url>
+          <line>329</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/service/impl/UcoinGrandServiceImpl.java</url>
+          <line>588</line>
+          <properties />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/service/impl/RoleManagerServiceImpl.java</url>
+          <line>116</line>
+          <properties />
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ylife-core/src/main/java/com/ylife/order/service/impl/CreditOrderServiceImpl.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ylife-core/src/main/java/com/ylife/order/service/impl/CreditOrderServiceImpl.java</url>
+          <line>62</line>
+          <properties />
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/service/impl/OrderManageServiceImpl.java</url>
+          <line>234</line>
+          <properties />
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/OrderManageAPIController.java</url>
+          <line>158</line>
+          <properties />
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="99" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/accountReturnUntop.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9275362" vertical-offset="4019" max-vertical-offset="32160">
+          <caret line="143" column="53" selection-start-line="143" selection-start-column="50" selection-end-line="143" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/order_sure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12450">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/employeeManager.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.02564" vertical-offset="19577" max-vertical-offset="20460">
+          <caret line="676" column="0" selection-start-line="676" selection-start-column="0" selection-end-line="676" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/memberUbaoReduceForm.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5790" max-vertical-offset="8130">
+          <caret line="194" column="27" selection-start-line="194" selection-start-column="27" selection-end-line="194" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/formCenter.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3601896" vertical-offset="2276" max-vertical-offset="5160">
+          <caret line="86" column="43" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/orderManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.033975083" vertical-offset="18180" max-vertical-offset="58770">
+          <caret line="607" column="43" selection-start-line="607" selection-start-column="43" selection-end-line="607" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/UCoinManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.96651787" vertical-offset="4564" max-vertical-offset="5850">
+          <caret line="181" column="9" selection-start-line="181" selection-start-column="9" selection-end-line="181" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/BaseDataform.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5384616" vertical-offset="4470" max-vertical-offset="5700">
+          <caret line="147" column="52" selection-start-line="147" selection-start-column="52" selection-end-line="147" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/accountReturn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2389581" vertical-offset="3496" max-vertical-offset="26670">
+          <caret line="153" column="33" selection-start-line="153" selection-start-column="33" selection-end-line="153" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/memberUbaoSendForm.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46682465" vertical-offset="4376" max-vertical-offset="8280">
+          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/oldUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19548872" vertical-offset="4156" max-vertical-offset="15330">
+          <caret line="142" column="33" selection-start-line="142" selection-start-column="33" selection-end-line="142" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/formCenter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2160" max-vertical-offset="14700">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/ExcelExportController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="22696" max-vertical-offset="40710">
+          <caret line="810" column="42" selection-start-line="810" selection-start-column="42" selection-end-line="810" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/SystemManageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5016987" vertical-offset="1656" max-vertical-offset="7620">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/OrderManageAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="6780">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/AccountServiceAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3556059" vertical-offset="706" max-vertical-offset="2340">
+          <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/HierarchyManageAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.0" vertical-offset="210" max-vertical-offset="3360">
+          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/addInventory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33294255" vertical-offset="106" max-vertical-offset="13680">
+          <caret line="13" column="63" selection-start-line="13" selection-start-column="60" selection-end-line="13" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/itemManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38958097" vertical-offset="1216" max-vertical-offset="5130">
+          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/UcoinQueryAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6" max-vertical-offset="1110">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/ubaoSendForm.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43127963" vertical-offset="5186" max-vertical-offset="6720">
+          <caret line="185" column="51" selection-start-line="184" selection-start-column="47" selection-end-line="184" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/mainleft.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3270">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/main.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2576" max-vertical-offset="4140">
+          <caret line="97" column="14" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/UbaoSend.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.615385" vertical-offset="6540" max-vertical-offset="9780">
+          <caret line="237" column="8" selection-start-line="237" selection-start-column="8" selection-end-line="237" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/css/g.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.79910713" vertical-offset="9214" max-vertical-offset="10110">
+          <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/css/CheckSystem.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
+          <caret line="0" column="18" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4564" max-vertical-offset="5430">
+          <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/login.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6960" max-vertical-offset="9120">
+          <caret line="243" column="17" selection-start-line="243" selection-start-column="17" selection-end-line="243" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/itemList.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8130" max-vertical-offset="9330">
+          <caret line="279" column="14" selection-start-line="279" selection-start-column="14" selection-end-line="279" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/CheckSystem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1800">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="21827" max-vertical-offset="25470">
+          <caret line="814" column="103" selection-start-line="814" selection-start-column="89" selection-end-line="814" selection-end-column="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/hieManager.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.3768115" vertical-offset="18976" max-vertical-offset="20700">
+          <caret line="638" column="58" selection-start-line="638" selection-start-column="33" selection-end-line="638" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/allocation.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3326572" vertical-offset="256" max-vertical-offset="21630">
+          <caret line="14" column="67" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/reimburse.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15450">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/reimburse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1533" max-vertical-offset="16710">
+          <caret line="61" column="49" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/allocation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5223" max-vertical-offset="20280">
+          <caret line="181" column="48" selection-start-line="181" selection-start-column="45" selection-end-line="181" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/replenishment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1413" max-vertical-offset="16860">
+          <caret line="57" column="49" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/InventoryGoodsService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321739" vertical-offset="289" max-vertical-offset="4710">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/InventoryManageAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5919118" vertical-offset="7988" max-vertical-offset="13260">
+          <caret line="303" column="58" selection-start-line="303" selection-start-column="58" selection-end-line="303" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/voucherManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1410" max-vertical-offset="6960">
+          <caret line="57" column="134" selection-start-line="57" selection-start-column="114" selection-end-line="57" selection-end-column="134" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/zrj_ajaxPages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14536929" vertical-offset="20276" max-vertical-offset="27120">
+          <caret line="680" column="31" selection-start-line="680" selection-start-column="31" selection-end-line="680" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/hieManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3130129" vertical-offset="4593" max-vertical-offset="12990">
+          <caret line="162" column="6" selection-start-line="162" selection-start-column="6" selection-end-line="162" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/UbaoSend.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1890" max-vertical-offset="8130">
+          <caret line="84" column="56" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
+          <folding>
+            <marker date="1471055433811" expanded="true" signature="5178:5227" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/UcoinGrandAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3320965" vertical-offset="1321" max-vertical-offset="5760">
+          <caret line="78" column="43" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2940">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/piliangdaoru.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="3420">
+          <caret line="47" column="37" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/piliangdaoru.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5129" max-vertical-offset="7170">
+          <caret line="184" column="67" selection-start-line="184" selection-start-column="67" selection-end-line="184" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/list.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3947" max-vertical-offset="9870">
+          <caret line="143" column="47" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.466667" vertical-offset="6946" max-vertical-offset="30840">
+          <caret line="287" column="43" selection-start-line="287" selection-start-column="43" selection-end-line="287" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/CaptchaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/utils/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.57757646" vertical-offset="180" max-vertical-offset="2580">
+          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>chinapost-enterprise:war exploded</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>ylife-core</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

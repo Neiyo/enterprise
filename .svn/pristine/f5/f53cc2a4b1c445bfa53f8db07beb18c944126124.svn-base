@@ -1,0 +1,212 @@
+package com.ylife.chinapost.controller.api;
+
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.ValetOrderService;
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.customer.model.CustomerAddress;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.model.EnterpriseInfo;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import com.ylife.order.model.Order;
+import com.ylife.product.model.GoodsInfo;
+import com.ylife.security.annotation.SecurityResource;
+import com.ylife.utils.Assert;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * Created by InThEnd on 2016/4/30.
+ * 代客下单。
+ */
+@Controller
+@SecurityResource(parent = "/web/UserGet", primary = false)
+@RequestMapping(value = "/web/api/valet", produces = "application/json;charset=utf-8")
+public class ValetOrderAPIController {
+    @Resource
+    private ValetOrderService valetOrderService;
+
+
+    /**
+     * 获取商品信息。
+     *
+     * @param goodsInfoName 商品名称
+     * @param lowPrice      价格区间下限
+     * @param highPrice     价格区间上限
+     * @param page          页码
+     * @param size          页大小
+     */
+    @RequestMapping(value = "/getGoods")
+    @ResponseBody
+    public String getVALEtGoods(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                @RequestParam(value = "lowPrice", required = false) BigDecimal lowPrice,
+                                @RequestParam(value = "highPrice", required = false) BigDecimal highPrice,
+                                @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        Page<GoodsManagerResult> goodsManagerResultPage = valetOrderService.getValetGoods(goodsInfoName, lowPrice, highPrice, new Pageable(page, size));
+        return new JsonResponseBean(goodsManagerResultPage).leave("goodsInfoId", "goodsInfoPreferPrice", "goodsInfoName",
+                "goodsInfoImgId", "goodsImgId", "images", "imageInName", "imageThumName", "imageBigName", "imageArtworkName").toJson();
+    }
+
+    /**
+     * 下单。
+     *
+     * @param customerId 客户ID
+     * @param isOnline   订单类型
+     * @param addressId  地址ID
+     * @param goodsId    货品ID
+     */
+    @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public String placeOrder(@RequestParam(value = "customerId") long customerId,
+                             @RequestParam(value = "isOnline") boolean isOnline,
+                             @RequestParam(value = "addressId", required = false) Long addressId,
+                             @RequestParam(value = "goodsId") long goodsId,
+                             @RequestParam(value = "count") int count) {
+        Order order = valetOrderService.placeOrder(customerId, isOnline, addressId, goodsId, count);
+        return new JsonResponseBean(order).leave("orderId", "orderCode", "orderPrice").toJson();
+    }
+
+
+    /**
+     * 获取当前网点的信息。
+     */
+    @RequestMapping(value = "/getEnterpriseInfo")
+    @ResponseBody
+    public String getEnterpriseInfo() {
+        EnterpriseInfo info = valetOrderService.getEnterpriseInfo();
+        return new JsonResponseBean(info).leave("enterpriseName", "address").toJson();
+    }
+
+
+    /**
+     * 获取用户信息。
+     *
+     * @param idCard 身份证号
+     */
+    @RequestMapping(value = "/getCustomerInfo")
+    @ResponseBody
+    public String getCustomerInfo(@RequestParam(value = "idCard") String idCard) {
+        ChinapostCustomer info = valetOrderService.getCustomerInfo(idCard);
+        return new JsonResponseBean(info).leave("id", "phoneNo", "fullname", "totalUcoin").toJson();
+    }
+
+  /*  */
+
+    /**
+     * 获取商品信息。
+     *
+     * @param goodsInfoId 商品ID
+     */
+    @RequestMapping(value = "/getGoodsInfo")
+    @ResponseBody
+    public String getGoodsInfo(@RequestParam(value = "goodsInfoId") long goodsInfoId) {
+        GoodsInfo info = valetOrderService.getGoodsInfo(goodsInfoId);
+        return new JsonResponseBean(info).toJson();
+    }
+
+
+    /**
+     * 获取所有客户地址。
+     *
+     * @param customerId 客户ID
+     */
+    @RequestMapping(value = "/getAddresses")
+    @ResponseBody
+    public String getAddresses(@RequestParam(value = "customerId") long customerId) {
+        List<CustomerAddress> addresses = valetOrderService.getAddresses(customerId);
+        return new JsonResponseBean(addresses).leave("addressId", "addressName", "addressDetail",
+                "addressMoblie", "infoProvince","", "infoCity", "infoCounty", "infoStreet", "isDefault","district","districtName","province","provinceName","city","cityName").toJson();
+    }
+
+    /**
+     * 增加收货地址。
+     *
+     * @param customerId    客户ID
+     * @param addressName   收货人姓名
+     * @param addressDetail 地址明细
+     * @param addressMoblie 联系手机
+     * @param isDefault     是否默认 0不是默认，1默认
+     * @param infoProvince  省份id
+     * @param infoCity      城市id
+     * @param infoCounty    乡镇id
+     * @param infoStreet    街道id
+     * @param addressZip    邮政编码
+     * @param addressPhone  电话
+     */
+    @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
+    @ResponseBody
+    public String addAddress(@RequestParam(value = "customerId") long customerId,
+                             @RequestParam(value = "addressName") String addressName,
+                             @RequestParam(value = "addressDetail") String addressDetail,
+                             @RequestParam(value = "addressMoblie") String addressMoblie,
+                             @RequestParam(value = "isDefault") String isDefault,
+                             @RequestParam(value = "infoProvince") String infoProvince,
+                             @RequestParam(value = "infoCity") String infoCity,
+                             @RequestParam(value = "infoCounty") String infoCounty,
+                             @RequestParam(value = "infoStreet") String infoStreet,
+                             @RequestParam(value = "addressZip") String addressZip,
+                             @RequestParam(value = "addressPhone") String addressPhone) {
+        Assert.hasLength(addressName, addressDetail, addressMoblie, isDefault, infoProvince, infoCity, infoCounty, addressZip);
+        CustomerAddress address = valetOrderService.addAddress(customerId, addressName, addressDetail, addressMoblie, isDefault, infoProvince, infoCity, infoCounty, infoStreet, addressZip, addressPhone);
+        return new JsonResponseBean(address).toJson();
+    }
+
+    /**
+     * 支付订单。
+     *
+     * @param orderCode 订单号
+     */
+    @RequestMapping(value = "/payOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public String payOrder(@RequestParam("orderCode") long orderCode) {
+        Order order = valetOrderService.payOrder(orderCode);
+        return new JsonResponseBean(order).toJson();
+    }
+
+
+    /**
+     * 是否免验证。
+     */
+    @RequestMapping(value = "/hasPermit")
+    @ResponseBody
+    public String hasPermit() {
+        boolean hasPermit = valetOrderService.hasPermit();
+        return new JsonResponseBean(hasPermit).toJson();
+    }
+
+
+    /**
+     * 根据提货码获取订单
+     *
+     * @param deliveryCode 提货码
+     */
+    @RequestMapping(value = "/getByDeliveryCode")
+    @ResponseBody
+    public String getOrderByDeliveryCode(@RequestParam(value = "deliveryCode") String deliveryCode) {
+        Assert.hasLength(deliveryCode);
+        Order order = valetOrderService.getOrderByDeliveryCode(deliveryCode);
+        return new JsonResponseBean(order).toJson();
+    }
+
+    /**
+     * 根据订单ID提货。
+     *
+     * @param orderCode 订单号
+     */
+    @RequestMapping(value = "/pickUpOrder")
+    @ResponseBody
+    public String pickUpOrder(@RequestParam(value = "orderCode") long orderCode) {
+        valetOrderService.pickUpOrder(orderCode);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+}

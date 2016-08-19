@@ -1,0 +1,27 @@
+package com.ylife.chinapost.security.service;
+
+import com.ylife.enterprise.model.EnterpriseManager;
+
+/**
+ * Created by InThEnd on 2016/4/9.
+ * <p/>
+ * 此服务提供给Spring security使用。
+ */
+public interface EnterpriseSecurityService {
+
+    /**
+     * 根据登录名获取EnterpriseManager实体。
+     */
+    EnterpriseManager findByLoginName(String username);
+
+    /**
+     * 根据管理员ID获取权限ID
+     */
+    Long getAuthorityId(Long managerId);
+
+    /**
+     * 检验权限和资源关系是否存在。
+     */
+    boolean check(long authorityId, long resourceId);
+
+}

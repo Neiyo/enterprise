@@ -1,0 +1,48 @@
+$(document).ready(function(){
+    $("#date_start").click(function(e){
+        console.log(1);
+        $("#datetimepicker_start").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_start").trigger("focus");
+    })
+    $("#datetimepicker_start").blur(function(){
+        $("#datetimepicker_start").datetimepicker('destroy');
+    });
+
+    $("#date_end").click(function(e){
+        $("#datetimepicker_end").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_end").trigger("focus");
+    })
+    $("#datetimepicker_end").blur(function(){
+        $("#datetimepicker_end").datetimepicker('destroy');
+    });
+    $(".arrow").click(function(){
+        var arr=$(this).val()
+        $(this).siblings("dd").slideToggle()
+        if(arr==0){
+            $(this).css("background","url(../static/img/com_btn_arrow_black_up.png) center no-repeat")
+            $(this).val("1")
+        }else if(arr==1){
+            $(this).css("background","url(../static/img/com_btn_arrow_black_down.png) center no-repeat")
+            $(this).val("0")
+        }
+
+    })
+    $(".select dd").click(function(){
+        var sechtml = $(this).html();
+        var sechtId = $(this).data("id");
+        $("#typeId").val(sechtId);
+        $(this).hide().siblings("dd").hide();
+        $(this).siblings("dt").children("abbr").html(sechtml);
+        $(this).siblings(".arrow").css("background","url(../static/img/com_btn_arrow_black_down.png) center no-repeat")
+    })
+})

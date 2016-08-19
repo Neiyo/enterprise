@@ -1,0 +1,105 @@
+﻿
+body, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, p,abbr,span,i, form, div, input, textarea {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background:#fcfcfc;
+    color: #333;
+    font-family: "Arial","微软雅黑";
+    font-size: 16px;
+	width:100%;
+	height:100%;
+}
+h1, h2, h3, h4, h5, h6{
+    font-weight: normal;
+    font-size: 12px;
+}
+ul, li {
+    list-style-type: none;
+}
+img {
+    border: medium none;
+}
+img, input, select {
+    vertical-align: middle;
+}
+input, textarea, button {
+    font-family:"微软雅黑";
+    font-size: 16px;
+}
+input[type='button']{
+    cursor: pointer;
+}
+a {
+    text-decoration: none;
+    cursor:pointer;
+
+}
+i{
+    cursor: pointer;
+}
+a:hover {
+    color: #FF3300;
+    text-decoration: none;
+}
+.topNews{
+	width:100%;
+	height:53px;
+    background:url(../img/com_pic_top_bar.png) center no-repeat;
+	margin-top:0px;
+    border-bottom: 1px  solid #046b2f;
+	position:relative;
+	font-size:16px;
+    color: #fff;
+    background-size: 100%;
+}
+.topNews div.spanright{
+    position: absolute;
+    right: 5%;
+    top:10px;
+}
+.topNews span.news{
+	display:inline-block;
+	padding:5px;
+	font-weight:bold;
+    cursor: pointer;
+}
+.topNews span.news i{
+	display:inline-block;
+	width:20px;
+	height:20px;
+    border-radius: 25px;
+    background: #ff3300;
+	position:relative;
+	top:-10px;
+	left:-4px;
+	color:#FFF;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	line-height:20px;
+	font-style:normal;
+}
+
+.topNews span.users{
+	display:inline-block;
+	padding:5px;
+		font-weight:bold;
+    cursor: pointer;
+}
+.topNews span.users i{
+	display:inline-block;
+	width:10px;
+	height:10px;
+	background:url(../img/arrow.png) center no-repeat;
+	margin-left:5px;
+}
+#holder a:hover{
+    background: #24b383;
+    color: #fff;
+}
+.holder a:hover{
+    background: #24b383;
+    color: #fff;
+}

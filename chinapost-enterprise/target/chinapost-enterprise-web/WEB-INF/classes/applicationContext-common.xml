@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/dbconfig.properties</value>
+                <value>classpath:/feedbackEmail.properties</value>
+            </list>
+        </property>
+    </bean>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.ylife"/>
+
+
+    <bean name="ucoinStatisticalServiceImpl" class="com.ylife.chinapost.service.impl.UcoinStatisticalServiceImpl">
+        <constructor-arg index="0" value="${email.receivers}"/>
+        <constructor-arg index="1" value="${email.send.enable}"/>
+    </bean>
+    <!-- 定时任务-->
+    <task:scheduled-tasks>
+        <!-- 货品同步状态 -->
+        <task:scheduled ref="goodsProductServiceImpl" method="saveGoodsProducts" cron="0 0/5 * * * ?"/>
+        <!-- 订单同步状态 -->
+        <task:scheduled ref="orderServiceImpl" method="updateOrderStatus" cron="0 0/10 * * * ?"/>
+        <!-- 退单同步状态 -->
+        <task:scheduled ref="creditOrderServiceImpl" method="updateBackOrderStatus" cron="0 0/10 * * * ?"/>
+        <!-- 定时取消订单（代客下单未支付） -->
+        <task:scheduled ref="orderManageServiceImpl" method="cancelOrderTiming" cron="0 0/10 * * * ?"/>
+        <!-- 发送邮豆统计邮件 -->
+        <task:scheduled ref="ucoinStatisticalServiceImpl" method="ucoinStatistical" cron="0 30 8 * * ?"/>
+    </task:scheduled-tasks>
+
+    <bean class="com.ylife.fdfs.FastDFS"/>
+
+</beans>

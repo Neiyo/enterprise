@@ -1,0 +1,126 @@
+package com.ylife.system.service.impl;
+
+import com.ylife.exception.UserOperationException;
+import com.ylife.expression.Expression;
+import com.ylife.expression.Variable;
+import com.ylife.expression.exception.ParseException;
+import com.ylife.system.mapper.BusinessTypeMapper;
+import com.ylife.system.mapper.ParamMapper;
+import com.ylife.system.model.BusinessType;
+import com.ylife.system.model.Param;
+import com.ylife.system.model.ParamType;
+import com.ylife.system.service.BusinessTypeService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by InThEnd on 2016/6/6.
+ * BusinessTypeServiceImpl
+ */
+@Service
+public class BusinessTypeServiceImpl implements BusinessTypeService {
+
+    @Resource
+    private BusinessTypeMapper businessTypeMapper;
+    @Resource
+    private ParamMapper paramMapper;
+
+    @Override
+    public BusinessType getByTypeId(Integer typeId) {
+        return businessTypeMapper.selectByPrimaryKey(typeId);
+    }
+
+    @Override
+    public void editExpression(int typeId, String expression) {
+        Expression expression1;
+        try {
+            expression1 = Expression.create(expression);
+        } catch (ParseException e) {
+            throw new UserOperationException(e);
+        }
+        for (Variable variable : expression1.getVariables()) {
+            int id = variable.getId();
+            if (id == Param.DISCOUNT_ID) {
+                continue;
+            }
+            Param param = paramMapper.selectByPrimaryKey(id);
+            if (param == null || param.getTypeId() != typeId || param.getParamType() == ParamType.TYPE_TXT || !param.getRequired()) {
+                throw new UserOperationException("表达式错误，参数不存在或者不属于此业务类型或者参数无法参入计算。");
+            }
+        }
+        BusinessType model = new BusinessType();
+        model.setTypeId(typeId);
+        model.setExpression(expression);
+        businessTypeMapper.updateByPrimaryKeySelective(model);
+    }
+
+    @Override
+    public void updateSerialNo(Map<Integer, Integer> map) {
+        for (Integer id : map.keySet()) {
+            BusinessType model = businessTypeMapper.selectByPrimaryKey(id);
+            model.setTypeId(id);
+            model.setSerialNo(map.get(id));
+            businessTypeMapper.updateByPrimaryKeySelective(model);
+        }
+    }
+
+    @Override
+    @Transactional
+    public BusinessType creatBusinessType(String name, Integer serialNo) {
+        BusinessType type = businessTypeMapper.selectByNameForUpdate(name);
+        if (type != null) {
+            throw new UserOperationException("此业务类型名称已存在。");
+        }
+        Date now = new Date();
+        BusinessType model = new BusinessType();
+        model.setTypeName(name);
+        model.setCreateTime(now);
+        model.setModifyTime(now);
+        model.setIsDelete(false);
+        model.setSerialNo(serialNo);
+        businessTypeMapper.insertSelective(model);
+        return model;
+    }
+
+    @Override
+    @Transactional
+    public void editBusinessType(int typeId, String name) {
+        BusinessType type = businessTypeMapper.selectByNameForUpdate(name);
+        if (type != null) {
+            throw new UserOperationException("此业务类型名称已存在。");
+        }
+        BusinessType model = new BusinessType();
+        model.setTypeId(typeId);
+        model.setTypeName(name);
+        model.setModifyTime(new Date());
+        businessTypeMapper.updateByPrimaryKeySelective(model);
+    }
+
+    @Override
+    public void deleteBusinessType(int typeId) {
+        BusinessType model = new BusinessType();
+        model.setTypeId(typeId);
+        model.setIsDelete(true);
+        businessTypeMapper.updateByPrimaryKeySelective(model);
+    }
+
+    @Override
+    public List<BusinessType> getAll() {
+        return businessTypeMapper.selectAll();
+    }
+
+    @Override
+    public List<BusinessType> getAllByExpressionNotNull() {
+        return businessTypeMapper.selectAllByExpressionNotNull();
+    }
+
+    @Override
+    public BusinessType getDetailsBytypeId(int typeId) {
+        return businessTypeMapper.selectDetailsByPrimaryKey(typeId);
+    }
+}

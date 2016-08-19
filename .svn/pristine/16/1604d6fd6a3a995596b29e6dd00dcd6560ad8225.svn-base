@@ -1,0 +1,1305 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css"/>
+    <link rel="stylesheet" href="${bath}/static/css/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="${bath}/static/css/xcConfirm.css" />
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script src="${bath}/static/js/jPages.js"></script>
+    <title>无标题文档</title>
+    <style type="text/css">
+        .sum{
+            width:100%;
+            height:50px;
+            line-height:50px;
+            background:#24b35f;
+            margin-left:20px;
+            margin-top:20px;
+            padding-left:30px;
+            color: #fff;
+        }
+        .accountSearch{
+            width:1500px;
+            height:130px;
+            margin-left:20px;
+            font-size: 12px;
+        }
+        .accountSearch li{
+            width:300px;
+            height:40px;
+            line-height:40px;
+            float:left;
+            margin:10px 0px;
+        }
+        .accountSearch li input{
+            width:150px;
+            height:42px;
+            border:1px solid #ccc;
+            background:#FFF;
+        }
+        .accountSearch li span{
+            display:inline-block;
+            width:80px;
+            height:42px;
+            text-align:center;
+            background:#e4e4e4;
+            line-height:40px;
+            border:1px solid #ccc;
+
+        }
+        #accSearch{
+            width:80px;
+            height:42px;
+            background:#24b35f;
+            color:#FFF;
+            border:1px solid transparent;
+        }
+
+        #accSearch:hover{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+        }
+        #accSearch:active{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+            background: #008738;
+        }
+        #accExport{
+            width:120px;
+            height:42px;
+            background:#24b35f;
+            color:#FFF;
+            border:1px solid transparent;
+            margin-left:30px;
+        }
+        #accExport:hover{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+        }
+        #accExport:active{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+            background: #008738;
+        }
+        #accChooseExport{
+            width:120px;
+            height:42px;
+            background:#24b35f;
+            color:#FFF;
+            border:1px solid transparent;
+            margin-left:30px;
+        }
+        #accChooseExport:hover{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+        }
+        #accChooseExport:active{
+            box-shadow: 0px 1px 3px 0px #bbbbbb;
+            background: #008738;
+        }
+
+
+        .accountTable{
+            width:1600px;
+            height:auto;
+            margin-left:20px;
+        }
+        .accountTable ul{
+            width:1000px;
+            height:30px;
+        }
+        .accountTable ul li{
+            float:left;
+            width:60px;
+            height:28px;
+            line-height:30px;
+            background:#f2f2f2;
+            border:1px solid #d7d7d7;
+            text-align:center;
+            margin-right:-1px;
+            cursor:pointer;
+        }
+        .accountTable ul li.accOn{
+            background:#c5c5c5;
+            border:1px solid #c5c5c5;
+
+        }
+        .account_Table{
+            width:1600px;
+        }
+        .account_Table abbr{
+            display:inline-block;
+            width:60px;
+            height:20px;
+            line-height:20px;
+            text-align:center;
+            background:#ff3300;
+            color:#FFF;
+            border-radius:5px;
+            margin-top:30px;
+            border:1px solid transparent;
+
+        }
+        .account_Table a,i{
+            color:#24b35f;
+            padding:0px 5px;
+            cursor:pointer;
+
+        }
+        .account_Table abbr:hover{
+            color:#f2b95d;
+            border:1px solid #f2b95d;
+        }
+        .itemContainer td abbr{
+            display:inline-block;
+            height:20px;
+            line-height:20px;
+            text-align:center;
+            background:#ff3300;
+            color:#FFF;
+            border-radius:5px;
+            margin-top:30px;
+            border:1px solid transparent;
+
+        }
+        .itemContainer a,i{
+            color:#24b35f;
+            padding:0px 5px;
+            cursor:pointer;
+
+        }
+        .itemContainer abbr:hover{
+            color:#f2b95d;
+            border:1px solid #f2b95d;
+        }
+        .detailOne{
+            width:800px;
+            height:auto;
+            position:absolute;
+            left:15%;
+            top:5%;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-shadow:2px 2px 2px 2px #999;
+            background:#FFF;
+            z-index:2;
+            display:none;
+        }
+        .detailImg li{
+            float:left;
+            width:200px;
+            height:150px;
+            text-align:center;
+            line-height:60px;
+            margin-right:-1px
+        }
+        .detailOne ul.checkDetailOne{
+            width:760px;
+            height:auto;
+            overflow:hidden;
+            border:1px solid #CCC;
+            margin-left:20px;
+        }
+        .checkDetailOne dd.dt{
+            width:740px;
+            padding:10px;
+            font-size:18px;
+            font-weight:bold;
+            border-bottom:1px solid #E4E4E4;
+            margin-bottom:10px;
+            color:#333;
+        }
+        .checkDetailOne dd{
+            width:360px;
+            float:left;
+            padding:5px 0px 5px 10px;
+        }
+        .Purchase_table{
+            margin-bottom:50px;
+        }
+        .Purchase_table td,th{
+            border:1px solid #E4E4E4;
+        }
+        #xxOne{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:450px;
+            top:10px;
+            cursor:pointerl;
+        }
+        /*网点代客下单*/
+        .detailTwo{
+            width:800px;
+            height:auto;
+            position:absolute;
+            left:15%;
+            top:5%;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-shadow:2px 2px 2px 2px #999;
+            background:#FFF;
+            z-index:2;
+            display:none;
+        }
+        .detailImg li{
+            float:left;
+            width:200px;
+            height:150px;
+            text-align:center;
+            line-height:60px;
+            margin-right:-1px
+        }
+        .detailTwo ul.checkDetailTwo{
+            width:760px;
+            height:auto;
+            overflow:hidden;
+            border:1px solid #CCC;
+            margin-left:20px;
+        }
+        .checkDetailTwo dd.dt{
+            width:740px;
+            padding:10px;
+            font-size:18px;
+            font-weight:bold;
+            border-bottom:1px solid #E4E4E4;
+            margin-bottom:10px;
+            color:#333;
+        }
+        .checkDetailTwo dd{
+            width:360px;
+            float:left;
+            padding:5px 0px 5px 10px;
+        }
+        .Purchase_table{
+            margin-bottom:50px;
+        }
+        .Purchase_table td,th{
+            border:1px solid #E4E4E4;
+        }
+        #xxTwo{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:450px;
+            top:10px;
+            cursor:pointerl;
+        }
+
+
+        /*用户自己下单*/
+        .detailThree{
+            width:800px;
+            height:auto;
+            position:absolute;
+            left:15%;
+            top:5%;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-shadow:2px 2px 2px 2px #999;
+            background:#FFF;
+            z-index:2;
+            display:none;
+        }
+        .detailImg li{
+            float:left;
+            width:200px;
+            height:150px;
+            text-align:center;
+            line-height:60px;
+            margin-right:-1px
+        }
+        .detailThree ul.checkDetailThree{
+            width:760px;
+            height:auto;
+            overflow:hidden;
+            border:1px solid #CCC;
+            margin-left:20px;
+        }
+        .checkDetailThree dd.dt{
+            width:740px;
+            padding:10px;
+            font-size:18px;
+            font-weight:bold;
+            border-bottom:1px solid #E4E4E4;
+            margin-bottom:10px;
+            color:#333;
+        }
+        .checkDetailThree dd{
+            width:360px;
+            float:left;
+            padding:5px 0px 5px 10px;
+        }
+        .Purchase_table{
+            margin-bottom:50px;
+        }
+        .Purchase_table td,th{
+            border:1px solid #E4E4E4;
+        }
+        #xxThree{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:450px;
+            top:10px;
+            cursor:pointerl;
+        }
+
+        /*网点自提代客*/
+        .detailFour{
+            width:800px;
+            height:auto;
+            position:absolute;
+            left:15%;
+            top:5%;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-shadow:2px 2px 2px 2px #999;
+            background:#FFF;
+            z-index:2;
+            display:none;
+        }
+        .detailImg li{
+            float:left;
+            width:200px;
+            height:150px;
+            text-align:center;
+            line-height:60px;
+            margin-right:-1px
+        }
+        .detailFour ul.checkDetailFour{
+            width:760px;
+            height:auto;
+            overflow:hidden;
+            border:1px solid #CCC;
+            margin-left:20px;
+        }
+        .checkDetailFour dd.dt{
+            width:740px;
+            padding:10px;
+            font-size:18px;
+            font-weight:bold;
+            border-bottom:1px solid #E4E4E4;
+            margin-bottom:10px;
+            color:#333;
+        }
+        .checkDetailFour dd{
+            width:360px;
+            float:left;
+            padding:5px 0px 5px 10px;
+        }
+        .Purchase_table{
+            margin-bottom:50px;
+        }
+        .Purchase_table td,th{
+            border:1px solid #E4E4E4;
+        }
+        #xxFour{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:420px;
+            top:7px;
+            cursor:pointerl;
+        }
+        .holder a{
+            display: inline-block;
+            line-height: 30px;
+            text-align: center;
+            border:0;
+            background-color: #fff;
+            border-radius: 3px;
+            width:40px;
+            height:30px;
+            color:gray;
+            font-weight: bold;
+            margin-left: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            border: 1px solid #cccccc;
+        }
+        .jp-current{
+            background-color: #24b383!important;
+            color: #fff!important;
+        }
+        /*网点自提用户自主下单*/
+        .date_button{
+            display: inline-block;
+            vertical-align: middle;
+            width:42px!important;
+            margin-left: 0!important;
+            height:42px;
+            background-color: #f2f2f2;
+            background: url("${bath}/static/img/com_btn_calendar_nor.png") no-repeat center;
+            border:1px solid #ccc;
+        }
+
+        /*日历控件样式*/
+        .xdsoft_datetimepicker{
+            width:310px!important;
+        }
+
+
+
+
+
+        .setAccountState{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display: none;
+        }
+        .setAccountState li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #setAccountStateCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #ccc;
+            background:#fff;
+            color:#333
+            cursor:pointer;
+
+        }
+        #setAccountStateCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountStateCancel:active{
+            background: #008738;
+            color: #fff;
+
+        }
+        #setAccountStateConfrim{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #setAccountStateConfrim:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountStateConfrim:active{
+            background: #008738;
+
+        }
+
+        .setAccountMoneyWarning{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display: none;
+        }
+        .setAccountMoneyWarning li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #setAccountMoneyWarningCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #ccc;
+            background:#fff;
+            color:#333
+        cursor:pointer;
+
+        }
+        #setAccountMoneyWarningCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountMoneyWarningCancel:active{
+            background: #008738;
+            color: #fff;
+
+        }
+        #setAccountMoneyWarningConfrim{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #setAccountMoneyWarningConfrim:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountMoneyWarningConfrim:active{
+            background: #008738;
+
+        }
+
+
+
+
+        .setAccountMoney{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display: none;
+        }
+        .setAccountMoney li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #setAccountMoneyCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #ccc;
+            background:#fff;
+            color:#333
+        cursor:pointer;
+
+        }
+        #setAccountMoneyCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountMoneyCancel:active{
+            background: #008738;
+            color: #fff;
+
+        }
+        #setAccountMoneyConfrim{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #setAccountMoneyConfrim:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #setAccountMoneyConfrim:active{
+            background: #008738;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .CancelAccountStateWarning{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display: none;
+        }
+        .CancelAccountStateWarning li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #CancelAccountStateWarningCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #ccc;
+            background:#fff;
+            color:#333
+        cursor:pointer;
+
+        }
+        #CancelAccountStateWarningCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #CancelAccountStateWarningCancel:active{
+            background: #008738;
+            color: #fff;
+
+        }
+        #CancelAccountStateWarningConfrim{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #CancelAccountStateWarningConfrim:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #CancelAccountStateWarningConfrim:active{
+            background: #008738;
+
+        }
+
+
+
+
+
+
+        .updateAccountState{
+            width:680px;
+            height:420px;;
+            position:absolute;
+            left:15%;
+            top:20%;
+            background:#FFF;
+            z-index:100;
+            display: none;
+        }
+        .updateAccountState li{
+            height:80px;
+            line-height:80px;
+            padding-left:20px;
+        }
+        #updateAccountStateCancel{
+            width:200px;
+            height:50px;
+            border:1px solid #ccc;
+            background:#fff;
+            color:#333
+        cursor:pointer;
+
+        }
+        #updateAccountStateCancel:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #updateAccountStateCancel:active{
+            background: #008738;
+            color: #fff;
+
+        }
+        #updateAccountStateConfrim{
+            width:200px;
+            height:50px;
+            border:1px solid transparent;
+            background:#24b35f;
+            color:#fff;
+            cursor:pointer;
+
+        }
+        #updateAccountStateConfrim:hover{
+            box-shadow: 1px 3px 3px 0px #87988e;
+        }
+        #updateAccountStateConfrim:active{
+            background: #008738;
+
+        }
+
+        #holder_All_previous,#holder_second_next,#holder_first_next,#holder_third_next,#holder_forth_next,#holder_fifth_next,#holder_sixth_previous{
+            width:80px!important;
+        }
+
+        #holder_All_next,#holder_second_previous,#holder_first_previous,#holder_third_previous,#holder_forth_previous,#holder_fifth_previous,#holder_sixth_next{
+            width:80px!important;
+        }
+        td section{
+            margin-left: 20px!important;
+        }
+        td img{
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        var isTop = true;
+        $(document).ready(function(e) {
+
+            $("#accReturn").click(function(){
+                window.location.href = "accountReturn";
+            })
+            $(".accountTable li").click(function(){
+                $(this).addClass("accOn").siblings("li").removeClass("accOn");
+            })
+            $("#xxOne").click(function(){
+                discoverHtml();
+                $(".detailOne").fadeOut(500);
+            })
+            $("#xxTwo").click(function(){
+                discoverHtml();
+                $(".detailTwo").fadeOut(500);
+            })
+            $("#xxThree").click(function(){
+                discoverHtml();
+                $(".detailThree").fadeOut(500);
+            })
+            $("#xxFour").click(function(){
+                discoverHtml();
+                $(".detailFour").fadeOut(500);
+            })
+        });
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div style="width:100%; height:70px; border-bottom:2px solid #dcdcdc; margin-left:20px;">
+	<span style="font:30px '黑体'; color:#000; display:inline-block; margin-top:15px;margin-bottom:20px;">订单管理
+    </span>
+    <br  />
+</div>
+
+<#--<div class="sum">-->
+    <#--订单总金额：<span>13000</span>邮豆，其中现金：<span>3000</span>元，邮豆：<span>7000</span>邮豆-->
+<#--</div>-->
+
+<div class="accountSearch">
+    <ul>
+        <li><span>订单号</span><input type="text" name="accountNum" /></li>
+        <li><span>收货人</span><input type="text" name="accountCust" /></li>
+        <li><span>联系电话</span><input type="text" name="accountTel" /></li>
+        <li><span>下单开始时间</span><input type="text" style="width:150px;" id="datetimepicker_start"/><a  id="date_start" href="#"class="date_button"/></a></li>
+        <li><span>下单结束时间</span><input type="text" style="width:150px;" id="datetimepicker_end"/><a  id="date_end" href="#"class="date_button"/></a></li>
+        <li><span>用户名</span><input type="text" name="accountUserName" /></li>
+        <li><span>付款开始时间</span><input type="text" style="width:150px;" id="pay_datetimepicker_start"/><a  id="pay_date_start" href="#"class="date_button"/></a></li>
+        <li><span>付款结束时间</span><input type="text" style="width:150px;" id="pay_datetimepicker_end"/><a  id="pay_date_end" href="#"class="date_button"/></a></li>
+        <li style="width:500px;"><input type="button" value="搜索" id="accSearch" /><input type="button" id="accExport" value="导出订单" /><input type="button" id="accChooseExport" value="导出选中的" /></li>
+    </ul>
+</div>
+
+<div class="accountTable">
+    <ul>
+        <li class="accOn" style="width:auto;">全部订单</li>
+        <li>待付款</li>
+        <li>待发货</li>
+        <li>待收货</li>
+        <li>待提货</li>
+        <li>已完成</li>
+        <li>已取消</li>
+        <li id="accReturn" style="margin-left:80px; width: 150px;">全部退单</li>
+    </ul>
+    <table role="none" class="account_Table" border="0" cellspacing="0" cellpadding="0">
+        <thead style="display:inline-block; width:1604px; height:40px; color:#FFF; margin-left:-2px; background:#c5c5c5; border:none;" >
+        <tr>
+            <th style="display:inline-block; width:0px; height:40px; overflow:hidden;">订单号</th>
+            <th style="display:inline-block; width:400px; height:40px; line-height:40px; border-style:none;">商品</th>
+            <th style="display:inline-block; width:80px; height:40px; line-height:40px; border-style:none;">总价/数量</th>
+            <th style="display:inline-block; width:320px; height:40px; line-height:40px; border-style:none;">买家信息</th>
+            <th style="display:inline-block; width:240px; height:40px; line-height:40px; text-align:left; border-style:none;">下单时间</th>
+            <th style="display:inline-block; width:200px; height:40px; line-height:40px; text-align:left; border-style:none;">订单状态</th>
+            <th style="display:inline-block; width:200px; height:40px; line-height:40px; text-align:left; border-style:none;">订单金额</th>
+            <th style="display:inline-block; width:150px; height:40px; line-height:40px; text-align:center; border-style:none;">商家</th>
+        </tr>
+        </thead>
+        <tbody >
+
+
+        </tbody>
+    </table>
+
+    <#--全部订单-->
+    <div class="jpages_Table">
+        <div id="itemContainer_All" class="itemContainer"></div>
+        <div id="holder_All" class="holder"></div>
+    </div>
+
+    <#--待付款-->
+    <div class="jpages_Table">
+        <div id="itemContainer_first" class="itemContainer"></div>
+        <div id="holder_first" class="holder"></div>
+    </div>
+
+    <#--待发货-->
+    <div class="jpages_Table">
+        <div id="itemContainer_second" class="itemContainer"></div>
+        <div id="holder_second" class="holder"></div>
+    </div>
+
+    <#--待收货-->
+    <div class="jpages_Table">
+        <div id="itemContainer_third" class="itemContainer"></div>
+        <div id="holder_third" class="holder"></div>
+    </div>
+
+    <#--待提货-->
+    <div class="jpages_Table">
+        <div id="itemContainer_forth" class="itemContainer"></div>
+        <div id="holder_forth"class="holder"></div>
+    </div>
+
+    <#--已完成-->
+    <div class="jpages_Table">
+        <div id="itemContainer_fifth" class="itemContainer"></div>
+        <div id="holder_fifth" class="holder"></div>
+    </div>
+
+    <#--已取消-->
+    <div class="jpages_Table">
+        <div id="itemContainer_sixth" class="itemContainer"></div>
+        <div id="holder_sixth" class="holder"></div>
+    </div>
+
+</div>
+
+
+<div class="detailOne">
+    <ul>
+        <li style="width:780px; height:60px; font-size:18px; color:#333; padding-left:20px; line-height:60px; border-bottom:1px solid #ccc;">订单号:<span class="accountNUM"></span><i id="xxOne"></i></li>
+        <li style="width:800px; height:150px;">
+            <ul class="detailImg" style="width:800px; height:150px;">
+                <li class="Img11" style="text-align:center; position:relative; color:#e6e6e6;">已下单<br /><abbr class="Img1" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">1</abbr><abbr class="Img1" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="orderTime" style="display:inline-block; margin-top:10px; color:#999;"></span></li>
+                <li class="Img22" style="text-align:center; position:relative; color:#e6e6e6;">已付款<br /><abbr class="Img2" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img2" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">2</abbr><abbr class="Img2" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="PayedTime" style="display:inline-block; margin-top:10px; color:#999;"></span></li>
+                <li class="Img33" style="text-align:center; position:relative; color:#e6e6e6;">已发货<br /><abbr class="Img3" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img3" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">3</abbr><abbr class="Img3" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="sendExpressTime" style="display:inline-block; margin-top:10px; color:#999;"></span></li>
+                <li class="Img44" style="text-align:center; position:relative; color:#e6e6e6;">已完成<br /><abbr class="Img4" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img4" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">4</abbr><span class="finishTime" style="display:inline-block; margin-top:10px; color:#999;"></span></li>
+                <li class="Img55" style="text-align:center; position:relative; color:#e6e6e6;">已取消<br /><abbr class="Img5" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img5" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">2</abbr><span class="cancelTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+            </ul>
+        </li>
+        <li>
+            <ul class="checkDetailOne">
+                <li>
+                    <dl>
+                        <dd class="dt">订单概况</dd>
+                        <dd>订单编号：<span class="orderCode"></span></dd>
+                        <dd>下单时间：<span class="createTime"></span></dd>
+                        <dd>订单状态：<span class="orderStatusDetail"></span></dd>
+                        <dd>使用优惠券：<span></span></dd>
+                        <dd>订单原始金额：<span class="oldPrice"></span>邮豆</dd>
+                        <dd>订单优惠金额：<span class="accountPrice"></span></dd>
+                        <dd>订单交易金额：<span class="orderPrice"></span>邮豆</dd>
+                        <dd>邮豆支付金额：<span class="ucoinPrice"></span>邮豆</dd>
+                        <dd>金钱支付金额：<span class="moneyPayTime"></span>元</dd>
+                        <dd>邮豆支付时间：<span class="ucoinPayTime"></span></dd>
+                        <dd>支付完成时间：<span class="finishTime"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt deliveryInfo">快递信息</dt>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">配送方式</dt>
+                        <dd>配送方式：<span class="deliveryType"></span></dd>
+                        <dd>运费：<span class="deliveryPrice">0.00</span></dd>
+                        <dd>收货地址：<span class="deliveryAddress"></span></dd>
+                        <dd>详细地址：<span class="deliveryDetailAddress"></span></dd>
+                        <dd>收货人：<span class="personGet"></span></dd>
+                        <dd>联系电话：<span class="contactPhone"></span></dd>
+                        <dd>手机：<span class="cellPhone"></span></dd>
+                        <dd>邮编：<span class="postCode"></span></dd>
+                        <dd>客户留言：<span class="customerRemark"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">下单类型</dt>
+                        <dd>下单类型：<span class="billType">网店代客下单</span></dd>
+                        <dd>操作者：<span class="operator"></span></dd>
+                        <dd>扣款验证方式：<span></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">卖家备注</dt>
+                        <dd style="width:740px;">卖家备注：<span class="selfRemark"></span></dd>
+                    </dl>
+
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <table class="Purchase_table" style="text-align:center;width:760px; margin-left:20px; margin-top:20px;" cellspacing="0" cellpadding="0" align="center" border="0">
+                <thead style="height:40px; background:#a4aeb9;">
+                <tr>
+                    <th>商品名称</th>
+                    <th>原始价格</th>
+                    <th>数量</th>
+                    <th style="width: 200px;">商品规格</th>
+                    <th>交易价格</th>
+                    <th>商品总价</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr bgcolor="#FFFFFF">
+                    <td><img src="${bath}/static/img/look.png" width="50" height="50" /><span>道具两件套</span></td>
+                    <td><span></span>邮豆</td>
+                    <td></td>
+                    <td>个数：两件套</td>
+                    <td><span></span>邮豆</td>
+                    <td><span></span>邮豆</td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </li>
+
+    </ul>
+</div>
+
+
+
+
+<div class="detailTwo">
+    <ul>
+        <li style="width:780px; height:60px; font-size:18px; color:#333; padding-left:20px; line-height:60px; border-bottom:1px solid #ccc;">订单号:<span class="accountNUM"></span><i id="xxTwo"></i></li>
+        <li style="width:800px; height:150px;">
+            <ul class="detailImg" style="width:800px; height:150px;">
+                <li class="Img11" style="text-align:center; position:relative; color:#e6e6e6;">已下单<br /><abbr class="Img1" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">1</abbr><abbr class="Img1" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="orderTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img22" style="text-align:center; position:relative; color:#e6e6e6;">已付款<br /><abbr class="Img2" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img2" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">2</abbr><abbr class="Img2" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="PayedTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img33" style="text-align:center; position:relative; color:#e6e6e6;">已发货<br /><abbr class="Img3" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img3" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">3</abbr><abbr class="Img3" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="sendExpressTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img44" style="text-align:center; position:relative; color:#e6e6e6;">已完成<br /><abbr class="Img4" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img4" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">4</abbr><span class="finishTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img55" style="text-align:center; position:relative; color:#e6e6e6;">已取消<br /><abbr class="Img5" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img5" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">2</abbr><span class="cancelTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+            </ul>
+        </li>
+        <li>
+            <ul class="checkDetailTwo">
+                <li>
+                    <dl>
+                        <dd class="dt">订单概况</dd>
+                        <dd>订单编号：<span class="orderCode"></span></dd>
+                        <dd>下单时间：<span class="createTime"></span></dd>
+                        <dd>订单状态：<span class="orderStatusDetail"></span></dd>
+                        <dd>使用优惠券：<span></span></dd>
+                        <dd>订单原始金额：<span class="oldPrice"></span>邮豆</dd>
+                        <dd>订单优惠金额：<span class="accountPrice"></span></dd>
+                        <dd>订单交易金额：<span class="orderPrice"></span>邮豆</dd>
+                        <dd>邮豆支付金额：<span class="ucoinPrice"></span>邮豆</dd>
+                        <dd>金钱支付金额：<span class="moneyPayTime"></span>元</dd>
+                        <dd>邮豆支付时间：<span class="ucoinPayTime"></span></dd>
+                        <dd>支付完成时间：<span class="finishTime"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt deliveryInfo">快递信息</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">配送方式</dd>
+                        <dd>配送方式：<span class="deliveryType"></span></dd>
+                        <dd>运费：<span class="deliveryPrice">0.00</span></dd>
+                        <dd>收货地址：<span class="deliveryAddress"></span></dd>
+                        <dd>详细地址：<span class="deliveryDetailAddress"></span></dd>
+                        <dd>收货人：<span class="personGet"></span></dd>
+                        <dd>联系电话：<span class="contactPhone"></span></dd>
+                        <dd>手机：<span class="cellPhone"></span></dd>
+                        <dd>邮编：<span class="postCode"></span></dd>
+                        <dd>客户留言：<span class="customerRemark"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">下单类型</dd>
+                        <dd>下单类型：<span class="billType"></span></dd>
+                        <dd>操作者：<span class="operator"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">卖家备注</dd>
+                        <dd style="width:740px;">卖家备注：<span class="selfRemark"></span></dd>
+                    </dl>
+
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <table class="Purchase_table" style="text-align:center;width:760px; margin-left:20px; margin-top:20px;" cellspacing="0" cellpadding="0" align="center" border="0">
+                <thead style="height:40px; background:#a4aeb9;">
+                <tr>
+                    <th>商品名称</th>
+                    <th>原始价格</th>
+                    <th>数量</th>
+                    <th style="width: 200px;">商品规格</th>
+                    <th>交易价格</th>
+                    <th>商品总价</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr bgcolor="#FFFFFF">
+                    <td><img src="${bath}/static/img/look.png" width="50" height="50" /><span>道具两件套</span></td>
+                    <td><span></span>邮豆</td>
+                    <td>1</td>
+                    <td>个数：两件套</td>
+                    <td><span></span>邮豆</td>
+                    <td><span></span>邮豆</td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </li>
+
+    </ul>
+</div>
+
+
+<div class="detailThree">
+    <ul>
+        <li style="width:780px; height:60px; font-size:18px; color:#333; padding-left:20px; line-height:60px; border-bottom:1px solid #ccc;">订单号:<span class="accountNUM"></span><i id="xxThree"></i></li>
+        <li style="width:800px; height:150px;">
+            <ul class="detailImg" style="width:800px; height:150px;">
+                <li class="Img11" style="text-align:center; position:relative; color:#e6e6e6;">已下单<br /><abbr class="Img1" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">1</abbr><abbr class="Img1" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="orderTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img22" style="text-align:center; position:relative; color:#e6e6e6;">已付款<br /><abbr class="Img2" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img2" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">2</abbr><abbr class="Img2" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="PayedTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img44" style="text-align:center; position:relative; color:#e6e6e6;">已完成<br /><abbr class="Img4" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img4" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">4</abbr><span class="finishTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img55" style="text-align:center; position:relative; color:#e6e6e6;">已取消<br /><abbr class="Img5" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img5" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">2</abbr><span class="cancelTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+            </ul>
+        </li>
+        <li>
+            <ul class="checkDetailThree">
+                <li>
+                    <dl>
+                        <dd class="dt">订单概况</dd>
+                        <dd>订单编号：<span class="orderCode"></span></dd>
+                        <dd>下单时间：<span class="createTime"></span></dd>
+                        <dd>订单状态：<span class="orderStatusDetail"></span></dd>
+                        <dd>使用优惠券：<span></span></dd>
+                        <dd>订单原始金额：<span class="oldPrice"></span>邮豆</dd>
+                        <dd>订单优惠金额：<span class="accountPrice"></span></dd>
+                        <dd>订单交易金额：<span class="orderPrice"></span>邮豆</dd>
+                        <dd>邮豆支付金额：<span class="ucoinPrice"></span>邮豆</dd>
+                        <dd>金钱支付金额：<span class="moneyPayTime"></span>元</dd>
+                        <dd>邮豆支付时间：<span class="ucoinPayTime"></span></dd>
+                        <dd>支付完成时间：<span class="finishTime"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">配送方式</dd>
+                        <dd>配送方式：<span class="deliveryType"></span></dd>
+                        <dd>提货网点：<span class="enterpriseAddress"></span></dd>
+                        <dd>提货人：<span class="pickName2"></span></dd>
+                        <dd>提货人电话：<span class="pickPhone2"></span></dd>
+                        <dd>客户留言：<span class="customerRemark"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">下单类型</dd>
+                        <dd>下单类型：<span class="billType"></span></dd>
+                        <dd>操作者：<span class="operator"></span></dd>
+                        <dd>扣款验证方式：<span></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">卖家备注</dd>
+                        <dd style="width:740px;">卖家备注：<span class="selfRemark"></span></dd>
+                    </dl>
+
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <table class="Purchase_table" style="text-align:center;width:760px; margin-left:20px; margin-top:20px;" cellspacing="0" cellpadding="0" align="center" border="0">
+                <thead style="height:40px; background:#a4aeb9;">
+                <tr>
+                    <th>商品名称</th>
+                    <th>原始价格</th>
+                    <th>数量</th>
+                    <th style="width: 200px;">商品规格</th>
+                    <th>交易价格</th>
+                    <th>商品总价</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr bgcolor="#FFFFFF">
+                    <td><img src="${bath}/static/img/look.png" width="50" height="50" /><span>道具两件套</span></td>
+                    <td><span>48.00</span>邮豆</td>
+                    <td></td>
+                    <td>个数：两件套</td>
+                    <td><span></span>邮豆</td>
+                    <td><span></span>邮豆</td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </li>
+
+    </ul>
+</div>
+
+<div class="detailFour">
+    <ul>
+        <li style="width:780px; height:60px; font-size:18px; color:#333; padding-left:20px; line-height:60px; border-bottom:1px solid #ccc;">订单号:<span class="accountNUM"></span><i id="xxFour"></i></li>
+        <li style="width:800px; height:150px;">
+            <ul class="detailImg" style="width:800px; height:150px;">
+                <li class="Img11" style="text-align:center; position:relative; color:#e6e6e6;">已下单<br /><abbr class="Img1" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">1</abbr><abbr class="Img1" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="orderTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;">2016-03-22 09:01:00</span></li>
+                <li class="Img22" style="text-align:center; position:relative; color:#e6e6e6;">已付款<br /><abbr class="Img2" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img2" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:92px; font-size:9px">2</abbr><abbr class="Img2" style="display:inline-block; width:90px; height:5px; background:#e6e6e6; position:absolute; left:109px; top:68px;"></abbr><span class="PayedTime" style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img44" style="text-align:center; position:relative; color:#e6e6e6;">已完成<br /><abbr class="Img4" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img4" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">4</abbr><span class="finishTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+                <li class="Img55" style="text-align:center; position:relative; color:#e6e6e6;">已取消<br /><abbr class="Img5" style="display:inline-block; width:92px; height:5px; background:#e6e6e6; position:absolute; left:0px; top:68px;"></abbr><abbr class="Img5" style="display:inline-block;  width:20px; height:20px; line-height:20px; color:#FFF; background:#e6e6e6; border-radius:10px; position:absolute; left:90px; font-size:9px">2</abbr><span class="cancelTime"  style="display:inline-block; margin-top:10px; color:#e6e6e6;"></span></li>
+            </ul>
+        </li>
+        <li>
+            <ul class="checkDetailFour">
+                <li>
+                    <dl>
+                        <dd class="dt">订单概况</dd>
+                        <dd>订单编号：<span class="orderCode"></span></dd>
+                        <dd>下单时间：<span class="createTime"></span></dd>
+                        <dd>订单状态：<span class="orderStatusDetail"></span></dd>
+                        <dd>使用优惠券：<span></span></dd>
+                        <dd>订单原始金额：<span class="oldPrice"></span>邮豆</dd>
+                        <dd>订单优惠金额：<span class="accountPrice"></span></dd>
+                        <dd>订单交易金额：<span class="orderPrice"></span>邮豆</dd>
+                        <dd>邮豆支付金额：<span class="ucoinPrice"></span>邮豆</dd>
+                        <dd>金钱支付金额：<span class="moneyPayTime"></span>元</dd>
+                        <dd>邮豆支付时间：<span class="ucoinPayTime"></span></dd>
+                        <dd>支付完成时间：<span class="finishTime"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">配送方式</dd>
+                        <dd>配送方式：<span class="deliveryType"></span></dd>
+                        <dd>提货网点：<span class="enterpriseAddress"></span></dd>
+                        <dd>提货人：<span class="pickName2"></span></dd>
+                        <dd>提货人电话：<span class="pickPhone2"></span></dd>
+                        <dd>客户留言：<span class="customerRemark"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">下单类型</dd>
+                        <dd>下单类型：<span class="billType"></span></dd>
+                        <dd>操作者：<span class="operator"></span></dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dd class="dt">卖家备注</dd>
+                        <dd style="width:740px;">卖家备注：<span class="selfRemark"></span></dd>
+                    </dl>
+
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <table class="Purchase_table" style="text-align:center;width:760px; margin-left:20px; margin-top:20px;" cellspacing="0" cellpadding="0" align="center" border="0">
+                <thead style="height:40px; background:#a4aeb9;">
+                <tr>
+                    <th>商品名称</th>
+                    <th>原始价格</th>
+                    <th>数量</th>
+                    <th style="width: 200px;">商品规格</th>
+                    <th>交易价格</th>
+                    <th>商品总价</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </li>
+
+    </ul>
+</div>
+
+
+
+<div class="setAccountState">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">设置订单状态</li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">
+            你确定将订单状态修改为已付款吗
+        </li>
+        <li style="text-align: center;">
+            <input type="button" id="setAccountStateConfrim" value="确定" />
+            <input type="button" id="setAccountStateCancel" value="取消" />
+        </li>
+    </ul>
+</div>
+
+<div class="setAccountMoneyWarning">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">操作提示</li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">
+         订单金额不能随意修改，你确定要修改吗？
+        </li>
+        <li style="text-align: center;">
+            <input type="button" id="setAccountMoneyWarningConfrim" value="确定" />
+            <input type="button" id="setAccountMoneyWarningCancel" value="取消" />
+        </li>
+    </ul>
+</div>
+
+
+<div class="setAccountMoney">
+    <ul>
+        <input type="hidden" id="orderCode" />
+        <li style="font-size:24px; padding-left:30px;">修改订单金额</li>
+        <li style="height:100px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:100px; text-align: center;">
+          <i style="color: #ff3300;">*</i>优惠的金额：<input style="width: 350px; height: 35px;" type="text" id="priceForsetAccountMoney"/>
+        </li>
+        <li style="height:150px; width: 640px; margin-left: 20px; line-height:150px; text-align: center;">
+            <span style="position:relative; top: -70px;"><i style="color: #ff3300;">*</i>修改金额原因：</span><textarea rows="4" cols="40"></textarea>
+        </li>
+        <li style="text-align: center;">
+            <input type="button" id="setAccountMoneyConfrim" value="确定" />
+            <input type="button" id="setAccountMoneyCancel" value="取消" />
+        </li>
+    </ul>
+</div>
+
+
+<div class="CancelAccountStateWarning">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">操作提示</li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">
+            订单不能随意中断，你确定要修改吗？
+        </li>
+        <li style="text-align: center;">
+            <input type="button" id="CancelAccountStateWarningConfrim" value="确定" />
+            <input type="button" id="CancelAccountStateWarningCancel" value="取消" />
+        </li>
+    </ul>
+</div>
+
+<div class="updateAccountState">
+    <ul>
+        <li style="font-size:24px; padding-left:30px;">修改订单状态</li>
+        <li style="height:250px; width: 640px; margin-left: 20px; border-top:1px solid #CCC; line-height:250px; text-align: center;">
+            <span style="position:relative; top: -70px;"><i style="color: #ff3300;">*</i>申请原因：</span><textarea rows="4" cols="50"></textarea>
+        </li>
+        <li style="text-align: center;">
+            <input type="button" id="updateAccountStateConfrim" value="确定" />
+            <input type="button" id="updateAccountStateCancel" value="取消" />
+        </li>
+    </ul>
+</div>
+
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+<script src="${bath}/static/js/jquery.datetimepicker.full.js"></script>
+<script src="${bath}/static/js/orderManager.js?version=${VERSION}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+
+
+<div class="bar-bottom">
+    <a class="bar-item" href="${basePath}/main"><i class="bar-bottom-i home"></i>首页</a>
+    <#--<a class="bar-item" href="${basePath}/cates.html"><i class="bar-bottom-i class"></i>分类</a>-->
+    <#--<a class="bar-item" href="${basePath}/customer/addCoupon.htm"><i class="bar-bottom-coupon"></i></a>-->
+    <a class="bar-item" href="${basePath}/myshoppingmcart"><i class="bar-bottom-i cart"></i>购物车</a>
+    <a class="bar-item" href="${basePath}/customercenter"><i class="bar-bottom-i mine"></i>我的</a>
+</div>
+
+<script>
+
+    if(window.location.href.indexOf("uindex.htm")>=0)
+    {
+        var item = document.getElementById('bar-bottom-item1');
+        item.setAttribute("class", "bar-item selected");
+    }
+
+    if(window.location.href.indexOf("addCoupon.htm")>=0)
+    {
+        var item = document.getElementById('bar-bottom-item2');
+        item.setAttribute("class", "bar-item selected");
+    }
+
+    if(window.location.href.indexOf("customercenter.htm")>=0)
+    {
+        var item = document.getElementById('bar-bottom-item3');
+        item.setAttribute("class", "bar-item selected");
+    }
+
+</script>

@@ -1,0 +1,87 @@
+package com.ylife.inventory.mapper;
+
+
+import com.ylife.data.page.Pageable;
+import com.ylife.inventory.model.BillStatus;
+import com.ylife.inventory.model.BillType;
+import com.ylife.inventory.model.InventoryBill;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
+
+public interface InventoryBillMapper {
+
+    int deleteByPrimaryKey(Long billId);
+
+    int insert(InventoryBill record);
+
+    int insertSelective(InventoryBill record);
+
+    InventoryBill selectByPrimaryKey(Long billId);
+
+    InventoryBill selectByPrimaryKeyForUpdate(Long billId);
+
+    List<InventoryBill> selectByCreatorId(@Param("creatorId") Long creatorId,
+                                          @Param("code") Long code,
+                                          @Param("creatorName") String creatorName,
+                                          @Param("start") Date start,
+                                          @Param("end") Date end,
+                                          @Param("billStatus")BillStatus billStatus,
+                                          @Param("billType")BillType billType,
+                                          @Param("pageable") Pageable pageable);
+
+    int countByCreatorId(@Param("creatorId") Long creatorId,
+                         @Param("code") Long code,
+                         @Param("creatorName") String creatorName,
+                         @Param("start") Date start,
+                         @Param("end") Date end,
+                         @Param("billStatus")BillStatus billStatus,
+                         @Param("billType")BillType billType);
+
+    List<InventoryBill> selectByCurrentId(@Param("currentId") Long currentId,
+                                          @Param("code") Long code,
+                                          @Param("creatorName") String creatorName,
+                                          @Param("start") Date start,
+                                          @Param("end") Date end,
+                                          @Param("billStatus")BillStatus billStatus,
+                                          @Param("billType")BillType billType,
+                                          @Param("pageable") Pageable pageable);
+
+    int countByCurrentId(@Param("currentId") Long currentId,
+                         @Param("code") Long code,
+                         @Param("creatorName") String creatorName,
+                         @Param("start") Date start,
+                         @Param("end") Date end,
+                         @Param("billStatus")BillStatus billStatus,
+                         @Param("billType")BillType billType);
+
+    List<InventoryBill> selectHandleHistory(@Param("enterpriseId") Long enterpriseId,
+                                            @Param("code") Long code,
+                                            @Param("creatorName") String creatorName,
+                                            @Param("start") Date start,
+                                            @Param("end") Date end,
+                                            @Param("pageable") Pageable pageable);
+
+    int countHandleHistory(@Param("enterpriseId") Long enterpriseId,
+                           @Param("code") Long code,
+                           @Param("creatorName") String creatorName,
+                           @Param("start") Date start,
+                           @Param("end") Date end,
+                           @Param("billStatus")BillStatus billStatus,
+                           @Param("billType")BillType billType);
+
+    List<InventoryBill> selectByModel(@Param("model") InventoryBill model, @Param("pageable") Pageable pageable);
+
+    int countByModel(InventoryBill model);
+
+    InventoryBill selectByCode(Long code);
+
+    int updateByPrimaryKeySelective(InventoryBill record);
+
+    int updateByPrimaryKey(InventoryBill record);
+
+    InventoryBill selectBillDetailByPrimaryKey(Long billId);
+
+    InventoryBill selectBillDetailByCode(Long code);
+}

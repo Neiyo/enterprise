@@ -1,0 +1,14 @@
+$(document).ready(function(){
+   $("#payCheck").click(function(){
+       $.post("../web/api/valet/payOrder",{
+           orderCode:payOrder
+       },function(data){
+           if( data.response == 'success' ){
+                type_alert("UserGet","支付成功","success");
+           }
+           else{
+               response_ensure_alert("error",data.data.text,function(){})
+           }
+       });
+   });
+});

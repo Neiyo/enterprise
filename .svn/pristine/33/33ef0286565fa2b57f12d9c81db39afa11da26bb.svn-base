@@ -1,0 +1,310 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css?version=${VERSION}"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css" />
+    <script src="${bath}/static/js/jPages.js"></script>
+    <script src="${bath}/static/js/xcConfirm.js"></script>
+    <script src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
+    <script src="${bath}/static/js/zrj_ajaxPages.js?version=${VERSION}"></script>
+    <style type="text/css">
+        @media screen and ( max-width: 1360px) {
+            body {
+                zoom: 62.5%;
+                font-size: 10px !important;
+            }
+        }
+        input[type='checkbox']:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+        }
+        .itemsButton{
+            width:1400px;
+            height:140px;
+            margin-left:20px;
+        }
+        .itemsButton li{
+            width:200px;
+            height:40px;
+            float:left;
+            margin-left:20px;
+            margin-top:20px;
+        }
+        .itemsButton li span{
+            display:inline-block;
+            vertical-align:middle;
+            width:90px;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+        }
+        .itemsButton li input{
+            width:108px;
+            height:40px;
+            border:none;
+            background:#FFF;
+        }
+        .itemsButton li input:hover{
+            box-shadow: 1px 0px 5px 0px #ccc;
+
+        }
+        .itemsButton li select{
+            width:100px;
+            height:38px;
+            margin-top:-1px;
+            border:none;
+            background:#FFF;
+        }
+        #itemsSearch{
+            width:75px;
+            height:40px;
+            border:none;
+            background:#24b383;
+            color:#FFF;
+        }
+        #itemsSearch:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+        }
+        #itemsSearch:active{
+            background: #009966;
+        }
+        #itemsOut{
+            width:130px;
+            height:40px;
+            border:none;
+            background:#33cccc;
+            text-align:center;
+            margin-left:20px;
+            color:#FFF;
+        }
+        .itemsTable{
+            width:1600px;
+            height:auto;
+            margin-left:20px;
+        }
+        .itemsList{
+            width:1600px;
+            height:800px;
+            overflow-y:auto;
+        }
+        .itemsList dt{
+            width:1600px;
+            height:60px;
+            color:#666666;
+            border-bottom:1px solid #e5e5e5;
+        }
+        .itemsList dt abbr{
+            display:inline-block;
+            width:150px;
+            height:60px;
+            text-align:center;
+            padding:15px 0px;
+        }
+        .itemsList dd{
+            width:1600px;
+            height:80px;
+            background:#fff;
+            border-bottom:1px solid #e5e5e5;
+        }
+        .itemsList dd abbr{
+            display:inline-block;
+            text-align:center;
+            width:150px;
+            height:80px;
+            vertical-align:middle;
+            padding:30px 0px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+
+        }
+        .itemsList dd abbr:nth-child(3){
+            vertical-align:top!important;
+            font-size: 14px;
+            overflow: hidden;
+        }
+        .inOut{
+            width:80px;
+            height:35px;
+            text-align:center;
+            border:1px solid #CCC;
+            background:#666;
+            color: #fff;
+        }
+        #holder{
+            margin-top: 20px;
+        }
+
+        .select{
+            display: inline-block;
+            vertical-align: middle;
+            width:120px;
+            height:32px;
+            margin-left:20px;
+            border:1px solid #ccc;
+            border-radius: 32px;
+            background:#f8f8f8;
+            text-align: center;
+            position: relative;
+        }
+        .select dt{
+            border-radius: 32px;
+        }
+        .select dt,.select dd {
+            width:120px;
+            height:32px;
+            border:1px solid #ccc!important;
+            background:#f8f8f8;
+            margin-top: -1px;
+            margin-left:-1px;
+            cursor: pointer;
+            line-height: 32px;
+        }
+        .arrow{
+            display: inline-block;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 36px;
+            height: 38px;
+            background:url(${bath}/static/img/com_btn_arrow_bg_down.png) center no-repeat;
+        }
+        .select dd{
+            display: none;
+        }
+        .select dd:hover{
+            color: #24b35f;
+        }
+        .select dd:active{
+            color: #fff;
+            background: #24b35f;
+        }
+        .select dt:hover{
+            color: #24b35f;
+        }
+        .select dt:active{
+            color: #fff;
+            background: #24b35f;
+        }
+    </style>
+    <script type="text/javascript">
+        //禁止后退键 作用于Firefox、Opera
+        document.onkeypress = forbidBackSpace;
+        //禁止后退键  作用于IE、Chrome
+        document.onkeydown = forbidBackSpace;
+        var isTop = ${isTop};
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            $("input[type='text'],input[type='password']").focus(function(){
+                $(this).css("background","#f1f1f1");
+            })
+            $("input[type='text'],input[type='password']").blur(function(){
+                $(this).css("background","#fff");
+            })
+        });
+    </script>
+
+    <title>无标题文档</title>
+</head>
+
+<body style="background: #edf3f8">
+<div style="background:#fff;margin-left: 20px; margin-top: 20px;margin-bottom: 20px; height:auto;width: 100%;overflow-x: scroll;">
+<div style="width:100%; font-size: 16px; height:70px; line-height: 70px;margin-left:20px;">
+	<span style="font:20px '黑体'; color:#2c97de; display:inline-block; line-height: 70px;">商品管理
+    </span>
+</div>
+
+
+<div class="itemsButton">
+    <ul>
+        <li style="width: 250px"><input class="allinputButton" placeholder="货品名称" style="width: 208px" type="text" name="itemManager_Name" /></li>
+        <li style="width: 250px"><input class="allinputButton" placeholder="货品编号" style="width: 158px" type="text" name="itemManager_Number" /></li>
+        <#--<li><span>品牌</span>-->
+            <#--<select name="itemManager_Brand">-->
+                <#--<option selected="selected">全部</option>-->
+                <#--<#list brandResult as object>-->
+                    <#--<option value="${object.brandId}">${object.goodsBrand}</option>-->
+                <#--</#list>-->
+            <#--</select>-->
+        <#--</li>-->
+        <li style=" width: 250px;height: 40px!important;" class="allinputButton"><span>是否上架</span>
+            <select name="itemManager_Shelves">
+                <option selected="selected">全部</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+            </select>
+        </li>
+        <#--<li><span>分类</span>-->
+            <#--<select name="itemManager_Type">-->
+                <#--<option selected="selected">全部</option>-->
+                <#--<#list typeResult as object>-->
+                    <#--<option value="${object.typeId}">${object.goodsInfoTypeName}</option>-->
+                <#--</#list>-->
+            <#--</select>-->
+        <#--</li>-->
+        <#--<li><span>商家</span>-->
+            <#--<select name="itemManager_ThirdName">-->
+                <#--<option selected="selected">全部</option>-->
+                <#--<#list thirdNameResult as object>-->
+                    <#--<option value="${object.thirdId}">${object.thirdName}</option>-->
+                <#--</#list>-->
+            <#--</select>-->
+        <#--</li>-->
+        <li style="width:300px; border:none;">
+
+            <input class="allseachButton" type="button" id="itemsSearch" value="搜索" />
+            <dl class="select"> <i value="0" class="arrow"></i>
+                <dt class="allSelectButton" id="outputAll">导出所有</dt>
+                <dd class="allSelectButton" id="outputPart">导出选中</dd>
+            </dl>
+        </li>
+    </ul>
+
+
+</div>
+
+
+
+<div class="itemsTable">
+    <dl class="itemsList">
+        <dt><abbr style="width:50px;"><input name="itemsListCheck" type="checkbox" /></abbr><abbr>图片</abbr><abbr>货品名称</abbr><abbr>货品规格</abbr><abbr>货品编号</abbr><abbr>商城价(邮豆)</abbr><abbr>是否上架</abbr><abbr>分类</abbr><abbr>品牌</abbr><abbr>所属商家</abbr><abbr>操作</abbr>
+        </dt>
+
+        <div id="itemContainer"></div>
+        <div class="allcpageTurnButton" id="holder"></div>
+    </dl>
+
+</div>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+    </div>
+<script src="${bath}/static/js/itemManager.js?version=${VERSION}"></script>
+</body>
+<script>
+    $(document).ready(function(){
+        $(document).on("mouseover",".select",function(){
+            $(this).children("dd").show()
+        })
+        $(document).on("mouseout",".select",function(){
+            $(this).children("dd").hide()
+        })
+        $(document).on("click",".itemsList dt input[name='itemsListCheck']",function(){
+            if($(".itemsList dt input[name='itemsListCheck']").is(':checked')) {
+                $(".itemsList dd input[name='itemsListCheck']:not(:checked)").each(function () {
+                    $(this).trigger("click")
+                });
+            }else if(!$(".itemsList dt input[name='itemsListCheck']").is(':checked')){
+                $(".itemsList dd input[name='itemsListCheck']:checked").each(function () {
+                    $(this).trigger("click")
+                });
+            }
+
+        })
+    })
+</script>
+</html>

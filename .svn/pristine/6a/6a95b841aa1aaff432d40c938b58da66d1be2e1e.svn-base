@@ -1,0 +1,128 @@
+package com.ylife.chinapost.service.impl;
+
+import com.ylife.chinapost.service.CurrentLoginService;
+import com.ylife.chinapost.service.ReportInfoService;
+import com.ylife.chinapost.service.pojo.ReportInfo;
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.mapper.EnterpriseFunctionMapper;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.form.model.FormFunc;
+import com.ylife.form.service.FormFuncService;
+import com.ylife.ucoin.model.CustomerUcoinHistory;
+import com.ylife.utils.DateUtil;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2016/8/5.
+ */
+
+@Service
+public class ReportInfoServiceImpl implements ReportInfoService {
+
+    @Resource
+    private CurrentLoginService currentLoginService;
+    @Resource
+    private EnterpriseFunctionMapper enterpriseFunctionMapper;
+    @Resource
+    private FormFuncService formFuncService;
+
+
+    @Override
+    public ReportInfo getReportInfo(Date start, Date end) {
+        Long enterpriseId=currentLoginService.getCurrentLoginEnterpriseId();
+        ReportInfo info=new ReportInfo();
+        EnterpriseFunction function=enterpriseFunctionMapper.selectByPrimaryKey(enterpriseId);
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        Date now =new Date();
+        Date today=DateUtil.getMorning(now);
+        Date yearStart=DateUtil.getStartYear(now);
+        FormFunc historyToday=formFuncService.getReportInfoByTime(maxCatalog, minCatalog, today, now);
+        info.setExpenditureByDay(historyToday.getExpenditure());
+        info.setPriceByDay(historyToday.getTotalPrice());
+        FormFunc historyYear=formFuncService.getReportInfoByTime(maxCatalog, minCatalog, yearStart, now);
+        info.setPriceByYear(historyYear.getTotalPrice());
+        info.setExpenditureByYear(historyYear.getExpenditure());
+        FormFunc historyTIme=formFuncService.getReportInfoByTime(maxCatalog, minCatalog, start, end);
+        info.setPriceBytime(historyTIme.getTotalPrice());
+        info.setExpenditureBytime(historyTIme.getExpenditure());
+        info.setMarketPrice(historyTIme.getTotalMarketPrice());
+        info.setSalePrce(historyTIme.getTotalSalePrice());
+        List<FormFunc> historyEveryDay=formFuncService.getReportInfoEveryDay(maxCatalog, minCatalog, start, end);
+        List<Date> dateList=DateUtil.dateSplit(start,end);
+        for(int i=0;i<dateList.size();i++){
+            Date date1=historyEveryDay.get(i).getHistoryDay();
+            Date date2=dateList.get(i);
+            if(!date1.equals(date2)){
+                FormFunc model=new FormFunc();
+                model.setTotalPrice(BigDecimal.ZERO);
+                model.setExpenditure(0l);
+                model.setHistoryDay(dateList.get(i));
+                historyEveryDay.add(i, model);
+            }
+        }
+        info.setDayList(historyEveryDay);
+
+        List<FormFunc> newCustomerAmount=formFuncService.newCustomerAmount(maxCatalog,minCatalog,start,end);
+        info.setNewCustomerAmountList(newCustomerAmount);
+        return info;
+    }
+
+    @Override
+    public Page<FormFunc> getUcoingrandReport(Long enterpriseId, Date start, Date end, String idCard,Pageable pageable) {
+        EnterpriseFunction function;
+        if(enterpriseId==null){
+            function=currentLoginService.getCurrentLoginEnterpriseFunc();
+        }else {
+            function = enterpriseFunctionMapper.selectByPrimaryKey(enterpriseId);
+        }
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        return formFuncService.getucoinGrandForm(idCard, maxCatalog, minCatalog, start, end,pageable);
+    }
+
+    @Override
+    public Page<FormFunc> getDetailGrandInfo(Long enterpriseId,Date start,Date end,String idCard,Pageable pageable) {
+        EnterpriseFunction function;
+        if(enterpriseId==null){
+            function=currentLoginService.getCurrentLoginEnterpriseFunc();
+        }else {
+            function = enterpriseFunctionMapper.selectByPrimaryKey(enterpriseId);
+        }
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        return formFuncService.getDetailGrandForm(idCard,maxCatalog,minCatalog,start,end,pageable);
+    }
+
+    @Override
+    public Page<FormFunc> getCustomerconsumeReport(String idCard, Date start, Date end, Pageable pageable) {
+        EnterpriseFunction function=currentLoginService.getCurrentLoginEnterpriseFunc();
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        return formFuncService.getCustomerConsume(idCard,maxCatalog,minCatalog,start,end,pageable);
+    }
+
+    @Override
+    public Page<FormFunc> getDetailConsume(String idCard, Date start, Date end, Pageable pageable) {
+        EnterpriseFunction function=currentLoginService.getCurrentLoginEnterpriseFunc();
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        return formFuncService.getDetailConsume(idCard,maxCatalog,minCatalog,start,end,pageable);
+    }
+
+    @Override
+    public Page<FormFunc> getBaseReport(Long enterpriseId, Date start, Date end, Pageable pageable) {
+        EnterpriseFunction function=currentLoginService.getCurrentLoginEnterpriseFunc();
+        Long maxCatalog=function.getMaxCatalog();
+        Long minCatalog=function.getMinCatalog();
+        return formFuncService.getNetdata(maxCatalog,minCatalog,start,end,pageable);
+    }
+
+}

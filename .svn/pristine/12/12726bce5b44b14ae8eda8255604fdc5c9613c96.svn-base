@@ -1,0 +1,168 @@
+package com.ylife.data.order;
+
+import com.ylife.exception.ServerInternalException;
+import com.ylife.utils.ClasspathPropertiesHelper;
+import com.ylife.utils.InetAddressUtil;
+import com.ylife.utils.StringUtil;
+
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Created by InThEnd on 2016/5/4.
+ * ID生成器工厂，通过create(String type)方法生成Generator。type参数为使用者定义的业务类型，需要使用者自己维护。
+ * 生成的单个Generator对象都是线程安全的，针对每一种不同的需求可分别生成一个Generator。
+ * 注意Generator的实例与实例之间生成的ID是无法保证唯一的。某一种需求需使用同一个Generator事例。
+ * 比如对于订单表，所有获取订单号的方法必须使用同一个Generator；而退单表则最好创建另外一个Generator实例来保证并发性。
+ *
+ * @author InThEnd
+ * @see #create(String type)
+ */
+public class IdGeneratorFactory {
+
+    private static final String PROPERTY_TABLE = "provider.tableName";
+    private static final String PROPERTY_DRIVER_NAME = "provider.driverName";
+    private static final String PROPERTY_URL = "provider.url";
+    private static final String PROPERTY_USERNAME = "provider.username";
+    private static final String PROPERTY_PASSWORD = "provider.password";
+
+    private static final String COLUMN_MAC = "mac_address";
+
+    private static final ClasspathPropertiesHelper helper = new ClasspathPropertiesHelper("id-generator.properties");
+
+    private static int serverId;
+
+    private static final Map<String, Generator> generatorMap = new ConcurrentHashMap<>();
+
+    static {
+        try {
+            init();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private IdGeneratorFactory() {
+    }
+
+
+    public static synchronized Generator create(String type) {
+        Generator generator = generatorMap.get(type);
+        if (generator == null) {
+            generator = new InternalGenerator(serverId);
+            generatorMap.put(type, generator);
+        }
+        return generator;
+    }
+
+
+    private static class InternalGenerator implements Generator {
+
+        private static final DateFormat format = new SimpleDateFormat("yyMMdd");
+
+        private int serverId;
+
+        private int secondOffSet = (TimeZone.getDefault().getRawOffset()) / 1000;
+
+        InternalGenerator(int serverId) {
+            this.serverId = serverId;
+        }
+
+        private long lastTime = System.currentTimeMillis();
+
+        private int seqNumber = 0;
+
+        public long generate() {
+            long[] longs = compute();
+            long time = longs[0];
+            long number = longs[1];
+            long date = Long.parseLong(format.format(new Date(time)));
+            long second = ((time / 1000) + secondOffSet) % (3600 * 24);
+            return date * 1000 * 1000 * 1000 * 10 + serverId * 1000 * 1000 * 100 + second * 1000 + number;
+        }
+
+        private synchronized long[] compute() {
+            long current = System.currentTimeMillis();
+            if (inOneSecond(lastTime, current)) {
+                seqNumber++;
+                if (seqNumber >= 999) {
+                    try {
+                        Thread.sleep(1001 - current % 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                seqNumber = 0;
+            }
+            lastTime = current;
+            return new long[]{current, seqNumber};
+        }
+
+
+        private boolean inOneSecond(long time1, long time2) {
+            return time1 / 1000 == time2 / 1000;
+        }
+
+    }
+
+
+    private static void init() throws Exception {
+        //获取mac地址
+        String mac = InetAddressUtil.getMacAddress();
+        if (StringUtil.isBlank(mac)) {
+            throw new RuntimeException("获取mac地址失败！");
+        }
+
+        //初始化数据库连接
+        Class.forName(helper.getProperty(PROPERTY_DRIVER_NAME));
+        String url = helper.getProperty(PROPERTY_URL);
+        String username = helper.getProperty(PROPERTY_USERNAME);
+        String password = helper.getProperty(PROPERTY_PASSWORD);
+        Connection connection = DriverManager.getConnection(url, username, password);
+        PreparedStatement statement1 = connection.prepareStatement(querySQL());
+        PreparedStatement statement2 = connection.prepareStatement(insertSQL(), Statement.RETURN_GENERATED_KEYS);
+        statement1.setString(1, mac);
+        statement2.setString(1, mac);
+
+        //获取查询SQL
+        ResultSet resultSet = statement1.executeQuery();
+        if (resultSet.first()) {
+            serverId = resultSet.getInt("id");
+        } else {
+            statement2.executeUpdate();
+            resultSet = statement2.getGeneratedKeys();
+            if (resultSet.first()) {
+                serverId = resultSet.getInt(1);
+            }
+        }
+        if (serverId > 99) {
+            throw new ServerInternalException("服务器ID必须小于等于99.");
+        }
+        resultSet.close();
+        statement1.close();
+        statement2.close();
+        connection.close();
+
+    }
+
+    private static String querySQL() {
+        return new StringBuilder("SELECT * FROM ")
+                .append(helper.getProperty(PROPERTY_TABLE)).append(" WHERE ")
+                .append(COLUMN_MAC).append("=").append("?")
+                .toString();
+    }
+
+    private static String insertSQL() {
+        return new StringBuilder("INSERT INTO ")
+                .append(helper.getProperty(PROPERTY_TABLE)).append("(").append(COLUMN_MAC)
+                .append(")").append(" VALUES(").append("?").append(")")
+                .toString();
+    }
+
+}

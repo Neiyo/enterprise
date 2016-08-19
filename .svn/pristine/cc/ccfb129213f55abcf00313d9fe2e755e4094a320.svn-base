@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.authority.mapper.AuthorityResoucePageMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.authority.model.AuthorityPageKey">
+        <id column="authority_id" property="authorityId" jdbcType="BIGINT"/>
+        <id column="page_id" property="pageId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.ylife.authority.model.AuthorityPageKey">
+        delete from ysh_enterprise_authority_page
+        where authority_id = #{authorityId,jdbcType=BIGINT}
+        and page_id = #{pageId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByAuthorityId" parameterType="java.lang.Long">
+        delete from
+        ysh_enterprise_authority_page
+        where
+        authority_id = #{authorityId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.authority.model.AuthorityPageKey">
+        insert into ysh_enterprise_authority_page (authority_id, page_id)
+        values (#{authorityId,jdbcType=BIGINT}, #{pageId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into
+        ysh_enterprise_authority_page
+        (authority_id, page_id)
+        values
+        <foreach collection="list" separator="," item="item">
+            (#{item.authorityId,jdbcType=BIGINT}, #{item.pageId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+    <select id="exist" parameterType="com.ylife.authority.model.AuthorityPageKey" resultType="java.lang.Boolean">
+        select count(*)
+        from ysh_enterprise_authority_page
+        where authority_id = #{authorityId,jdbcType=BIGINT}
+        and page_id = #{pageId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

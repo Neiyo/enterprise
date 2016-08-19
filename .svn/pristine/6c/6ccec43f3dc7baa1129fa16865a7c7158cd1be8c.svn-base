@@ -1,0 +1,418 @@
+<#assign bath = request.contextPath>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/jPages.css"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css"/>
+
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/jPages.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script>
+        //wealth_do   已分配
+        //wealth_undo 未分配
+        var wealth_do = ${wealth_do};
+        var wealth_undo = ${wealth_undo};
+    </script>
+    <script src="${bath}/static/js/excel.js"></script>
+    <title>无标题文档</title>
+    <style type="text/css">
+        .Ucoin{
+            width:700px;
+            height:300px;
+            border:1px solid #999;
+            margin-left:20px;
+            margin-top: 20px;
+            background:#FFF;
+            box-shadow:1px 1px 1px 1px #999;
+            position:relative;
+        }
+        .Ucoin #my_container{
+            position:absolute;
+            top:0px;
+            right:0px;
+        }
+        .Ucoin .UcoinContent{
+            width:400px;
+            height:300px;
+            position:absolute;
+            left:0px;
+            top:0px;
+        }
+        .Ucoin .UcoinContent li{
+            width:200px;
+            height:50px;
+            margin:40px 10px;
+        }
+        .Ucoin .UcoinContent li a{
+            display:inline-block;
+            width:75px;
+            height:25px;
+            text-align:center;
+            line-height:25px;
+            background:#24b383;
+            border-radius:2px;
+            font-size:14px;
+            color:#FFF;
+            margin-right:20px;
+            cursor:pointer;
+        }
+        .Ucoin .UcoinContent li a:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+        }
+        .Ucoin .UcoinContent li a:active{
+            background: #009966;
+        }
+        .UcoinUnder{
+            width:700px;
+            height:300px;
+            border:1px solid #999;
+            margin-left:20px;
+            background:#FFF;
+            box-shadow:1px 1px 1px 1px #999;
+            position:absolute;
+            left:750px;
+            top:92px;
+        }
+        .UcoinUnder li{
+            width:200px;
+            height:50px;
+            margin:40px 10px;
+        }
+        .Budget{
+            width:600px;
+            height:300px;
+            border:1px solid #999;
+            background:#FFF;
+            box-shadow:1px 1px 1px 1px #999;
+            position:fixed;
+            left:15%;
+            top:30%;
+            display:none;
+            z-index: 3;
+        }
+        .Budget li{
+            width:600px;
+            height:50px;
+            margin:5px 10px;
+        }
+        .Budget li input{
+            margin-left:50px;
+            width:350px;
+            height:30px;
+            border-style:none;
+            border-bottom:1px solid #999;
+            background:#FFF;
+        }
+        #Ucoinsub{
+            width:160px;
+            height:30px;
+            border-style:none;
+            border-radius:3px;
+            background:#24b383;
+            color:#FFF;
+            margin-left:200px;
+            margin-top:20px;
+            cursor:pointer;
+        }
+        #Ucoinsub:hover {
+           box-shadow: 0px 1px 3px 0px #333333;
+        }
+        #Ucoinsub:active {
+            background: #009966;
+        }
+        .Budget li i{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:450px;
+            top:0px;
+            cursor:pointer;
+        }
+        .CashAssign{
+            width:800px;
+            height:auto;
+            border:1px solid #999;
+            background:#FFF;
+            box-shadow:1px 1px 1px 1px #999;
+            position:absolute;
+            left:15%;
+            top:15%;
+            display:none;
+            z-index: 3;
+        }
+        .CashAssign li{
+            width:600px;
+            height:auto;
+            margin:25px 10px;
+        }
+        .CashAssign h1{
+            width:600px;
+            height:50px;
+            margin:0px 10px;
+        }
+        .CashAssign li ul{
+            margin:20px 0px;
+            position:relative;
+            top:-40px;
+            left:100px;
+            width:500px;
+        }
+        .CashAssign li ul li{
+            width:700px;
+            height:30px;
+            line-height:30px;
+            margin:10px 0px;
+        }
+        .CashAssign li ul li abbr{
+            display: inline-block;
+            vertical-align: middle;
+            width: 400px;
+        }
+        .CashAssign li ul li input.CashChkbox{
+            margin:0px 10px;
+        }
+        .CashAssign li ul li input.Cashtext{
+            width:150px;
+            height:30px;
+            border-style:none;
+            border:1px solid #999;
+            background:#FFF;
+        }
+        #checkval{
+            border-style:none;
+            background:#FFF;
+        }
+        #Cashsub{
+            width:160px;
+            height:30px;
+            border-style:none;
+            border-radius:3px;
+            background:#24b383;
+            color:#FFF;
+            margin-left:200px;
+            margin-bottom:30px;
+            cursor:pointer;
+        }
+        #Cashsub:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+        }
+        #Cashsub:active{
+            background: #009966;
+        }
+        .CashAssign h1 i{
+            display:inline-block;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            position:relative;
+            left:500px;
+            top:10px;
+            cursor:pointer;
+        }
+        .CashPwd{
+            width:600px;
+            height:250px;
+            border:1px solid #999;
+            border-radius:5px;
+            background:#FFF;
+            box-shadow:1px 1px 1px 1px #999;
+            position:fixed;
+            left:15%;
+            top:30%;
+            display:none;
+            z-index: 4;
+        }
+        .CashPwd li{
+            width:550px;
+            height:65px;
+            padding-left:20px;
+        }
+        #CashPwd{
+            width:150px;
+            height:30px;
+            margin-left:30px;
+        }
+        #CashPwdSub{
+            width:80px;
+            height:40px;
+            border-style:none;
+            background:#24b383;
+            color:#fff;
+        }
+        #CashPwdSub:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+
+        }
+        #CashPwdSub:active{
+           background: #009966;
+        }
+        #CashCancel{
+            width:80px;
+            height:40px;
+            border-style:none;
+            border:1px solid #CCC;
+            background:#FFF;
+            margin-left:30px;
+        }
+        #CashCancel:hover{
+            box-shadow: 0px 1px 3px 0px #333;
+        }
+        #CashCancel:active{
+            background: #009966;
+            color: #fff;
+
+        }
+        .table_list thead tr{
+            height: 50px!important;
+            color: #fff;
+            background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+        }
+        .table_list tbody tr{
+            height: 30px!important;
+        }
+        .table_list tbody tr:nth-child(2n) {
+            background: #ccc!important;
+        }
+        .holder{
+            margin-top: 20px;
+        }
+        .holder a{
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #ccc;
+
+        }
+        .holder a.jp-current{
+            background: #24b383;
+            color: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            moveWindow.apply($('.CashAssign'));
+            moveWindow.apply($('.CashPwd'));
+            moveWindow.apply($('.Budget'));
+
+
+            if(${flag}){
+                $("#BudGo").hide()
+            }
+        })
+
+    </script>
+</head>
+
+<body>
+
+<div style="width:100%; height:70px; margin-left:20px; border-bottom: 1px solid #ccc;">
+  	<span style="font:30px '微软雅黑'; color:#000; display:inline-block; margin-top:15px;margin-bottom:10px;position:relative;">财富管理
+      </span>
+</div>
+<div class="Ucoin">
+    <div class="UcoinContent">
+        <ul>
+            <li style="font-size:18px;">${enterpriseInfo.enterpriseName}</li>
+            <li style="font-size:24px; color:#000; font-weight:bold;"><span>${wealth_total}</span>邮豆</li>
+            <li><a id="BudGo">预算申请</a><a id="CashGo">财富分配</a></li>
+        </ul>
+    </div>
+    <div id="my_container">
+        <canvas id="pie_canvas"></canvas>
+    </div>
+</div>
+<div class="UcoinUnder">
+    <ul>
+        <li style="font-size:18px;">${enterpriseInfo.accountName}</li>
+        <li style="font-size:34px; color:#000; font-weight:bold;"><span>${myUCoin}</span>邮豆</li>
+    </ul>
+</div>
+
+<div style="margin:40px 0px 20px 20px; font-size:18px; color:#333;">
+    下级账号(财富总量<span>${SonTotalWealth}</span>)
+</div>
+
+<div>
+    <table class="table_list" style="width:1450px;margin-left:20px;font-size:16px;font-weight:550;border:0;">
+        <thead>
+        <tr>
+            <th>账号名称</th>
+            <th>财富总量</th>
+            <th>占比</th>
+        </tr>
+        </thead>
+        <tbody id="itemContainer">
+            <#list SonWealthResult as son>
+                <tr style="background-color:#fff;">
+                    <th>${son.name}</th>
+                    <th><abbr class="ucoinAll">${son.wealth}</abbr> 邮豆</th>
+                    <th class="percent" data-total="${SonTotalWealth}" data-son="${son.wealth}">
+                        <#if son.wealth !="0">
+                        ${(son.wealth / SonTotalWealth)}
+                        <#else>
+                            0%
+                        </#if>
+                    </th>
+                </tr>
+            </#list>
+        </tbody>
+        <div id="id_list">
+            <#list SonWealthResult as son>
+                <input type="hidden" value="${son.id}" />
+            </#list>
+        </div>
+    </table>
+    <div class="holder" style="margin-left: 22px;"></div>
+</div>
+
+<form onsubmit="return Ucoinsubmit();">
+    <div class="Budget">
+        <ul>
+            <li style="margin-top:30px; font-size:18px; color:#000;">预算申请 <i></i></li>
+            <li style="margin:-10px 0px 0px 50px;">申请金额<input type="text" id="BudAmout" name="BudAmout" placeholder="请输入充值金额" /></li>
+            <li style="margin-left:50px;">申请原因<input type="text" id="BudReason" name="BudReason" placeholder="请填写申请原因"  /></li>
+            <li><input type="button" id="Ucoinsub" value="确定" /></li>
+        </ul>
+    </div>
+</form>
+
+
+<div class="CashAssign">
+    <h1 style="width:100%;font-size:18px; color:#000;">未分配财富:<span>${wealth_undo}</span> <i></i></h1>
+    <ul>
+        <li style=" margin-left:40px;">账号:
+            <ul id="CashAssign">
+                    <li><input type="checkbox" value="${enterpriseId}" class="CashChkbox" /><abbr>${enterpriseName}:</abbr><input maxlength="8" type="text" name="CashName" class="Cashtext" placeholder="分配金额" /></li>
+                <#list SonWealthResult as son>
+                    <li><input type="checkbox" value="${son.id}" class="CashChkbox" /><abbr>${son.name}:</abbr><input type="text" name="CashName" class="Cashtext" placeholder="分配金额" /></li>
+                </#list>
+            </ul>
+        </li>
+        <li style="margin-top:-20px;margin-left:40px;">分配总额：<input type="text" id="checkval" readonly="readonly" /></li>
+        <li><input type="button" id="Cashsub" value="确定"  /> </li>
+    </ul>
+</div>
+
+
+
+<form>
+    <div class="CashPwd">
+        <ul>
+            <li style="line-height:65px; color:#000; font-size:22px;">支付密码</li>
+            <li style="height:100px; line-height:100px; padding-left:50px; border-bottom:1px solid #ccc; border-top:1px solid #CCC;"><span style="color:#ff3300;">*</span>支付密码：<input type="password" id="CashPwd"/></li>
+            <li style="padding:20px 0px 0px 200px;"><input type="button" id="CashPwdSub" value="确定" /><input type="button" id="CashCancel" value="取消" /></li>
+        </ul>
+    </div>
+</form>
+<div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+</body>
+<script src="${bath}/static/js/UCoinManager.js?version=${VERSION}"></script>
+</html>

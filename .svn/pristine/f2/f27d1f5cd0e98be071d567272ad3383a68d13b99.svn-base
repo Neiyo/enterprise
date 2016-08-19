@@ -1,0 +1,36 @@
+package com.ylife.product.service;
+
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 2016/4/27.
+ * <p/>
+ * 货品信息服务。
+ */
+public interface GoodsInfoService {
+    /**
+     * 商品管理的货品列表
+     */
+    Page<GoodsManagerResult> getGoods(String goodsInfoName, String goodsInfoItemNo,
+                                      String goodsInfoAdded, Long brandId, Long typeId, Long thirdId, Pageable pageable);
+
+   /* Page<GoodsManagerResult> getValetGoods(String goodsInfoName,Float lowPrice,Float highPrice);*/
+
+    List<GoodsManagerResult> getBrands();
+
+    List<GoodsManagerResult> getType();
+
+    List<GoodsManagerResult> getThirdName();
+
+    List<GoodsManagerResult> getBrandTypeThird();
+
+    int unshelves(long goodsInfoId);
+
+    int shelves(long goodsInfoId);
+
+
+}

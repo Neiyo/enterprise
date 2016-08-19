@@ -1,0 +1,40 @@
+package com.ylife.authority.mapper;
+
+import com.ylife.authority.model.ResourcePage;
+
+import java.util.List;
+
+public interface ResourcePageMapper {
+
+    int deleteByPrimaryKey(Long id);
+
+    int insert(ResourcePage record);
+
+    int insertSelective(ResourcePage record);
+
+    ResourcePage selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(ResourcePage record);
+
+    int updateByPrimaryKey(ResourcePage record);
+
+    /**
+     * 获取顶级页面
+     * @return
+     */
+    List<ResourcePage> selectByParentIdisNull();
+
+    /**
+     * 获取当前页面的子页面
+     * @param parentId
+     * @return
+     */
+    List<ResourcePage> selectByParentId(Long parentId);
+
+    /**
+     * 获取角色的所有权限
+     * @param authorityId
+     * @return
+     */
+    List<ResourcePage> selectByAuthorityId(Long authorityId);
+}

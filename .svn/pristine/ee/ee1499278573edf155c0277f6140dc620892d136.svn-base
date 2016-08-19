@@ -1,0 +1,108 @@
+package com.ylife.chinapost.service.impl;
+
+import com.ylife.authority.mapper.AuthorityMapper;
+import com.ylife.authority.mapper.ResourcePageMapper;
+import com.ylife.authority.model.Authority;
+import com.ylife.authority.model.ResourcePage;
+import com.ylife.enterprise.mapper.EnterpriseFunctionMapper;
+import com.ylife.enterprise.mapper.EnterpriseInfoMapper;
+import com.ylife.enterprise.mapper.EnterpriseMapper;
+import com.ylife.enterprise.model.Enterprise;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.enterprise.model.EnterpriseInfo;
+import com.ylife.exception.UserNotLoginException;
+import com.ylife.chinapost.service.CurrentLoginService;
+import com.ylife.enterprise.mapper.EnterpriseManagerMapper;
+import com.ylife.enterprise.model.EnterpriseManager;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by InThEnd on 2016/4/8.
+ * CurrentLoginServiceImpl
+ */
+@Service
+public class CurrentLoginServiceImpl implements CurrentLoginService {
+
+    @Resource
+    private EnterpriseManagerMapper enterpriseManagerMapper;
+    @Resource
+    private EnterpriseMapper enterpriseMapper;
+    @Resource
+    private EnterpriseInfoMapper enterpriseInfoMapper;
+    @Resource
+    private EnterpriseFunctionMapper enterpriseFunctionMapper;
+    @Resource
+    private ResourcePageMapper resourcePageMapper;
+    @Resource
+    private AuthorityMapper authorityMapper;
+
+    @Override
+    public Long getCurrentLoginEnterpriseId() {
+        return getCurrentLoginEnterpriseManager().getEnterpriseId();
+    }
+
+    @Override
+    public Enterprise getCurrentLoginEnterprise() {
+        return enterpriseMapper.selectByPrimaryKey(getCurrentLoginEnterpriseId());
+    }
+
+    @Override
+    public EnterpriseInfo getCurrentLoginEnterpriseInfo() {
+        return enterpriseInfoMapper.selectByPrimaryKey(getCurrentLoginEnterpriseId());
+    }
+
+    @Override
+    public EnterpriseFunction getCurrentLoginEnterpriseFunc() {
+        return enterpriseFunctionMapper.selectByPrimaryKey(getCurrentLoginEnterpriseId());
+    }
+
+    @Override
+    public EnterpriseManager getCurrentLoginEnterpriseManager() {
+        return enterpriseManagerMapper.selectByUsername(getCurrentLoginUsername());
+    }
+
+    @Override
+    public Long getCurrentLoginEnterpriseManagerId() {
+        return getCurrentLoginEnterpriseManager().getId();
+    }
+
+    @Override
+    public String getCurrentLoginUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof AnonymousAuthenticationToken || authentication == null) {
+            throw new UserNotLoginException();
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+    }
+
+    @Override
+    public boolean isPrimaryEnterprise() {
+        return getCurrentLoginEnterprise().getParentId() == null;
+    }
+
+    @Override
+    public boolean isPrimaryManager() {
+        return getCurrentLoginEnterpriseManager().getIsPrimary();
+    }
+
+    @Override
+    public List<ResourcePage> getCurrentPages() {
+        long managerId = getCurrentLoginEnterpriseManagerId();
+        Authority authority = authorityMapper.selectByManagerId(managerId);
+        if (authority == null) {
+            return new ArrayList<>();
+        }
+        return resourcePageMapper.selectByAuthorityId(authority.getId());
+    }
+
+
+}

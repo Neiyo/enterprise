@@ -1,0 +1,339 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/g.css"/>
+    <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css"/>
+    <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
+    <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script type="text/javascript" src="${bath}/static/js/jPages.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${bath}/static/js/voucherManager.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${bath}/static/js/jquery.datetimepicker.full.js"></script>
+    <link rel="stylesheet" href="${bath}/static/css/jquery.datetimepicker.css" />
+    <script src="${bath}/static/js/zrj_ajaxPages.js?version=${VERSION}"></script>
+</head>
+<style type="text/css">
+    .billButton{
+        width:1450px;
+        height:130px;
+        margin-left:20px;
+    }
+    .billButton li{
+        height:35px;
+        float:left;
+        margin-left:20px;
+        margin-top:20px;
+    }
+
+    .billButton li button{
+        width:60px;
+        height:35px;
+        border:1px solid #CCC;
+        background:#f4f4f4;
+        margin-right:10px;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .billButton li button:active{
+        background: #00cc88;
+    }
+    .billButton li span{
+        display:inline-block;
+        vertical-align:middle;
+        width:75px;
+        height:35px;
+        background:#f1f1f1;
+        line-height:35px;
+        text-align:center;
+        border:1px solid #ccc;
+    }
+    .billButton li input{
+        width:135px;
+        height:35px;
+        border:none;
+        border: 1px solid #ccc;
+        background:#FFF;
+        margin-left: -1px;
+        font-size:16px;
+    }
+    .billButton li input:hover{
+        box-shadow: 1px 0px 3px 0px #cccccc;
+    }
+    .billButton li:first-child{
+        width:217px;
+    }
+    .billButton li:nth-child(2){
+        width:215px;
+    }
+    .billButton li:nth-child(3){
+        width:315px;
+    }
+    .billButton li:nth-child(4){
+        width:315px;
+    }
+    .date_button{
+        display: inline-block;
+        vertical-align: middle;
+        width:37px!important;
+        margin-left: 0!important;
+        height:35px;
+        background-color: #f2f2f2;
+        background-image: url("${bath}/static/img/date_img.png");
+    }
+    .xdsoft_datetimepicker{
+        width:310px!important;
+    }
+    #voucherSearch{
+        width:75px;
+        height:35px;
+        margin-left:20px;
+        color:#FFF;
+        background:#24b35f;
+        box-shadow: 0px 3px 3px 0px #9ba39e;
+        border:1px solid transparent;
+    }
+    #voucherSearch:hover{
+        background:#00cc55;
+    }
+    #voucherSearch:active{
+        background:#008738;
+    }
+
+    .voucherTable{
+        width:1600px;
+        height:800px;
+        margin-left:20px;
+        margin-top:20px;
+    }
+    .voucherTable ul{
+        width:1600px;
+        height:35px;
+    }
+    .voucherTable ul li{
+        width:85px;
+        height:35px;
+        background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+        text-align:center;
+        line-height:35px;
+        margin-left:20px;
+        float:left;
+        cursor:pointer;
+    }
+    .voucherTable ul li.reqOn{
+        background:#949494;
+        color:#FFF;
+    }
+
+    .myVoucherTodo{
+        width:1600px;
+        height:700px;
+        margin-left:20px;
+    }
+    .myVoucherTodo dt{
+        width:1600px;
+        height:40px;
+        background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+    }
+    .myVoucherTodo dd{
+        width:1600px;
+        height:45px;
+        background:#FFF;
+    }
+    .myVoucherTodo dd:nth-child(2n-1){
+        background:#f4f4f4
+    }
+
+    .myVoucherTodo dt abbr{
+        display:inline-block;
+        width:250px;
+        height:40px;
+        text-align:center;
+        color:#fff;
+        line-height:40px;
+    }
+    .myVoucherTodo dd abbr{
+        display:inline-block;
+        width:250px;
+        height:45px;
+        text-align:center;
+        line-height:45px;
+        color:#333;
+    }
+
+
+    .myVoucherDone{
+        width:1600px;
+        height:700px;
+        margin-left:20px;
+        display: none;
+    }
+    .myVoucherDone dt{
+        width:1600px;
+        height:40px;
+        background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+    }
+    .myVoucherDone dd{
+        width:1600px;
+        height:45px;
+        background:#FFF;
+    }
+    .myVoucherDone dd:nth-child(2n-1){
+        background:#f4f4f4
+    }
+
+    .myVoucherDone dt abbr{
+        display:inline-block;
+        width:250px;
+        height:40px;
+        text-align:center;
+        color:#fff;
+        line-height:40px;
+    }
+    .myVoucherDone dd abbr{
+        display:inline-block;
+        width:250px;
+        height:45px;
+        text-align:center;
+        line-height:45px;
+        color:#333;
+    }
+
+
+
+
+    .myVoucherRequest{
+        width:1600px;
+        height:700px;
+        margin-left:20px;
+        display: none;
+    }
+    .myVoucherRequest dt{
+        width:1600px;
+        height:40px;
+        background:url(${bath}/static/img/com_pic_backgroundcolour.png) center no-repeat;
+    }
+    .myVoucherRequest dd{
+        width:1600px;
+        height:45px;
+        background:#FFF;
+    }
+    .myVoucherRequest dd:nth-child(2n-1){
+        background:#f4f4f4
+    }
+
+    .myVoucherRequest dt abbr{
+        display:inline-block;
+        width:250px;
+        height:40px;
+        text-align:center;
+        color:#fff;
+        line-height:40px;
+    }
+    .myVoucherRequest dd abbr{
+        display:inline-block;
+        width:250px;
+        height:45px;
+        text-align:center;
+        line-height:45px;
+        color:#333;
+    }
+    .vocherCode{
+        color: #24b35f!important;
+        cursor: pointer!important;
+    }
+    #holder_myRequest a,#holder_done a,#holder_notHandled a{
+        display: inline-block;
+        line-height: 30px;
+        text-align: center;
+        border:0;
+        background-color: #fff;
+        border-radius: 3px;
+        width:50px;
+        height:30px;
+        color:gray;
+        font-weight: bold;
+        margin-left: 15px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+    }
+    .jp-current{
+        background-color: #24b35f!important;
+
+        color: #fff!important;
+
+    }
+
+</style>
+
+<body>
+<div style="width:100%; font-size: 16px; height:70px; line-height: 70px; border-bottom:2px solid #dcdcdc; margin-left:20px;">
+    <#if isEnd == true>
+        <a style="color: #24b35f" href="InventoryManager">仓库管理</a>
+        |
+    </#if>
+    <#if isTop == true>
+        <a style="color: #24b35f" href="InventoryManager">仓库管理</a>
+        |
+    </#if>
+    <a style="color: #24b35f" href="inventoryInquiry">库存查询</a>
+    |
+    <span style="color: #333">单据管理</span>
+</div>
+
+
+<div class="billButton">
+    <ul>
+        <li><span>单据编号</span><input type="text" id="voucherOrder"/></li>
+        <li><span>创建人</span><input type="text" id="voucherName"/></li>
+        <li>
+            <span>开始时间</span><input type="text" style="width:197px;" id="datetimepicker_start"/><a  id="date_start" href="#"class="date_button"/></a>
+        </li>
+        <li>
+            <span>结束时间</span><input type="text" style="width:197px;" id="datetimepicker_end"/><a  id="date_end" href="#"class="date_button"/></a>
+        </li>
+        <li> <input type="button" id="voucherSearch" value="搜索" /></li>
+
+    </ul>
+</div>
+
+
+<div class="voucherTable">
+    <ul>
+        <li value="0" class="reqOn">待办事宜</li>
+        <li value="1">已办事宜</li>
+        <li value="2">我的请求</li>
+    </ul>
+    <dl class="myVoucherTodo">
+        <dt><abbr>单据类型</abbr><abbr>单据编号</abbr><abbr>申请账号</abbr><abbr>创建日期</abbr><abbr>单据状态</abbr><abbr>当前操作者</abbr>
+        </dt>
+        <div id="itemContainer_notHandled"></div>
+        <div id="holder_notHandled"></div>
+
+    </dl>
+    <dl class="myVoucherDone">
+        <dt><abbr>单据类型</abbr><abbr>单据编号</abbr><abbr>申请账号</abbr><abbr>创建日期</abbr><abbr>单据状态</abbr>
+        </dt>
+        <div id="itemContainer_done"></div>
+        <div id="holder_done"></div>
+    </dl>
+
+
+
+    <dl class="myVoucherRequest">
+        <dt><abbr>单据类型</abbr><abbr>单据编号</abbr><abbr>申请账号</abbr><abbr>创建日期</abbr><abbr>单据状态</abbr><abbr>当前操作者</abbr>
+        </dt>
+
+        <div id="itemContainer_myRequest"></div>
+        <div id="holder_myRequest"></div>
+    </dl>
+
+</div>
+
+</body>

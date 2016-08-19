@@ -1,0 +1,152 @@
+@media screen and ( max-width: 130px){
+    body{
+        zoom:62.5%;
+        font-size:10px!important;
+    }
+}
+.list{
+	width:100%;
+	height:1200px;
+	color:#FFF;
+	text-align:center;
+    background: #008738;
+}
+.list span{
+	display:inline-block;
+    vertical-align: middle;
+	font-size:24px;
+    padding: 10px;
+    width: 100%;
+    background: #008738;
+}
+.list ul{
+	font-size:16px;
+}
+.list ul li i{
+    display: inline-block;
+    vertical-align: middle;
+	width:18px;
+	height:18px;
+	margin-right:10px;
+}
+.list ul li#com i{
+    background:url(../img/com_btn_account_nor.png) center no-repeat;
+}
+.list ul li#com:hover i{
+    background:url(../img/com_btn_account_hover.png) center no-repeat;
+}
+.list ul li#hie i{
+     background:url(../img/com_btn_level_nor.png) center no-repeat;
+ }
+.list ul li#hie:hover i{
+    background:url(../img/com_btn_level_hover.png) center no-repeat;
+}
+.list ul li#rol i{
+    background:url(../img/com_btn_role_nor.png) center no-repeat;
+}
+.list ul li#rol:hover i{
+    background:url(../img/com_btn_role_hover.png) center no-repeat;
+}
+.list ul li#mem i{
+    background:url(../img/com_btn_member_nor.png) center no-repeat;
+}
+.list ul li#mem:hover i{
+    background:url(../img/com_btn_member_hover.png) center no-repeat;
+}
+.list ul li#ite i{
+     background:url(../img/com_btn_goods_nor.png) center no-repeat;
+ }
+.list ul li#ite:hover i{
+    background:url(../img/com_btn_goods_hover.png) center no-repeat;
+}
+.list ul li#uco i{
+    background:url(../img/com_btn_wealth_nor.png) center no-repeat;
+}
+.list ul li#uco:hover i{
+    background:url(../img/com_btn_wealth_hover.png) center no-repeat;
+}
+.list ul li#uba i{
+    background:url(../img/com_btn_youbao_nor.png) center no-repeat;
+}
+.list ul li#uba:hover i{
+    background:url(../img/com_btn_youbao_hover.png) center no-repeat;
+}
+.list ul li#use i{
+    background:url(../img/com_btn_user_nor.png) center no-repeat;
+}
+.list ul li#use:hover i{
+    background:url(../img/com_btn_user_hover.png) center no-repeat;
+}
+.list ul li#acc i{
+     background:url(../img/com_btn_order_nor.png) center no-repeat;
+ }
+.list ul li#acc:hover i{
+    background:url(../img/com_btn_order_hover.png) center no-repeat;
+}
+.list ul li#req i{
+    background:url(../img/com_btn_request_nor.png) center no-repeat;
+}
+.list ul li#req:hover i{
+    background:url(../img/com_btn_request_hover.png) center no-repeat;
+}
+.list ul li#bil i{
+    background:url(../img/com_btn_bill_nor.png) center no-repeat;
+}
+.list ul li#bil:hover i{
+    background:url(../img/com_btn_bill_hover.png) center no-repeat;
+}
+.list ul li#inv i{
+    background:url(../img/com_btn_stock_nor.png) center no-repeat;
+}
+.list ul li#inv:hover i{
+    background:url(../img/com_btn_stock_hover.png) center no-repeat;
+}
+.list ul li#ucoc i{
+    background:url(../img/com_btn_statistics_nor.png) center no-repeat;
+}
+.list ul li#ucoc:hover i{
+    background:url(../img/com_btn_statistics_hover.png) center no-repeat;
+}
+.list ul li#ngt i{
+    background:url(../img/com_btn_outlets-please_nor.png) center no-repeat;
+}
+.list ul li#ngt:hover i{
+    background:url(../img/com_btn_outlets-please_hover.png) center no-repeat;
+}
+.list ul li#bus i{
+    background:url(../img/com_btn_businessType_nor.png) center no-repeat;
+}
+.list ul li#bus:hover i{
+    background:url(../img/com_btn_businessType_hover.png) center no-repeat;
+}
+.list ul li{
+    margin-top: -1px;
+    height: 50px;
+    line-height: 50px;
+    padding-right: 20px;
+    border-width: 1px 0px 1px 3px ;
+    border-style: solid;
+    border-color:#006d26 transparent #006d26 transparent ;
+    background: #008738;
+    font-size: 16px;
+}
+@media screen and (max-width: 105px) {
+    .list ul li{
+        padding-right: 0px!important;
+        font-size: 3px!important;
+    }
+}
+
+.list ul li:hover{
+	background:#0b944f;
+}
+
+.list ul li a{
+	color:#FFF;
+	display:inline-block;
+}
+
+.list ul li.clickOn{
+    background:#00b34a;
+    border-left-color: #fbe601;
+}

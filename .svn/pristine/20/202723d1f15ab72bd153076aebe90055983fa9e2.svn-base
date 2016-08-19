@@ -1,0 +1,31 @@
+package com.ylife.system.service.impl;
+
+import com.ylife.system.mapper.BusinessTypeHistoryMapper;
+import com.ylife.system.model.BusinessTypeHistory;
+import com.ylife.system.service.BusinessTypeHistoryService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * Created by Administrator on 2016/8/1.
+ */
+
+@Service
+public class BusinessTypeHistoryServiceImpl implements BusinessTypeHistoryService {
+
+    @Resource
+    BusinessTypeHistoryMapper businessTypeHistoryMapper;
+
+    @Override
+    public void addHistory(int typeId, String operation, String note, String beforeEx, String afterEx, String operator) {
+        BusinessTypeHistory model=new BusinessTypeHistory();
+        model.setTypeId(Long.valueOf(typeId));
+        model.setOperation(operation);
+        model.setNote(note);
+        model.setBeforeEx(beforeEx);
+        model.setAfterEx(afterEx);
+        model.setOperator(operator);
+        businessTypeHistoryMapper.insertSelective(model);
+    }
+}

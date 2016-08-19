@@ -1,0 +1,99 @@
+$(document).ready(function(){
+    $("#date_start").click(function(e){
+        $("#datetimepicker_start").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_start").trigger("focus");
+    })
+    $("#datetimepicker_start").blur(function(){
+        $("#datetimepicker_start").datetimepicker('destroy');
+    });
+
+    $("#date_end").click(function(e){
+        $("#datetimepicker_end").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_end").trigger("focus");
+    })
+    $("#datetimepicker_end").blur(function(){
+        $("#datetimepicker_end").datetimepicker('destroy');
+    });
+
+
+    //以下是会员邮豆发放统计报表JS
+
+    $("#userDetailList h1 i").click(function(){
+        discoverHtml()
+        $("#userDetailList").hide()
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //以下是会员邮豆扣减统计报表JS
+    $("#userDetailListReduce h1 i").click(function(){
+        discoverHtml()
+        $("#userDetailListReduce").hide()
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //以下是网点基础数据统计报表JS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //以下是邮豆发放记录表JS
+})

@@ -1,0 +1,115 @@
+package com.ylife.utils;
+
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by InThEnd on 2016/4/30.
+ * HTTP工具类。
+ */
+public class HttpUtil {
+
+    private static final HttpClient client = HttpClientBuilder.create().setConnectionTimeToLive(5, TimeUnit.SECONDS).build();
+
+    private static Charset charset = Charset.forName("UTF-8");
+
+    private static final String UTF_8 = "UTF-8";
+
+    /**
+     * GET 带参数的请求
+     *
+     * @param url    请求地址
+     * @param values 请求参数
+     */
+    public static String doGet(final String url, final Map<String, String> values) throws IOException {
+        StringBuilder builder = new StringBuilder(url);
+        builder.append("?");
+        for (String key : values.keySet()) {
+            builder.append(URLEncoder.encode(key, UTF_8)).append("=").append(URLEncoder.encode(values.get(key), UTF_8));
+            builder.append("&");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        HttpGet httpGet = new HttpGet(urlFix(builder.toString()));
+        HttpResponse response = client.execute(httpGet);
+        InputStream inputStream = response.getEntity().getContent();
+        return IOUtils.toString(inputStream, "UTF-8");
+    }
+
+    /**
+     * POST 表单方式请求
+     *
+     * @param url    请求地址
+     * @param values 请求参数
+     */
+    public static String doPost(final String url, final Map<String, String> values) throws IOException {
+        List<NameValuePair> pairList = new ArrayList<>();
+        for (String string : values.keySet()) {
+            NameValuePair pair = new BasicNameValuePair(string, values.get(string));
+            pairList.add(pair);
+        }
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(new UrlEncodedFormEntity(pairList, charset));
+        HttpResponse response = client.execute(httpPost);
+        InputStream inputStream = response.getEntity().getContent();
+        String resultContent = IOUtils.toString(inputStream, "UTF-8");
+        if(resultContent.equals("") || Integer.parseInt(JSONObject.parseObject(resultContent).get("code").toString())!=200) {
+            throw new IOException();
+        }
+
+        return resultContent;
+    }
+
+    /**
+     * POST 字符串方式请求
+     *
+     * @param url    请求地址
+     * @param values 字符串值
+     */
+    public static String doPost(final String url, final String values) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(new StringEntity(values, charset));
+        HttpResponse response = client.execute(httpPost);
+        InputStream inputStream = response.getEntity().getContent();
+        return IOUtils.toString(inputStream, "UTF-8");
+    }
+
+    /**
+     * POST 文件方式请求
+     *
+     * @param url  请求地址
+     * @param file 上传的文件
+     */
+    public static String doPost(final String url, final File file) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(new FileEntity(file));
+        HttpResponse response = client.execute(httpPost);
+        InputStream inputStream = response.getEntity().getContent();
+        return IOUtils.toString(inputStream, "UTF-8");
+    }
+
+
+    private static String urlFix(String s) {
+        return s.replaceAll(" ", "%20");
+    }
+
+}

@@ -1,0 +1,212 @@
+package com.ylife.chinapost.controller.api;
+
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.FormInfoService;
+import com.ylife.chinapost.service.UcoinGrandService;
+import com.ylife.chinapost.service.pojo.FormInfo;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.form.model.CustomerConsume;
+import com.ylife.form.model.FormFunc;
+import com.ylife.form.model.UcoinGrandForm;
+import com.ylife.security.annotation.SecurityResource;
+import com.ylife.ucoin.model.CustomerUcoinHistory;
+import com.ylife.utils.Assert;
+import com.ylife.utils.DateUtil;
+import com.ylife.utils.StringUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.Date;
+
+/**
+ * Created by Administrator on 2016/8/5.
+ */
+@Controller
+@SecurityResource(parent = "/web/formCenter", primary = false)
+@RequestMapping(value = "/web/api/report", produces = "application/json;charset=utf-8")
+public class FormApiController {
+
+
+    @Resource
+    private FormInfoService formInfoService;
+    @Resource
+    private UcoinGrandService ucoinGrandService;
+
+    @RequestMapping(value = "/getReportInfo")
+    @ResponseBody
+    public String getReportInfo(@RequestParam(value = "start",required=false)String start,
+                                @RequestParam(value = "end",required = false)String end) {
+
+
+        Date now =new Date();
+        Date startTime = null;
+        if (!StringUtil.isBlank(start)) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+        }else {
+            startTime=DateUtil.getWeekAgo(now);
+        }
+
+        Date endTime = null;
+        if (!StringUtil.isBlank(end)) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+            endTime=DateUtil.getNight(endTime);
+        }else{
+            endTime=DateUtil.getMorning(now);
+        }
+
+        FormInfo formInfo = formInfoService.getReportInfo(startTime, DateUtil.getMorning(endTime));
+        return new JsonResponseBean(formInfo).toJson();
+    }
+
+
+    @RequestMapping(value = "/getUcoinGranForm")
+    @ResponseBody
+    public String getUcoinGranForm(@RequestParam(value = "enterpriseId",required = false)Long enterpriseId,
+                                   @RequestParam(value = "idCard",required = false)String idCard,
+                                   @RequestParam(value = "start",required=false)String start,
+                                   @RequestParam(value = "end",required = false)String end,
+                                   @RequestParam(value = "page",required = false)int page,
+                                   @RequestParam(value = "size",required = false)int size){
+        start = StringUtil.nullOrNotBlank(start);
+        end = StringUtil.nullOrNotBlank(end);
+        idCard=StringUtil.nullOrNotBlank(idCard);
+        Date startTime=null;
+        if (start != null) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Date endTime=null;
+        if (end != null) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Page<UcoinGrandForm> formFunc=formInfoService.getUcoingrandReport(enterpriseId,startTime,endTime,idCard,new Pageable(page,size));
+        return new JsonResponseBean(formFunc).toJson();
+    }
+
+    @RequestMapping(value = "/getDetailUcoinGrand")
+    @ResponseBody
+    public String getDetailUcoinGrand(@RequestParam(value = "enterpriseId",required = false)Long enterpriseId,
+                                      @RequestParam(value = "idCard")String idCard,
+                                      @RequestParam(value = "start",required=false)String start,
+                                      @RequestParam(value = "end",required = false)String end,
+                                      @RequestParam(value = "page",required = false)int page,
+                                      @RequestParam(value = "size",required = false)int size){
+        start = StringUtil.nullOrNotBlank(start);
+        end = StringUtil.nullOrNotBlank(end);
+        Assert.notNull(idCard);
+        Date startTime=null;
+        if (start != null) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Date endTime=null;
+        if (end != null) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Page<UcoinGrandForm> formFunc=formInfoService.getDetailGrandInfo(enterpriseId, startTime, endTime, idCard, new Pageable(page, size));
+        return new JsonResponseBean(formFunc).toJson();
+    }
+
+
+
+
+    @RequestMapping(value = "/getNetDataReport")
+    @ResponseBody
+    public String getNetDataReport(@RequestParam(value = "enterpriseId",required = false)Long enterpriseId,
+                                      @RequestParam(value = "start",required=false)String start,
+                                      @RequestParam(value = "end",required = false)String end,
+                                      @RequestParam(value = "page",required = false)int page,
+                                      @RequestParam(value = "size",required = false)int size){
+        start = StringUtil.nullOrNotBlank(start);
+        end = StringUtil.nullOrNotBlank(end);
+        Date startTime = null;
+        if (start != null) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Date endTime = null;
+        if (end != null) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Page<FormFunc> formFunc = formInfoService.getBaseReport(enterpriseId, startTime, endTime, new Pageable(page, size));
+        return new JsonResponseBean(formFunc).toJson();
+    }
+
+
+    @RequestMapping(value = "/getCustomerConsume")
+    @ResponseBody
+    public String getCustomerConsume(@RequestParam(value = "idCard",required = false)String idCard,
+                                     @RequestParam(value = "start",required=false)String start,
+                                     @RequestParam(value = "end",required = false)String end,
+                                     @RequestParam(value = "page",required = false)int page,
+                                     @RequestParam(value = "size",required = false)int size){
+        idCard = StringUtil.nullOrNotBlank(idCard);
+        start = StringUtil.nullOrNotBlank(start);
+        end = StringUtil.nullOrNotBlank(end);
+        Date startTime = null;
+        if (start != null) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+            startTime=DateUtil.getMorning(startTime);
+        }
+        Date endTime = null;
+        if (end != null) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+            endTime = DateUtil.getNight(endTime);
+        }
+        Page<CustomerConsume> formFunc = formInfoService.getCustomerconsumeReport(idCard, startTime, endTime, new Pageable(page, size));
+        return new JsonResponseBean(formFunc).toJson();
+    }
+
+    @RequestMapping(value = "/getDetailConsume")
+    @ResponseBody
+    public  String getDetailConsume(@RequestParam(value = "idCard")String idCard,
+                                    @RequestParam(value = "start",required=false)String start,
+                                    @RequestParam(value = "end",required = false)String end,
+                                    @RequestParam(value = "page",required = false)int page,
+                                    @RequestParam(value = "size",required = false)int size){
+        Assert.notNull(idCard);
+        start = StringUtil.nullOrNotBlank(start);
+        end = StringUtil.nullOrNotBlank(end);
+        Date startTime=null;
+        if (start != null) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Date endTime=null;
+        if (end != null) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DAY_FORMAT);
+        }
+        Page<CustomerConsume> formFuncPage=formInfoService.getDetailConsume(idCard,startTime,endTime,new Pageable(page,size));
+        return new JsonResponseBean(formFuncPage).toJson();
+
+    }
+
+
+    @RequestMapping(value = "/getGrandHistory")
+    @ResponseBody
+    public String getGrandHistory(@RequestParam(value = "enterpriseId") Long enterpriseId,
+                                  @RequestParam(value = "typeId") Integer typeId,
+                                  @RequestParam(value = "start",required = false) String start,
+                                  @RequestParam(value = "end",required = false) String end,
+                                  @RequestParam(value = "page",required = false)int page,
+                                  @RequestParam(value = "size",required = false)int size){
+        Assert.notNull(typeId,"没有选择业务类型");
+        start=StringUtil.nullOrNotBlank(start);
+        end=StringUtil.nullOrNotBlank(end);
+        Date startTime = null;
+        Date endTime = null;
+        if(start!=null){
+            startTime=DateUtil.fromString(start,Constants.DEFAULT_DAY_FORMAT);
+        }
+        if(endTime!=null){
+            endTime=DateUtil.fromString(end,Constants.DEFAULT_DAY_FORMAT);
+        }
+
+
+        Page<CustomerUcoinHistory> customerUcoinPage= ucoinGrandService.getGrandHistory(enterpriseId,typeId,startTime,endTime,new Pageable(page,size));
+
+        return new JsonResponseBean(customerUcoinPage).toJson();
+    }
+
+}

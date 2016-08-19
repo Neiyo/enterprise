@@ -1,0 +1,16 @@
+package com.common.util;
+
+import com.ylife.utils.ResolverHelper;
+import org.junit.Test;
+
+/**
+ * Created by Administrator on 2016/6/29.
+ */
+public class ResolverHelperUtil {
+
+    @Test
+    public  void testSecurityResolver() throws Exception {
+        ResolverHelper resolverHelper = new ResolverHelper();
+        System.out.print(resolverHelper.ResolverSecurityResource());
+    }
+}

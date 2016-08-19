@@ -1,0 +1,35 @@
+package com.ylife.order.model;
+
+/**
+ * Created by Administrator on 2016/5/13.
+ */
+public enum CredentialType {
+
+
+    /*无凭证*/
+    NOCREDENTIAL("1", "无凭证"),
+
+    /*有发票*/
+    INVOICE("2","有发票"),
+
+    /*有质检报告*/
+    QUALITYREPORT("3","有质检报告");
+
+    private String code;
+
+    private String tag;
+
+    CredentialType(String code, String tag) {
+        this.code = code;
+        this.tag = tag;
+    }
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+}

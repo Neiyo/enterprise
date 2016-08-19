@@ -1,0 +1,91 @@
+$(document).ready(function(){
+    $(".pwd").draggable();
+    //确认转账，显示支付页面
+    $("#ensure").click(function(){
+        var length = $(".importLog ul li").length;
+        if( length == 0 ){
+            coverHtml();
+            $(".pwd").fadeIn(400);
+        }
+        else{
+            coverHtml();
+            $(".importLog").fadeIn();
+        }
+    });
+    //支付页面点击事件
+    //点击X返回上一个页面
+    $(".pwd h1 i").click(function(){
+        discoverHtml();
+        $(".pwd").fadeOut(500);
+    });
+    //点击确认支付
+    $("#confirm").click(function(){
+        var pwd = $("#list_password").val();
+        var infoJson = JSON.stringify(data.data);
+
+        //含业务类型
+        //var typeId = $("#typeId").val();
+
+        var key = data.data.key;
+        //$.post("../web/api/ucoingrand/batchGrand",{
+        $.post("../web/api/ucoingrand/newBatchGrand",{
+            //含业务类型
+            //typeId:typeId,
+            paykey:pwd,
+            key:key
+        },function(data){
+            if( data.response == 'success' ){
+                $(".pwd").fadeOut(200);
+                $(".success").fadeIn(400);
+                var i = 3;
+                setInterval(function(){
+                    i--;
+                    if( i >= 0 ){
+
+                    }
+                    else{
+                        clearInterval(this);
+                        discoverHtml();
+                        window.location.href = "piliangdaoru";
+                    }
+                },1000);
+            }
+            else{
+                response_ensure_alert('error',data.data.text,function(){
+
+                });
+            }
+        },'json');
+    });
+
+    //调用分页插件
+    $("span.footer").jPages({
+        containerID : "itemContainer"
+    });
+    //修改样式
+    var temp_arr = $(".footer").find("a");
+    var page_arr = [];
+    for(var i = 1; i < temp_arr.length - 1; i++){
+        page_arr.push(temp_arr[i]);
+    }
+    page_arr.map(function(a){
+        $(a).addClass("pagenumber");
+    });
+
+    $(".re_import").click(function(){
+        window.location.href = 'piliangdaoru';
+    });
+
+    $("#complete").click(function(){
+        discoverHtml();
+        window.location.href = 'UbaoSend';
+    });
+
+    $("#detail").click(function(){
+        discoverHtml();
+        //frame操作
+        $(window.parent.frames['mainleft'].document).find(".clickOn").removeClass("clickOn");
+        $(window.parent.frames['mainleft'].document).find("#bil").addClass("clickOn");
+        window.location.href="BillManager?action=2";
+    });
+});

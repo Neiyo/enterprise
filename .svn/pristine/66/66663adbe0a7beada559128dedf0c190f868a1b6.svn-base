@@ -1,0 +1,139 @@
+$(document).ready(function(e) {
+    //轮询刷新
+    setInterval(function(){
+        var action = localStorage["systemAction"];
+        if( action == 'refresh' ){
+            localStorage['systemAction'] = 'active';
+            window.location.href = 'voucherManager';
+        }
+    },1000);
+
+
+    $(".voucherTable ul li").click(function(){
+        if( $(this).html() == '待办事宜' ){
+            ajaxPages('../web/api/inventory/getUnHandleBills','itemContainer_notHandled','holder_notHandled','inventory_notHandled',5,'','');
+        }
+        if( $(this).html() == '已办事宜' ){
+            ajaxPages('../web/api/inventory/getHandledBills','itemContainer_done','holder_done','inventory_done',5,'','');
+        }
+        if( $(this).html() == '我的请求' ){
+            ajaxPages('../web/api/inventory/getCreatedBills','itemContainer_myRequest','holder_myRequest','inventory_myRequest',5,'','');
+        }
+    });
+    //搜索
+    $("#voucherSearch").click(function(){
+        var checked = $(".reqOn").html();
+        var code = $("#voucherOrder").val();
+        var creator = $("#voucherName").val();
+        var start = $("#datetimepicker_start").val();
+        var end = $("#datetimepicker_end").val();
+        var array = [];
+        array[8] = start;
+        array[9] = end;
+        array[11] = code;
+        array[12] = creator;
+        if( checked == '待办事宜' ){
+            ajaxPages('../web/api/inventory/getUnHandleBills','itemContainer_notHandled','holder_notHandled','inventory_notHandled',5,'','',array);
+        }
+        else if( checked == '已办事宜' ){
+            ajaxPages('../web/api/inventory/getHandledBills','itemContainer_done','holder_done','inventory_done',5,'','',array);
+        }
+        else if( checked ==  '我的请求'){
+            ajaxPages('../web/api/inventory/getCreatedBills','itemContainer_myRequest','holder_myRequest','inventory_myRequest',5,'','',array);
+        }
+    });
+
+
+    $(".voucherTable ul li[value='0']").trigger("click");
+
+
+    $(".billButton li input").focus(function () {
+        $(this).css("border", "1px solid #008738");
+    });
+    $(".billButton li input").blur(function () {
+        $(this).css("border", "1px solid #ccc");
+    });
+    $("#date_start").click(function(e){
+        $("#datetimepicker_start").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_start").trigger("focus");
+    });
+    $("#datetimepicker_start").blur(function(){
+        $("#datetimepicker_start").datetimepicker('destroy');
+    });
+
+    $("#date_end").click(function(e){
+        $("#datetimepicker_end").datetimepicker({
+            step:5,
+            lang:'ch',
+            formatTime:'H:i',
+            formatDate:'d.m.Y'
+        });
+        $("#datetimepicker_end").trigger("focus");
+    });
+    $("#datetimepicker_end").blur(function(){
+        $("#datetimepicker_end").datetimepicker('destroy');
+    });
+
+    $(".voucherTable li").click(function(){
+        var lival=$(this).val();
+        $(this).addClass("reqOn").siblings("li").removeClass("reqOn");
+        if(lival==0){
+            $(".myVoucherTodo").show().siblings("dl").hide();
+        }else if(lival==1){
+            $(".myVoucherDone").show().siblings("dl").hide();
+        }else if(lival==2){
+            $(".myVoucherRequest").show().siblings("dl").hide();
+        }
+    });
+    $(document).on("click",".vocherCode",function(){
+        var status = $(".reqOn").html();
+        status = handleStatus(status)
+        var vocherCode=$(this).siblings("input[type='hidden']").val();
+        var vocherState=$(this).siblings(".vocherState").html();
+       if(vocherState == "报损单" || vocherState == "报溢单" ){
+           window.open("reimburse?id=" + vocherCode + "&status=" + status) ;
+       }
+        else if(vocherState == "补货单"  ){
+            window.open("replenishment?id=" + vocherCode + "&status=" + status) ;
+        }
+       else if(vocherState == "调拨单"  ){
+           window.open("allocation?id=" + vocherCode + "&status=" + status) ;
+       }
+    });
+    $(".arrow").click(function(){
+        var arr=$(this).val()
+        $(this).siblings("dd").slideToggle()
+        if(arr==0){
+            $(this).css("background","url(../static/img/com_btn_arrow_black_up.png) center no-repeat")
+            $(this).val("1")
+        }else if(arr==1){
+            $(this).css("background","url(../static/img/com_btn_arrow_black_down.png) center no-repeat")
+            $(this).val("0")
+        }
+
+    })
+    $(".select dd").click(function(){
+        var secval=$(this).html();
+        $(this).hide().siblings("dd").hide()
+        $(this).siblings("dt").html(secval);
+        $(this).siblings(".arrow").css("background","url(../static/img/com_btn_arrow_black_down.png) center no-repeat")
+    })
+
+});
+
+function handleStatus( str ){
+    if( str == '待办事宜' ){
+        return 'nothandled';
+    }
+    if( str == '已办事宜' ){
+        return 'done';
+    }
+    if( str == '我的请求' ){
+        return 'myrequest';
+    }
+}

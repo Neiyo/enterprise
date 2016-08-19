@@ -1,0 +1,51 @@
+package com.ylife.order.mapper;
+
+
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.CreditOrder;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
+
+public interface CreditOrderMapper {
+
+    int deleteByPrimaryKey(Long backOrderId);
+
+    int insert(CreditOrder record);
+
+    int insertSelective(CreditOrder record);
+
+    CreditOrder selectByPrimaryKey(Long backOrderId);
+
+    CreditOrder selectByCreditOrderCode(Long creditOrderCode);
+
+    CreditOrder selectByOrderCode(Long orderCode);
+
+    List<CreditOrder> selectByModelSelectiveAndCreateDate(@Param("model") CreditOrder model,
+                                                          @Param("start") Date start,
+                                                          @Param("end") Date end,
+                                                          @Param("pageable") Pageable pageable);
+
+    int countByModelSelectiveAndCreateDate(@Param("model") CreditOrder model,
+                                           @Param("start") Date start,
+                                           @Param("end") Date end);
+
+    int updateByPrimaryKeySelective(CreditOrder record);
+
+    int updateByPrimaryKey(CreditOrder record);
+
+    /**
+     * 查询退单
+     * @return
+     */
+    List<CreditOrder> selectBackOrderListByCondition();
+
+
+    /**
+     * 根据退单号批量修改退单状态
+     * @param list
+     * @return
+     */
+    int updateStatusByBackOrderCode(List<com.ylife.client.bean.BackOrder> list);
+}

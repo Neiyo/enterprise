@@ -1,0 +1,44 @@
+$(document).ready(function(){
+    var goodsInfoName = '';
+    var lowPrice = '';
+    var highPrice = '';
+    var array = [];
+    array[0] = '';array[1] = '';array[2] = '';array[3] = '';array[4] = '';array[5] = '';
+    ajaxPages("../web/api/valet/getGoods","itemContainer","holder",9,10,'','',array);
+    $(".a_href").click(function(){
+        var str = $(this).html();
+        str = str.split('-');
+        if( str.length > 1 ){
+            $("#input_low").val(str[0]);
+            $("#input_high").val(str[1]);
+        }
+        else{
+            $("#input_low").val(str[0].substring(0,4));
+            $("#input_high").val('');
+        }
+    });
+
+    $("#itemSearch").click(function(){
+        goodsInfoName = $("#itemText").val();
+        lowPrice = $("#input_low").val();
+        highPrice = $("#input_high").val();
+
+        array[0] = goodsInfoName;
+        array[6] = lowPrice;
+        array[7] = highPrice;
+
+        ajaxPages("../web/api/valet/getGoods","itemContainer","holder",9,10,'','',array);
+    });
+
+    $("#itemSearch2").click(function(){
+        goodsInfoName = $("#itemText").val();
+        lowPrice = $("#input_low").val();
+        highPrice = $("#input_high").val();
+
+        array[0] = goodsInfoName;
+        array[6] = lowPrice;
+        array[7] = highPrice;
+
+        ajaxPages("../web/api/valet/getGoods","itemContainer","holder",9,10,'','',array);
+    });
+});

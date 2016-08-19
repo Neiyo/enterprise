@@ -1,0 +1,1094 @@
+package com.ylife.chinapost.controller;
+
+import com.google.gson.reflect.TypeToken;
+import com.ylife.address.model.City;
+import com.ylife.address.model.District;
+import com.ylife.address.model.Province;
+import com.ylife.address.service.AddressService;
+import com.ylife.chinapost.controller.utils.Constants;
+import com.ylife.chinapost.service.*;
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.customer.service.ChinapostCustomerService;
+import com.ylife.data.json.json.Parser;
+import com.ylife.data.json.json.SimpleParser;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.enterprise.model.EnterpriseInfo;
+import com.ylife.enterprise.service.EnterpriseInfoService;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import com.ylife.inventory.mapper.pojo.InventoryGoodsResult;
+import com.ylife.inventory.service.InventoryService;
+import com.ylife.order.model.*;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.order.service.OrderService;
+import com.ylife.system.model.BusinessType;
+import com.ylife.system.model.Param;
+import com.ylife.system.model.ParamType;
+import com.ylife.system.model.ParamValue;
+import com.ylife.system.service.BusinessTypeService;
+import com.ylife.ucoin.model.CustomerUcoinHistory;
+import com.ylife.utils.Assert;
+import com.ylife.utils.DateUtil;
+import com.ylife.utils.ExcelUtil;
+import com.ylife.utils.StringUtil;
+import com.ylife.wealth.model.EnterpriseBatchGrand;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.CellRangeAddressList;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import java.util.*;
+
+/**
+ * Created by InThEnd on 2016/5/30.
+ * Excel导出
+ */
+@Controller
+@RequestMapping(value = "web/api/exportExcel")
+public class ExcelExportController {
+
+
+    @Resource
+    private GoodsManageService goodsManageService;
+    @Resource
+    private InventoryManageService inventoryManageService;
+    @Resource
+    private OrderManageService orderManageService;
+    @Resource
+    private OrderService orderService;
+    @Resource
+    private CreditOrderService creditOrderService;
+    @Resource
+    private UcoinBillManageService ucoinBillManageService;
+    @Resource
+    private UcoinGrandService ucoinGrandService;
+    @Resource
+    private BusinessTypeService businessTypeService;
+    @Resource
+    private ChinapostCustomerService chinapostCustomerService;
+    @Resource
+    private CustomerManageService customerManageService;
+    @Resource
+    private InventoryService inventoryService;
+    @Resource
+    private EnterpriseInfoService enterpriseInfoService;
+    @Resource
+    private AddressService addressService;
+
+
+    private Parser parser = new SimpleParser();
+
+    @RequestMapping(value = "/goodsManagerDown", method = RequestMethod.GET)
+    public ModelAndView exportExcel(
+            @RequestParam(value = "goodsInfoId", required = false) String goodsInfoIds,
+            @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+            @RequestParam(value = "goodsInfoItemNo", required = false) String goodsInfoItemNo,
+            @RequestParam(value = "goodsInfoAdded", required = false) String goodsInfoAdded,
+            @RequestParam(value = "brandId", required = false) Long brandId,
+            @RequestParam(value = "typeId", required = false) Long typeId,
+            @RequestParam(value = "thirdId", required = false) Long thirdId) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsInfoItemNo = Constants.nullOrNotBlank(goodsInfoItemNo);
+        goodsInfoAdded = Constants.nullOrNotBlank(goodsInfoAdded);
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("goodsBrand", "货品品牌");
+        map.put("goodsInfoName", "货品名称");
+        map.put("specString", "货品规格");
+        map.put("goodsInfoTypeName", "货品类型");
+        map.put("goodsInfoItemNo", "货品编号");
+        map.put("thirdName", "货品所属商家");
+
+        Workbook wb;
+        if (goodsInfoIds.equals("all")) {
+            Page<GoodsManagerResult> page = goodsManageService.getGoods(goodsInfoName, goodsInfoItemNo, goodsInfoAdded, brandId, typeId, thirdId, null);
+            List<GoodsManagerResult> list = page.getContent();
+
+            wb = ExcelUtil.excelExport(map, list);
+        } else {
+            long[] ids = parser.parseJSON(goodsInfoIds, new TypeToken<long[]>() {
+            });
+            List<GoodsManagerResult> goodsManagerResults = new ArrayList<>();
+            for (long id : ids) {
+                GoodsManagerResult goodsManagerResult = goodsManageService.getByGoodsInfoId(id);
+                goodsManagerResults.add(goodsManagerResult);
+            }
+            wb = ExcelUtil.excelExport(map, goodsManagerResults);
+        }
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "商品列表.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+    @RequestMapping(value = "/inventoryGoodsDown", method = RequestMethod.GET)
+    public ModelAndView exportInventoryExcel(
+            @RequestParam(value = "goodsInfoId", required = false) String goodsInfoIds,
+            @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+            @RequestParam(value = "goodsInfoItemNo", required = false) String goodsInfoItemNo,
+            @RequestParam(value = "brandId", required = false) Long brandId,
+            @RequestParam(value = "thirdId", required = false) Long thirdId) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsInfoItemNo = Constants.nullOrNotBlank(goodsInfoItemNo);
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("goodsInfoName", "货品名称");
+        map.put("goodsBrand", "货品品牌");
+        map.put("specString", "货品规格");
+        map.put("goodsNumber", "货品编号");
+        map.put("available", "可用库存");
+        map.put("inventory", "库存总量");
+        Workbook wb;
+
+        if (goodsInfoIds.equals("all")) {
+            Page<InventoryGoodsResult> page = inventoryManageService.getInventoryGoodsResult(goodsInfoName, goodsInfoItemNo, brandId, thirdId, null);
+            List<InventoryGoodsResult> list = page.getContent();
+            wb = ExcelUtil.excelExport(map, list);
+        } else {
+            long[] ids = parser.parseJSON(goodsInfoIds, new TypeToken<long[]>() {
+            });
+            List<InventoryGoodsResult> inventoryGoodsResults = new ArrayList<>();
+            for (long id : ids) {
+                InventoryGoodsResult inventoryGoodsResult = inventoryManageService.getInventoryGoodsResultByPrimarykey(id);
+                inventoryGoodsResults.add(inventoryGoodsResult);
+            }
+            wb = ExcelUtil.excelExport(map, inventoryGoodsResults);
+        }
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "库存货品.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+    @RequestMapping(value = "/inventoryWarningGoodsDown", method = RequestMethod.GET)
+    public ModelAndView exportInventoryWarningExcel(
+            @RequestParam(value = "goodsInfoId", required = false) String goodsInfoIds,
+            @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+            @RequestParam(value = "goodsInfoItemNo", required = false) String goodsInfoItemNo,
+            @RequestParam(value = "brandId", required = false) Long brandId,
+            @RequestParam(value = "thirdId", required = false) Long thirdId) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsInfoItemNo = Constants.nullOrNotBlank(goodsInfoItemNo);
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("goodsInfoName", "货品名称");
+        map.put("goodsBrand", "货品品牌");
+        map.put("specString", "货品规格");
+        map.put("goodsNumber", "货品编号");
+        map.put("available", "可用库存");
+        map.put("inventory", "库存总量");
+        map.put("warning", "预警值");
+        Workbook wb;
+        if (goodsInfoIds.equals("all")) {
+
+            Page<InventoryGoodsResult> page = inventoryManageService.getWarningGoods(goodsInfoName, goodsInfoItemNo, brandId, thirdId, null);
+            List<InventoryGoodsResult> list = page.getContent();
+            wb = ExcelUtil.excelExport(map, list);
+        } else {
+            long[] ids = parser.parseJSON(goodsInfoIds, new TypeToken<long[]>() {
+            });
+            List<InventoryGoodsResult> inventoryGoodsResults = new ArrayList<>();
+            for (long id : ids) {
+                InventoryGoodsResult inventoryGoodsResult = inventoryManageService.getWarningGood(id);
+                inventoryGoodsResults.add(inventoryGoodsResult);
+            }
+            wb = ExcelUtil.excelExport(map, inventoryGoodsResults);
+        }
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "库存预警货品.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+    @RequestMapping(value = "/orderDown", method = RequestMethod.GET)
+    public ModelAndView exportOrderExcel(@RequestParam(value = "orderNoString", required = false) String orderNoString,
+                                         @RequestParam(value = "status", required = false) OrderStatus status,
+                                         @RequestParam(value = "selfPick", required = false) Boolean selfPick,
+                                         @RequestParam(value = "username", required = false) String username,
+                                         @RequestParam(value = "receiver", required = false) String receiver,
+                                         @RequestParam(value = "contactPhone", required = false) String contactPhone,
+                                         @RequestParam(value = "createStart", required = false) String createStart,
+                                         @RequestParam(value = "createEnd", required = false) String createEnd,
+                                         @RequestParam(value = "payStart", required = false) String payStart,
+                                         @RequestParam(value = "payEnd", required = false) String payEnd) {
+
+        if (status != null && status == OrderStatus.WAIT_DELIVER) {
+            status = OrderStatus.PAYED;
+            selfPick = false;
+        } else if (status != null && status == OrderStatus.WAIT_PICKUP) {
+            status = OrderStatus.PAYED;
+            selfPick = true;
+        }
+        username = Constants.nullOrNotBlank(username);
+        receiver = Constants.nullOrNotBlank(receiver);
+        contactPhone = Constants.nullOrNotBlank(contactPhone);
+        Date createStartTime = Constants.nullOrMorning(createStart);
+        Date createEndTime = Constants.nullOrNight(createEnd);
+        Date payStartTime = Constants.nullOrMorning(payStart);
+        Date payEndTime = Constants.nullOrNight(payEnd);
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet();
+        HSSFCellStyle style = wb.createCellStyle();
+        DataFormat format = wb.createDataFormat();
+        style.setDataFormat(format.getFormat("@"));
+        sheet.setDefaultColumnStyle(0,style);
+        sheet.setDefaultColumnStyle(1,style);
+        //构造表头
+        HSSFRow headRow = sheet.createRow(0);
+        List<String> headList=Arrays.asList("订单号","下单用户身份证号","下单用户姓名","下单时间", "付款时间",
+                                            "商品名称","购买数量","订单金额","订单状态","配送方式","商家",
+                                            "收件人姓名","收件人电话","收件人地址","自提网点","快递公司",
+                                            "快递单号");
+        for(int i=0;i<headList.size();i++){
+            HSSFCell cell=headRow.createCell(i);
+            cell.setCellValue(headList.get(i));
+        }
+
+
+        //填充表格内容
+
+        List<Order> orderList=new ArrayList<>();
+        if(orderNoString.equals("all")){
+            Page<Order> orderPage = orderManageService.getOrders(null, status, selfPick, username, receiver, contactPhone, createStartTime, createEndTime, payStartTime, payEndTime, null);
+            orderList=orderPage.getContent();
+        }else{
+            Long[] orderNos = parser.parseJSON(orderNoString, new TypeToken<Long[]>() {});
+            for(Long orderNo:orderNos) {
+            Order order = orderService.getOrder(orderNo);
+            orderList.add(order);
+            }
+        }
+
+            for(int i=0;i<orderList.size();i++){
+                HSSFRow orderRow=sheet.createRow(i+1);
+                Order order=orderList.get(i);
+                Order.CustomerInfo customerInfo=order.getCustomerInfo();
+                Order.Business business=order.getBusiness();
+                Long id = order.getEnterpriseId();
+                HSSFCell cell = orderRow.createCell(0);
+                cell.setCellValue(order.getOrderCode());
+                cell = orderRow.createCell(1);
+                cell.setCellValue(customerInfo.getUsername());
+                cell = orderRow.createCell(2);
+                cell.setCellValue(customerInfo.getFullName());
+                cell = orderRow.createCell(3);
+                Date createTime=order.getCreateTime();
+                cell.setCellValue(order.getCreateTime()==null?"": DateUtil.formatToString(createTime,"yyyy/MM/dd HH:mm"));
+                cell = orderRow.createCell(4);
+                Date payTime=order.getPayTime();
+                cell.setCellValue(order.getPayTime()==null?"":DateUtil.formatToString(payTime, "yyyy/MM/dd HH:mm"));
+
+                //拼写商品名称信息
+                cell = orderRow.createCell(5);
+                List<OrderGoods> orderGoodsList = order.getOrderGoodsList();
+                String goodsNameString="";
+                Long amount=0l;
+                for(OrderGoods orderGoods:orderGoodsList){
+                    String goodsName=orderGoods.getGoodsInfoName()+"("+orderGoods.getGoodsInfoNum()+")";
+                    goodsNameString=goodsNameString+","+goodsName;
+                    amount+=orderGoods.getGoodsInfoNum();
+                }
+                cell.setCellValue(goodsNameString);
+                cell = orderRow.createCell(6);
+                cell.setCellValue(amount);
+                cell = orderRow.createCell(7);
+                cell.setCellValue(order.getOrderPrice().doubleValue());
+                cell = orderRow.createCell(8);
+                cell.setCellValue(order.getOrderStatus().toString());
+                if(order.getSelfPick()==true) {
+                    cell = orderRow.createCell(9);
+                    cell.setCellValue("用户自提");
+                    //商家
+                    cell = orderRow.createCell(10);
+                    if(id==null){cell.setCellValue("");}else{
+                    cell.setCellValue(enterpriseInfoService.getEnterpriseInfo(id).getEnterpriseName());}
+                    cell = orderRow.createCell(11);
+                    cell.setCellValue(customerInfo.getFullName());
+                    cell = orderRow.createCell(12);
+                    cell.setCellValue(customerInfo.getContactPhone());
+                    cell = orderRow.createCell(13);
+                    cell.setCellValue(customerInfo.getContactAddr());
+                    cell = orderRow.createCell(14);
+                    cell.setCellValue(order.getSelfPickName());
+                    //快递公司
+                    cell = orderRow.createCell(15);
+                    cell.setCellValue("");
+                    //快递单号
+                    cell = orderRow.createCell(16);
+                    cell.setCellValue("");
+                }else{
+                    cell = orderRow.createCell(9);
+                    cell.setCellValue("快递配送");
+                    cell = orderRow.createCell(10);
+                    cell.setCellValue(business.getBusinessName());
+                    cell = orderRow.createCell(11);
+                    cell.setCellValue(order.getShippingPerson());
+                    cell = orderRow.createCell(12);
+                    cell.setCellValue(order.getShippingMobile());
+                    cell = orderRow.createCell(13);
+                    cell.setCellValue(order.getShippingAddress());
+                    //自提网点
+                    cell = orderRow.createCell(14);
+                    cell.setCellValue("");
+                    //快递公司
+                    cell = orderRow.createCell(15);
+                    cell.setCellValue("");
+                    //快递单号
+                    cell = orderRow.createCell(16);
+                    cell.setCellValue("");
+                }
+            }
+
+
+
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "订单.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+    @RequestMapping(value = "/backOrderDown", method = RequestMethod.GET)
+    public ModelAndView exportBackOrderExcel(@RequestParam(value = "backOrderNo", required = false) String backOrderNos,
+                                             @RequestParam(value = "phoneNo", required = false) String phoneNo,
+                                             @RequestParam(value = "orderNo", required = false) Long orderNo,
+                                             @RequestParam(value = "status", required = false) CreditOrderStatus status,
+                                             @RequestParam(value = "start", required = false) String start,
+                                             @RequestParam(value = "end", required = false) String end) {
+        phoneNo = Constants.nullOrNotBlank(phoneNo);
+        Date startTime = Constants.nullOrMorning(start);
+        Date endTime = Constants.nullOrNight(end);
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("backOrderCode", "订单号");
+        //map.put("goodsInfoName", "商品名称");
+        map.put("backCollectPerson", "退单收件人");
+        map.put("backCollectPhone", "退单收件人号码");
+        map.put("backTime", "退单时间");
+        map.put("backCheck", "退单状态");
+        map.put("backPrice", "退单金额");
+        Workbook wb;
+        if (backOrderNos.equals("all")) {
+            Page<CreditOrder> page = orderManageService.getBackOrder(null,
+                    phoneNo, orderNo, status, startTime, endTime, null);
+            List<CreditOrder> list = page.getContent();
+            wb = ExcelUtil.excelExport(map, list);
+        } else {
+            Long[] backNos = parser.parseJSON(backOrderNos, new TypeToken<Long[]>() {
+            });
+            List<CreditOrder> backOrders = new ArrayList<>();
+            for (long backNo : backNos) {
+                CreditOrder creditOrder = creditOrderService.selectByCreditOrderCode(backNo);
+                backOrders.add(creditOrder);
+            }
+            wb = ExcelUtil.excelExport(map, backOrders);
+        }
+
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "退单.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+
+
+    @RequestMapping(value = "/myGrandDown", method = RequestMethod.GET)
+    public ModelAndView exportGrandExcel(@RequestParam(value = "code", required = false) String tradeCodes,
+                                         @RequestParam(value = "start", required = false) String start,
+                                         @RequestParam(value = "end", required = false) String end) {
+        Date startTime = Constants.nullOrMorning(start);
+        Date endTime = Constants.nullOrNight(end);
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("code", "交易单号");
+        map.put("fee", "发放邮宝金额");
+        map.put("sendType", "交易类型");
+        Workbook wb;
+        if (tradeCodes.equals("all")) {
+            Page<EnterpriseBatchGrand> page = ucoinBillManageService.getGrands(null, startTime, endTime, null);
+            List<EnterpriseBatchGrand> list = page.getContent();
+            wb = ExcelUtil.excelExport(map, list);
+        } else {
+            Long[] codes = parser.parseJSON(tradeCodes, new TypeToken<Long[]>() {
+            });
+            List<EnterpriseBatchGrand> enterpriseBatchGrands = new ArrayList<>();
+            for (long code : codes) {
+                Page<EnterpriseBatchGrand> page = ucoinBillManageService.getGrands(code, startTime, endTime, null);
+                enterpriseBatchGrands = page.getContent();
+                //EnterpriseBatchGrand enterpriseBatchGrand=enterpriseBatchGrandMapper;
+                //enterpriseBatchGrands.add(enterpriseBatchGrand);
+            }
+            wb = ExcelUtil.excelExport(map, enterpriseBatchGrands);
+        }
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "账单管理.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+    @RequestMapping(value = "/grandHistory", method = RequestMethod.GET)
+    public ModelAndView grandHistory(@RequestParam(value = "enterpriseId")Long enterpriseId,
+                                     @RequestParam(value = "typeId") Integer typeId,
+                                     @RequestParam(value = "start") String start,
+                                     @RequestParam(value = "end") String end) {
+
+        Date startTime = null;
+        if (!StringUtil.isBlank(start)) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DATE_FORMAT);
+        }
+        Date endTime = null;
+        if (!StringUtil.isBlank(end)) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DATE_FORMAT);
+        }
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet();
+        HSSFRow row = sheet.createRow(0);
+        // 生成一个样式
+        HSSFCellStyle style = wb.createCellStyle();
+        // 设置这些样式
+        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+        // 生成一个字体
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.VIOLET.index);
+        font.setFontHeightInPoints((short) 12);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        // 把字体应用到当前的样式
+        style.setFont(font);
+
+        //构造表头
+        Page<CustomerUcoinHistory> customerUcoinHistoryPage = ucoinGrandService.getGrandHistory(enterpriseId,typeId, startTime, endTime, null);
+        List<CustomerUcoinHistory> customerUcoinHistoryList = customerUcoinHistoryPage.getContent();
+        List<String> jsonKey = new ArrayList<>();
+        for (CustomerUcoinHistory customerUcoinHistory : customerUcoinHistoryList) {
+            String paramjson = customerUcoinHistory.getParamJson();
+            Map<String, String> map = parser.parseJSON(paramjson, new TypeToken<Map<String, String>>() {
+            });
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    if (!jsonKey.contains(key)) {
+                        jsonKey.add(key);
+                    }
+                }
+            }
+        }
+
+        HSSFCell cell = row.createCell(0);
+        sheet.setColumnWidth(0,24*256);
+        cell.setCellValue("网点名称");
+        cell.setCellStyle(style);
+
+        cell=row.createCell(1);
+        sheet.setColumnWidth(1,30*256);
+        cell.setCellValue("身份证号");
+        cell.setCellStyle(style);
+        cell.setCellType(Cell.CELL_TYPE_STRING);
+        cell = row.createCell(2);
+        cell.setCellValue("姓名");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(3);
+        cell.setCellValue("营销邮豆金额");
+        cell.setCellStyle(style);
+        cell = row.createCell(4);
+        cell.setCellValue("促销邮豆金额");
+        cell.setCellStyle(style);
+        cell = row.createCell(5);
+        cell.setCellValue("邮豆总金额");
+        cell.setCellStyle(style);
+        cell = row.createCell(6);
+        cell.setCellValue("备注");
+        cell.setCellStyle(style);
+        cell = row.createCell(7);
+        sheet.setColumnWidth(7,30*256);
+        cell.setCellValue("邮豆发放时间");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(8);
+        cell.setCellValue("业务类型");
+        cell.setCellStyle(style);
+        for (int i = 0; i < jsonKey.size(); i++) {
+            cell = row.createCell(i + 9);
+            cell.setCellValue(jsonKey.get(i));
+            cell.setCellStyle(style);
+        }
+
+    /*    //key：网点id；value:该网点发放记录总条数
+        Map<Long, Integer> keyMap = new LinkedHashMap<>();
+        Long eId = -1l;
+        int k = 0;*/
+        //填充表格内容
+        for (int j = 0; j < customerUcoinHistoryList.size(); j++) {
+            row = sheet.createRow(j + 1);
+            CustomerUcoinHistory customerUcoinHistory = customerUcoinHistoryList.get(j);
+            ChinapostCustomer customer = chinapostCustomerService.getCustomer(customerUcoinHistory.getCustomerId());
+            cell=row.createCell(0);
+            Long id=customerUcoinHistory.getEnterpriseId();
+            EnterpriseInfo enterpriseInfo=enterpriseInfoService.getEnterpriseInfo(id);
+            cell.setCellValue(enterpriseInfo.getEnterpriseName());
+            cell = row.createCell(1);
+            cell.setCellValue(customer.getIdcardNo());
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            row.createCell(2).setCellValue(customer.getFullname());
+            BusinessType businessType = businessTypeService.getByTypeId(customerUcoinHistory.getTypeId());
+            row.createCell(3).setCellValue(customerUcoinHistory.getMarketPrice().toString());
+            Assert.notNull(customerUcoinHistory.getSalesPrice());
+            row.createCell(4).setCellValue(customerUcoinHistory.getSalesPrice().toString());
+            row.createCell(5).setCellValue(customerUcoinHistory.getPrice().toString());
+            Date createTime=customerUcoinHistory.getCreateTime();
+            String remark = customerUcoinHistory.getRemark();
+            remark = remark == null ? "" : remark;
+            row.createCell(6).setCellValue(remark);
+            row.createCell(7).setCellValue(createTime == null ? "" : DateUtil.formatToString(createTime, "yyyy/MM/dd HH:mm"));
+            row.createCell(8).setCellValue(businessType.getTypeName());
+          /*  if (customerUcoinHistory.getEnterpriseId() == eId) {
+                k++;
+                keyMap.put(eId, k);
+            } else {
+                eId = customerUcoinHistory.getEnterpriseId();
+                k++;
+                keyMap.put(eId, k);
+            }*/
+            String paramJson = customerUcoinHistory.getParamJson();
+            Map<String, String> map = parser.parseJSON(paramJson, new TypeToken<Map<String, String>>() {
+            });
+            if (map == null) {
+                map = new HashMap<>();
+            }
+            for (int i = 0; i < jsonKey.size(); i++) {
+                String value = map.get(jsonKey.get(i));
+                /*int paramValueId=Integer.valueOf(map.get(jsonKey.get(i))).intValue();
+                ParamValue paramValue=paramValueService.getParamValue(paramValueId);
+                String value=paramValue.getParamValueName();*/
+                if (value == null) {
+                    value = "";
+                }
+                row.createCell(i + 9).setCellValue(value);
+            }
+        }
+
+    /*    //合并网点名单元格
+        int s = 1;
+        for (Long id : keyMap.keySet()) {
+            int amount = keyMap.get(id);
+            CellRangeAddress cellAddress = new CellRangeAddress(s, amount, 0, 0);
+            sheet.addMergedRegion(cellAddress);
+            row = sheet.getRow(s);
+            cell = row.createCell(0);
+            EnterpriseInfo enterpriseInfo = enterpriseInfoService.getEnterpriseInfo(id);
+            cell.setCellValue(enterpriseInfo.getEnterpriseName());
+            cell.setCellStyle(style);
+            s = amount + 1;
+        }*/
+
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("wb", wb);
+        map.put("fileName", "邮宝发放记录.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map);
+    }
+
+    @RequestMapping(value = "/customerInfoDown", method = RequestMethod.GET)
+    public ModelAndView exportCustomerInfoExcel(@RequestParam(value = "idCard", required = false) String idCard,
+                                                @RequestParam(value = "linkPhone", required = false) String linkPhone,
+                                                @RequestParam(value = "name", required = false) String name,
+                                                @RequestParam(value = "isActive", required = false) Boolean isActive,
+                                                @RequestParam(value = "isPhoneChecked", required = false) Boolean isPhoneChecked,
+                                                @RequestParam(value = "managerNo", required = false) String managerNo) {
+        idCard = StringUtil.nullOrNotBlank(idCard);
+        linkPhone = StringUtil.nullOrNotBlank(linkPhone);
+        name = StringUtil.nullOrNotBlank(name);
+        managerNo = StringUtil.nullOrNotBlank(managerNo);
+        List<String> heads = new ArrayList<>();
+        heads.add("身份证号");
+        heads.add("姓名");
+        heads.add("性别");
+        heads.add("联系地址");
+        heads.add("联系电话");
+        heads.add("客户经理号");
+        heads.add("账户邮豆余额");
+        heads.add("账号状态");
+        heads.add("账号创建的网点名称");
+        heads.add("账号创建者账号");
+        heads.add("创建时间");
+
+        Workbook wb;
+        Page<ChinapostCustomer> page = customerManageService.getCustomers(idCard, linkPhone, name, isActive,
+                isPhoneChecked, managerNo, null);
+        List<ChinapostCustomer> sonList = page.getContent();
+
+        List<List<String>> outList = new ArrayList<>();
+        for (ChinapostCustomer customer : sonList) {
+            List<String> content = new ArrayList<>();
+            content.add(customer.getIdcardNo());
+            content.add(customer.getFullname());
+            String male = customer.getIdcardNo().substring(16, 17);
+            content.add(Integer.parseInt(male) % 2 == 0 ? "女" : "男");
+            content.add(customer.getContactAddr());
+            content.add(customer.getContactPhone());
+            content.add(customer.getManagerNo());
+            content.add(customer.getTotalUcoin().toString());
+            content.add(customer.getIsActive() ? "是" : "否");
+            content.add(customer.getAccountName());
+            content.add(customer.getUsername());
+            Date createTime=customer.getCreateTime();
+            content.add(createTime == null ? "" : DateUtil.formatToString(createTime, "yyyy/MM/dd HH:mm"));
+            outList.add(content);
+        }
+
+        wb = ExcelUtil.excelExport(heads, outList);
+
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "会员信息.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+    @RequestMapping(value = "/downByGoodsInfo", method = RequestMethod.GET)
+    public ModelAndView exportInventoryGoodsByGoodsInfo(@RequestParam("enterpriseId") long enterpriseId,
+                                                        @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                                        @RequestParam(value = "goodsNumber", required = false) String goodsNumber,
+                                                        @RequestParam(value = "brandId", required = false) Long brandId,
+                                                        @RequestParam(value = "thirdId", required = false) Long thirdId) {
+        goodsInfoName = StringUtil.nullOrNotBlank(goodsInfoName);
+        goodsNumber = StringUtil.nullOrNotBlank(goodsNumber);
+        List<String> heads = new ArrayList<>();
+        heads.add("货品名称");
+        heads.add("货品规格");
+        heads.add("货品编号");
+        heads.add("库存");
+        heads.add("可用库存");
+        heads.add("品牌");
+        heads.add("所属商家");
+        Workbook wb;
+        Page<InventoryGoodsResult> inventoryGoodsResults = inventoryManageService.queryByGoodsInfo(enterpriseId, goodsInfoName, goodsNumber, brandId, thirdId, null);
+        List<InventoryGoodsResult> sonList = inventoryGoodsResults.getContent();
+        List<List<String>> outList = new ArrayList<>();
+        for (InventoryGoodsResult model : sonList) {
+            List<String> content = new ArrayList<>();
+            content.add(model.getGoodsInfoName());
+            content.add(model.getSpecString());
+            content.add(model.getGoodsNumber());
+            content.add(model.getSumInventory());
+            content.add(model.getSumAvailable());
+            content.add(model.getGoodsBrand());
+            content.add(model.getGoodsMerchants());
+            outList.add(content);
+        }
+        wb = ExcelUtil.excelExport(heads, outList);
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "根据货品查询库存.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+    @RequestMapping(value = "/downByInventory", method = RequestMethod.GET)
+    public ModelAndView exportInventoryGoodsByInventory(@RequestParam("enterpriseId") long enterpriseId,
+                                                        @RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                                                        @RequestParam(value = "goodsNumber", required = false) String goodsNumber,
+                                                        @RequestParam(value = "brandId", required = false) Long brandId,
+                                                        @RequestParam(value = "thirdId", required = false) Long thirdId) {
+        goodsInfoName = StringUtil.nullOrNotBlank(goodsInfoName);
+        goodsNumber = StringUtil.nullOrNotBlank(goodsNumber);
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet();
+        HSSFRow row = sheet.createRow(0);
+        // 生成一个样式
+        HSSFCellStyle style = wb.createCellStyle();
+        // 设置这些样式
+        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+        // 生成一个字体
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.VIOLET.index);
+        font.setFontHeightInPoints((short) 12);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        // 把字体应用到当前的样式
+        style.setFont(font);
+
+        //构造表头
+        //第一行
+        HSSFCell cell = row.createCell(0);
+        sheet.setColumnWidth(0,20*256);
+        cell.setCellValue("网点名称");
+        cell.setCellStyle(style);
+        cell.setCellType(Cell.CELL_TYPE_STRING);
+        cell = row.createCell(1);
+        cell.setCellValue("货品名称");
+        sheet.setColumnWidth(1,40*256);
+        cell.setCellStyle(style);
+        cell = row.createCell(2);
+        cell.setCellValue("货品规格");
+        cell.setCellStyle(style);
+        cell = row.createCell(3);
+        cell.setCellValue("货品编号");
+        cell.setCellStyle(style);
+        cell = row.createCell(4);
+        cell.setCellValue("库存");
+        sheet.setColumnWidth(4,10*256);
+        cell.setCellStyle(style);
+        cell = row.createCell(5);
+        sheet.setColumnWidth(5,10*256);
+        cell.setCellValue("可用库存");
+        cell.setCellStyle(style);
+        cell = row.createCell(6);
+        cell.setCellValue("商家");
+        cell.setCellStyle(style);
+        cell = row.createCell(7);
+        cell.setCellValue("品牌");
+        cell.setCellStyle(style);
+        //填充表格内容
+        Page<InventoryGoodsResult> page = inventoryService.queryByInventory(enterpriseId, goodsInfoName, goodsNumber, brandId, thirdId, null);
+        List<InventoryGoodsResult> sonList = page.getContent();
+        //key：网点id；value：网点商品数量
+        Map<Long, Integer> map = new LinkedHashMap<>();
+        Long eId = -1l;
+        int j = 0;
+        for (int i = 0; i < sonList.size(); i++) {
+            InventoryGoodsResult model = sonList.get(i);
+            row = sheet.createRow(i + 1);
+            cell = row.createCell(1);
+            cell.setCellValue(model.getGoodsInfoName());
+            cell = row.createCell(2);
+            cell.setCellValue(model.getSpecString());
+            cell = row.createCell(3);
+            cell.setCellValue(model.getGoodsNumber());
+            cell = row.createCell(4);
+            cell.setCellValue(model.getInventory());
+            cell = row.createCell(5);
+            cell.setCellValue(model.getAvailable());
+            cell = row.createCell(6);
+            cell.setCellValue(model.getGoodsMerchants());
+            cell = row.createCell(7);
+            cell.setCellValue(model.getGoodsBrand());
+            if (model.getEnterpriseId() == eId) {
+                j++;
+                map.put(eId, j);
+            } else {
+                eId = model.getEnterpriseId();
+                j++;
+                map.put(eId, j);
+            }
+        }
+
+        //合并网点名单元格
+        int s = 1;
+        for (Long id : map.keySet()) {
+            int amount = map.get(id);
+            CellRangeAddress cellAddress = new CellRangeAddress(s, amount, 0, 0);
+            sheet.addMergedRegion(cellAddress);
+            row = sheet.getRow(s);
+            cell = row.createCell(0);
+            EnterpriseInfo enterpriseInfo = enterpriseInfoService.getEnterpriseInfo(id);
+            cell.setCellValue(enterpriseInfo.getAccountName());
+            cell.setCellStyle(style);
+            s = amount + 1;
+        }
+
+
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("wb", wb);
+        map1.put("fileName", "根据仓库下载库存货品.xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map1);
+    }
+
+
+
+    @RequestMapping(value = "/templateDown", method = RequestMethod.GET)
+    public ModelAndView ExportTemplateExcel(Integer typeId) {
+
+        HSSFWorkbook wb = new HSSFWorkbook();
+        //创建主表
+        HSSFSheet templateSheet = wb.createSheet("模板");
+        //创建省市数据源表
+        HSSFSheet provinceSheet=wb.createSheet("省市信息表");
+        //创建市区数据源表
+        HSSFSheet citySheet=wb.createSheet("市区信息表");
+        //创建参数信息表
+        HSSFSheet paramSheet=wb.createSheet("参数信息表");
+
+        //获取省份信息
+        List<Province> provinces=addressService.getProvinces();
+        int rowNumber=0;
+        for(int i=0;i<provinces.size();i++){
+            HSSFRow provinceRow=provinceSheet.createRow(i);
+            HSSFCell provinceCell=provinceRow.createCell(0);
+            provinceCell.setCellValue(provinces.get(i).getProvinceName());
+            //根据省份获取相应市
+            List<City> cities=addressService.getCities(provinces.get(i).getProvinceId());
+            //为市创建省份名称
+            String provincName=provinces.get(i).getProvinceName();
+            createName(wb,provincName,"省市信息表!$B$"+(i+1)+":$"+getcellColumnFlag(cities.size()+1)+"$"+(i+1));
+               for(int j=0;j<cities.size();j++){
+                   HSSFCell cityCell=provinceRow.createCell(j + 1);
+                   cityCell.setCellValue(cities.get(j).getCityName());
+                   HSSFRow cityRow=citySheet.createRow(rowNumber);
+                   HSSFCell cell=cityRow.createCell(0);
+                   cell.setCellValue(cities.get(j).getCityName());
+                   //根据市获取相应区
+                   List<District> districts=addressService.getDistricts(cities.get(j).getCityId());
+                   //为区创建市名称
+                   String cityName=cities.get(j).getCityName();
+                   cityName=cityName.equals(provincName)?cityName+"市级":cityName;
+                   createName(wb,cityName,"市区信息表!$B$"+(rowNumber+1)+":$"+getcellColumnFlag(districts.size()+1)+"$"+(rowNumber+1));
+                   rowNumber++;
+                      for(int k=0;k<districts.size();k++){
+                          HSSFCell districtCell=cityRow.createCell(k+1);
+                          districtCell.setCellValue(districts.get(k).getDistrictName());
+                      }
+               }
+        }
+
+        HSSFRow row = templateSheet.createRow(0);
+        // 生成一个样式
+        HSSFCellStyle style = wb.createCellStyle();
+        // 设置这些样式
+        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        // 生成一个字体
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.VIOLET.index);
+        font.setFontHeightInPoints((short) 12);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        // 把字体应用到当前的样式
+        style.setFont(font);
+        HSSFCell cell = row.createCell(0);
+        cell.setCellValue("身份证号");
+        cell.setCellStyle(style);
+        HSSFCellStyle style2 = wb.createCellStyle();
+        DataFormat format = wb.createDataFormat();
+        style2.setDataFormat(format.getFormat("@"));
+        templateSheet.setDefaultColumnStyle(0, style2);
+        cell = row.createCell(1);
+        cell.setCellValue("省");
+        cell.setCellStyle(style);
+        cell = row.createCell(2);
+        cell.setCellValue("市");
+        cell.setCellStyle(style);
+        cell = row.createCell(3);
+        cell.setCellValue("区");
+        cell.setCellStyle(style);
+        cell = row.createCell(4);
+        cell.setCellValue("详细地址");
+        cell.setCellStyle(style);
+        templateSheet.setDefaultColumnStyle(4, style2);
+        cell = row.createCell(5);
+        cell.setCellValue("姓名");
+        cell.setCellStyle(style);
+        cell = row.createCell(6);
+        cell.setCellValue("促销邮豆金额");
+        cell.setCellStyle(style);
+        cell = row.createCell(7);
+        cell.setCellValue("备注");
+        cell.setCellStyle(style);
+        //给省设置数据有效性
+        createName(wb, "province", "省市信息表!$A$1:$A$34");
+        HSSFDataValidation valiProvince=setDataValidation("province",1,1000,1,1);
+        templateSheet.addValidationData(valiProvince);
+        //市及区设置有效性
+        for(int i=2;i<1000;i++) {
+            HSSFDataValidation validCity = setDataValidation("INDIRECT(B" + i + ")", (i-1), (i-1), 2, 2);
+            templateSheet.addValidationData(validCity);
+            HSSFDataValidation validDistrict = setDataValidation("INDIRECT(C" + i + ")", (i-1), (i-1), 3, 3);
+            templateSheet.addValidationData(validDistrict);
+        }
+
+        //给excel动态增加参数列，同时将参数信息插入参数信息表
+        BusinessType businessType = businessTypeService.getDetailsBytypeId(typeId);
+        List<Param> params = businessType.getParams();
+        //调整列宽
+        for(int i=0;i<params.size()+8;i++){templateSheet.setColumnWidth(i,14*256);}
+        for (int i=0;i<params.size();i++) {
+            cell = row.createCell(i+8);
+            String paramName=params.get(i).getParamName();
+            cell.setCellValue(paramName);
+            cell.setCellStyle(style);
+            //参数信息表插入数据
+            HSSFRow paramRow=paramSheet.createRow(i);
+            HSSFCell paramCell=paramRow.createCell(0);
+            paramCell.setCellValue(paramName);
+            List<ParamValue> paramValues=params.get(i).getParamValues();
+
+            for(int j=0;j<paramValues.size();j++){
+                paramCell=paramRow.createCell(j+1);
+                paramCell.setCellValue(paramValues.get(j).getParamValueName());
+            }
+            if(params.get(i).getParamType()== ParamType.TYPE_ENUM){
+                createName(wb,"_"+paramName,"参数信息表!$B$"+(i+1)+":$"+getcellColumnFlag(paramValues.size()+1)+"$"+(i+1));
+                //选项参数的有效性
+                HSSFDataValidation validParam = setDataValidation("_"+paramName, 1, 1000, i+8, i+8);
+                templateSheet.addValidationData(validParam);
+            }
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("wb", wb);
+        map.put("fileName", businessType.getTypeName() + ".xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map);
+    }
+
+    /**
+     * 名称管理器
+     * @param wb
+     * @param name
+     * @param expression
+     * @return
+     */
+    public static HSSFName createName(HSSFWorkbook wb, String name, String expression){
+        HSSFName refer = wb.createName();
+        refer.setRefersToFormula(expression);
+        refer.setNameName(name);
+        return refer;
+    }
+
+    /**
+     * 数据有效性
+     * @param name
+     * @param firstRow
+     * @param endRow
+     * @param firstCol
+     * @param endCol
+     * @return
+     */
+    public static HSSFDataValidation setDataValidation(String name, int firstRow, int endRow, int firstCol, int endCol){
+        //加载下拉列表内容
+        DVConstraint constraint = DVConstraint.createFormulaListConstraint(name);
+        // 设置数据有效性加载在哪个单元格上。
+        // 四个参数分别是：起始行、终止行、起始列、终止列
+        org.apache.poi.ss.util.CellRangeAddressList regions = new CellRangeAddressList((short) firstRow, (short) endRow, (short) firstCol, (short) endCol);
+        // 数据有效性对象
+        HSSFDataValidation data_validation = new HSSFDataValidation(regions, constraint);
+        return data_validation;
+    }
+
+    //根据数据量查询所在列
+    private String getcellColumnFlag(int num) {
+        String columFiled = "";
+        int chuNum = 0;
+        int yuNum = 0;
+        if(num >= 1 && num <= 26){
+            columFiled = this.doHandle(num);
+        }else{
+            chuNum = num / 26;
+            yuNum = num % 26;
+
+            columFiled +=  this.doHandle(chuNum);
+            columFiled +=  this.doHandle(yuNum);
+        }
+        return columFiled;
+    }
+
+    private String doHandle(final int num) {
+        String[] charArr = {"A","B","C","D","E","F","G","H","I","J","K","L","M"
+                ,"N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        return charArr[num-1].toString();
+    }
+
+
+   /* @RequestMapping(value = "/templateDown", method = RequestMethod.GET)
+    public ModelAndView exportTemplateExcel(Integer typeId) {
+
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet();
+        HSSFRow row = sheet.createRow(0);
+        // 生成一个样式
+        HSSFCellStyle style = wb.createCellStyle();
+
+        // 设置这些样式
+        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+
+        // 生成一个字体
+        HSSFFont font = wb.createFont();
+        font.setColor(HSSFColor.VIOLET.index);
+        font.setFontHeightInPoints((short) 12);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        // 把字体应用到当前的样式
+        style.setFont(font);
+        BusinessType businessType = businessTypeService.getDetailsBytypeId(typeId);
+        List<Param> params = businessType.getParams();
+        *//*List<Param> params = paramService.getByTypeId(typeId);
+        BusinessType businessType = businessTypeService.getByTypeId(typeId);*//*
+        HSSFCell cell = row.createCell(0);
+        cell.setCellValue("姓名");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(1);
+        cell.setCellValue("身份证号");
+        cell.setCellStyle(style);
+        HSSFCellStyle style2 = wb.createCellStyle();
+        DataFormat format = wb.createDataFormat();
+        style2.setDataFormat(format.getFormat("@"));
+        cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+        sheet.setDefaultColumnStyle(1, style2);
+
+        cell = row.createCell(2);
+        cell.setCellValue("促销邮豆金额");
+        cell.setCellStyle(style);
+        cell = row.createCell(3);
+        cell.setCellValue("备注");
+        cell.setCellStyle(style);
+        int i = 4;
+        for (Param param : params) {
+            cell = row.createCell(i++);
+            cell.setCellValue(param.getParamName());
+            cell.setCellStyle(style);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("wb", wb);
+        map.put("fileName", businessType.getTypeName() + ".xls");
+        ViewExcel viewExcel = new ViewExcel();
+        return new ModelAndView(viewExcel, map);
+    }
+*/
+
+
+}

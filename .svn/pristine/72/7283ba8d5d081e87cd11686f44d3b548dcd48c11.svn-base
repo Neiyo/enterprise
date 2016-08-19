@@ -1,0 +1,318 @@
+package com.ylife.chinapost.service.impl;
+
+import com.ylife.address.service.AddressService;
+import com.ylife.chinapost.service.CurrentLoginService;
+import com.ylife.chinapost.service.UcoinGrandService;
+import com.ylife.customer.mapper.ChinapostCustomerMapper;
+import com.ylife.customer.model.ChinapostCustomer;
+import com.ylife.customer.service.ChinapostCustomerService;
+import com.ylife.customer.service.CustomerWithUcoinInfoService;
+import com.ylife.data.json.json.Renderer;
+import com.ylife.data.json.json.SimpleRenderer;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.enterprise.model.EnterpriseFunction;
+import com.ylife.enterprise.service.EnterpriseService;
+import com.ylife.exception.AuthoritionException;
+import com.ylife.exception.UserOperationException;
+import com.ylife.expression.Expression;
+import com.ylife.expression.exception.MagicException;
+import com.ylife.system.model.BusinessType;
+import com.ylife.system.model.Param;
+import com.ylife.system.model.ParamType;
+import com.ylife.system.model.ParamValue;
+import com.ylife.system.service.BusinessTypeService;
+import com.ylife.system.service.ParamService;
+import com.ylife.system.service.ParamValueService;
+import com.ylife.ucoin.model.CustomerUcoinHistory;
+import com.ylife.ucoin.model.HistoryType;
+import com.ylife.ucoin.service.CustomerUcoinHistoryService;
+import com.ylife.ucoin.service.CustomerUcoinService;
+import com.ylife.utils.Assert;
+import com.ylife.utils.ExcelUtil;
+import com.ylife.utils.StringUtil;
+import com.ylife.wealth.service.EnterpriseBatchGrandService;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
+
+/**
+ * Created by InThEnd on 2016/4/7.
+ * UcoinGrandServiceImpl
+ */
+@Service
+public class UcoinGrandServiceImpl implements UcoinGrandService {
+
+    @Resource
+    private ChinapostCustomerMapper chinapostCustomerMapper;
+    @Resource
+    private ChinapostCustomerService chinapostCustomerService;
+    @Resource
+    private CustomerUcoinService customerUcoinService;
+    @Resource
+    private CurrentLoginService currentLoginService;
+    @Resource
+    private EnterpriseService enterpriseService;
+    @Resource
+    private CustomerUcoinHistoryService customerUcoinHistoryService;
+    @Resource
+    private EnterpriseBatchGrandService enterpriseBatchGrandService;
+    @Resource
+    private CustomerWithUcoinInfoService customerWithUcoinInfoService;
+    @Resource
+    private BusinessTypeService businessTypeService;
+    @Resource
+    private ParamService paramService;
+    @Resource
+    private ParamValueService paramValueService;
+    @Resource
+    private AddressService addressService;
+
+    private Renderer renderer = new SimpleRenderer();
+
+    private static final String HEAD_NAME = "姓名";
+    private static final String HEAD_ID_CARD = "身份证号";
+    private static final String HEAD_PRICE = "促销邮豆金额";
+    private static final String HEAD_REMARK = "备注";
+
+    @Override
+    public boolean isNewCustomer(String idCardNo) {
+        return !chinapostCustomerService.isExist(idCardNo);
+    }
+
+    @Override
+    public ChinapostCustomer getCustomer(String idCardNo) {
+        return customerWithUcoinInfoService.getInfo(idCardNo);
+    }
+
+    @Override
+    public List<List<String>> parseFile(MultipartFile uploadExcel, int typeId) throws IOException, InvalidFormatException {
+        List<List<String>> excelList;
+        List<Param> def = paramService.getByTypeId(typeId);
+        excelList = ExcelUtil.readExcel(uploadExcel.getInputStream(), 0);
+        List<String> head = excelList.get(0);
+        checkExcelHeads(def, head);
+        return excelList;
+    }
+
+
+    private void checkExcelHeads(List<Param> def, List<String> heads) {
+        if (heads.size() - 4 != def.size() || !Objects.equals(heads.get(0), HEAD_NAME)
+                || !Objects.equals(heads.get(1), HEAD_ID_CARD) || !Objects.equals(heads.get(2), HEAD_PRICE) || !Objects.equals(heads.get(3), HEAD_REMARK)) {
+            throw new UserOperationException("格式不匹配，请重新下载对应的模板！");
+        }
+        for (Param aDef : def) {
+            if (!heads.contains(aDef.getParamName())) {
+                throw new UserOperationException("格式不匹配，请重新下载对应的模板！");
+            }
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public void singleGrand(int typeId, String paykey, Map<String, String> valuesMap,
+                            Long provinceId, Long cityId, Long districtId, String addr) {
+        EnterpriseFunction function = currentLoginService.getCurrentLoginEnterpriseFunc();
+        long enterpriseId = function.getId();
+        if (!enterpriseService.checkPaykey(enterpriseId, paykey)) {
+            throw new AuthoritionException("支付密码错误。");
+        }
+        BusinessType businessType = businessTypeService.getDetailsBytypeId(typeId);
+
+        List<String> content = new ArrayList<>();
+        String name = valuesMap.get(HEAD_NAME);
+        String idCard = valuesMap.get(HEAD_ID_CARD);
+        String priceString = valuesMap.get(HEAD_PRICE);
+        if (Integer.valueOf(priceString) == -1) {
+            throw new UserOperationException("存储金额错误，不能小于0！");
+        }
+        String remark = valuesMap.get(HEAD_REMARK);
+        Assert.hasLength(idCard, "身份证不能为空。");
+        content.add(name);
+        content.add(idCard);
+        content.add(priceString);
+        content.add(remark);
+
+        for (Param param : businessType.getParams()) {
+            String value = valuesMap.get(param.getParamName());
+            if (param.getRequired()) {
+                Assert.hasLength(value, "参数" + param.getParamName() + "的值未提供。");
+            }
+            if (value == null) {
+                value = "";
+            }
+            content.add(value);
+        }
+
+        long batchId = enterpriseBatchGrandService.addBatchGrand(enterpriseId, businessType.getTypeName(), remark);
+        BigDecimal price = doGrand(function, batchId, businessType, content, provinceId, cityId, districtId, addr);
+        enterpriseBatchGrandService.updateFee(batchId, price, 1);
+    }
+
+    @Override
+    @Transactional
+    public void batchGrand(int typeId, List<List<String>> excelList, String paykey) {
+        EnterpriseFunction function = currentLoginService.getCurrentLoginEnterpriseFunc();
+        long enterpriseId = function.getId();
+        if (!enterpriseService.checkPaykey(enterpriseId, paykey)) {
+            throw new AuthoritionException("支付密码错误。");
+        }
+        BigDecimal totalFee = BigDecimal.ZERO;
+        BusinessType businessType = businessTypeService.getDetailsBytypeId(typeId);
+        long batchId = enterpriseBatchGrandService.addBatchGrand(enterpriseId, businessType.getTypeName(), null);
+        List<Param> def = paramService.getByTypeId(typeId);
+        List<String> heads = excelList.get(0);
+        checkExcelHeads(def, heads);
+        int size = excelList.size();
+        for (int i = 1; i < size; i++) {
+            BigDecimal price;
+            price = doGrand(function, batchId, businessType, excelList.get(i), null, null, null, null);
+            totalFee = totalFee.add(price);
+        }
+        enterpriseBatchGrandService.updateFee(batchId, totalFee, size - 1);
+    }
+
+
+    private BigDecimal doGrand(EnterpriseFunction function, long batchId, BusinessType businessType, List<String> content,
+                               Long provinceId, Long cityId, Long districtId, String addr) {
+        String customerName = content.get(0);
+        String idCard = content.get(1);
+        Assert.hasLength(idCard, "身份证号不能为空。");
+        BigDecimal salePrice = StringUtil.isBlank(content.get(2)) ? BigDecimal.ZERO : new BigDecimal(content.get(2));
+        if (salePrice.compareTo(BigDecimal.ZERO) == -1) {
+            throw new UserOperationException("促销邮豆金额不能为负！");
+        }
+        String remark = content.get(3);
+        String sendType = businessType.getTypeName();
+        int typeId = businessType.getTypeId();
+        List<Param> params = businessType.getParams();
+        Map<String, BigDecimal> paramValueMap = new HashMap<>();
+        for (Param param : params) {
+            if (param.getParamType() == ParamType.TYPE_ENUM) {
+                List<ParamValue> paramValues = param.getParamValues();
+                for (ParamValue paramValue : paramValues) {
+                    paramValueMap.put(param.getParamName() + "-" + paramValue.getParamValueName(), paramValue.getParamValue());
+                }
+            }
+        }
+
+
+        //如果为新用户，保存用户
+        Long enterpriseId = currentLoginService.getCurrentLoginEnterpriseId();
+        Long creatorId = currentLoginService.getCurrentLoginEnterpriseManagerId();
+        if (isNewCustomer(idCard)) {
+            String contactAddr = addressService.getAddressString(provinceId, cityId, districtId, addr);
+            chinapostCustomerService.addCustomer(idCard, customerName, null, provinceId, cityId, districtId, addr, null, null, enterpriseId, creatorId, null, null, contactAddr);
+        }
+        long id = chinapostCustomerMapper.selectId(idCard);
+
+        Map<String, String> paramMap = new HashMap<>();
+        Map<Integer, BigDecimal> values = new HashMap<>();
+        //写入网折比例
+        values.put(Param.DISCOUNT_ID, function.getDiscountPct());
+        for (int i = 4; i < content.size(); i++) {
+            Param param = params.get(i - 4);
+            String name = content.get(i);
+            if (StringUtil.isBlank(name)) {
+                throw new UserOperationException("参数" + param.getParamName() + "的值为空。");
+            }
+            paramMap.put(param.getParamName(), content.get(i));
+            if (param.getParamType() == ParamType.TYPE_ENUM) {
+                BigDecimal v = paramValueMap.get(param.getParamName() + "-" + name);
+                if (v == null) {
+                    throw new UserOperationException("参数值" + name + "未定义。");
+                }
+                values.put(param.getParamId(), v);
+            } else if (param.getParamType() == ParamType.TYPE_FLOAT) {
+                BigDecimal mapValue = new BigDecimal(content.get(i));
+                if (mapValue.compareTo(BigDecimal.ZERO) == -1) {
+                    throw new UserOperationException(param.getParamName() + "输入值错误，不能为负数！");
+                }
+                values.put(param.getParamId(), mapValue);
+            }
+        }
+        BigDecimal marketPrice = compute(businessType.getExpression(), values);
+
+        BigDecimal price = marketPrice.add(salePrice);
+        //添加U宝
+        customerUcoinService.grandUcoin(id, function.getId(), price, null, null, sendType, remark);
+        customerUcoinHistoryService.addHistory(id, function.getId(), batchId, HistoryType.ENTERPRISE_GRAND, price, marketPrice, salePrice, typeId, remark, null, renderer.render(paramMap));
+        //扣款
+        enterpriseService.addUcoinAmount(function.getId(), price.negate());
+        return price;
+    }
+
+
+    @Override
+    public List<BusinessType> getBusinessType() {
+        return businessTypeService.getAllByExpressionNotNull();
+    }
+
+    @Override
+    public List<Param> getParam(Integer typeId) {
+        return paramService.getByTypeId(typeId);
+    }
+
+    private BigDecimal compute(String expression, Map<Integer, BigDecimal> values) {
+        Expression ex = Expression.create(expression);
+        BigDecimal price;
+        try {
+            price = ex.compute(values);
+        } catch (MagicException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+        //营销金额
+        return price;
+    }
+
+    @Override
+    public BigDecimal computeUcoin(int typeId, Map<String, String> valuesMap) {
+        EnterpriseFunction function = currentLoginService.getCurrentLoginEnterpriseFunc();
+        BusinessType businessType = businessTypeService.getDetailsBytypeId(typeId);
+        Map<String, BigDecimal> paramValueMap = new HashMap<>();
+        for (Param param : businessType.getParams()) {
+            if (param.getParamType() == ParamType.TYPE_ENUM) {
+                List<ParamValue> paramValues = param.getParamValues();
+                for (ParamValue paramValue : paramValues) {
+                    paramValueMap.put(param.getParamName() + "-" + paramValue.getParamValueName(), paramValue.getParamValue());
+                }
+            }
+        }
+        Map<Integer, BigDecimal> values = new HashMap<>();
+        //写入网折比例
+        values.put(Param.DISCOUNT_ID, function.getDiscountPct());
+        for (Param param : businessType.getParams()) {
+            if (param.getRequired()) {
+                if (param.getParamType() == ParamType.TYPE_ENUM) {
+                    BigDecimal v = paramValueMap.get(param.getParamName() + "-" + valuesMap.get(param.getParamName()));
+                    if (v == null) {
+                        throw new UserOperationException("参数值" + valuesMap.get(param.getParamName()) + "不存在,检查Excel！");
+                    }
+                    values.put(param.getParamId(), v);
+                } else if (param.getParamType() == ParamType.TYPE_FLOAT) {
+                    values.put(param.getParamId(), new BigDecimal(valuesMap.get(param.getParamName())));
+                }
+            }
+        }
+        return compute(businessType.getExpression(), values);
+    }
+
+    @Override
+    public List<ParamValue> getAll(Integer paramId) {
+        return paramValueService.getByParamId(paramId);
+    }
+
+    @Override
+    public Page<CustomerUcoinHistory> getGrandHistory(Long enterpriseId,Integer typeId, Date start, Date end, Pageable pageable) {
+
+
+        return customerUcoinHistoryService.getHistory(enterpriseId, typeId, start, end, pageable);
+    }
+}

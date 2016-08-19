@@ -1,0 +1,18 @@
+package com.ylife.system.mapper;
+
+import com.ylife.system.model.BusinessTypeHistory;
+
+public interface BusinessTypeHistoryMapper {
+
+    int deleteByPrimaryKey(Long historyId);
+
+    int insert(BusinessTypeHistory record);
+
+    int insertSelective(BusinessTypeHistory record);
+
+    BusinessTypeHistory selectByPrimaryKey(Long historyId);
+
+    int updateByPrimaryKeySelective(BusinessTypeHistory record);
+
+    int updateByPrimaryKey(BusinessTypeHistory record);
+}
