@@ -201,13 +201,13 @@
             line-height: 30px;
         }
         .mainfoot{
-            width:500px;
+            width:95%;
+            text-align: center;
             height: 40px;
             text-align: center;
             line-height: 40px;
             position: fixed;
             bottom: 16px;
-            right: 5%;
             font-size: 20px;
             color: #fff;
         }
@@ -231,7 +231,7 @@
     <div class="welcomelogin">
         <dl>
             <dd><img src="${bath}/static/img/login_icon_account.png">
-                <input class="lg_username" type="text" placeholder="账号">
+                <input class="lg_username check-coefficient" type="text" placeholder="账号">
                 <input class="val_username" type="hidden" readonly />
             </dd>
             <dd><img src="${bath}/static/img/login_icon_password.png">

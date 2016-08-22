@@ -33,7 +33,7 @@ $(document).ready(function(){
             brandId:'',
             thirdId:'',
             page:1,
-            size:5
+            size:10
         },function(data){
             if( data.response == 'success' ){
                 var total = data.data.totalElements;
@@ -54,12 +54,13 @@ $(document).ready(function(){
                 $("#holder a").click(function(){
                     var goodsInfoName = $("input[name='item_name']").val();
                     var goodsInfoItemNo = $("input[name='item_no']").val();
-                    console.log(goodsInfoName,goodsInfoItemNo);
+                    console.log($(this).html());
                     var page = '';
                     if( $(this).html() == '＜' ){
                         page = parseInt($(".jp-current").html()) - 1;
                     }
                     else if( $(this).html() == '＞' ){
+                        console.log($(".jp-current").html());
                         page = parseInt($(".jp-current").html()) + 1;
                     }
                     else{
@@ -73,7 +74,7 @@ $(document).ready(function(){
                         brandId:'',
                         thirdId:'',
                         page:page,
-                        size:5
+                        size:10
                     },function(data){
                         if( data.response == 'success' ){
                             var length = data.data.content.length;
@@ -85,10 +86,10 @@ $(document).ready(function(){
                             //jPagesGet("holder","itemContainer",5);
                             if( length < 5 ){
                                 console.log(length);
-                                goodsSearch_appendHtml("itemContainer",page,length,data.data.content,5);
+                                goodsSearch_appendHtml("itemContainer",page,length,data.data.content,10);
                             }
                             else{
-                                goodsSearch_appendHtml("itemContainer",page,data.data.size,data.data.content,5);
+                                goodsSearch_appendHtml("itemContainer",page,data.data.size,data.data.content,10);
                             }
                         }
                     },'json');
@@ -340,14 +341,14 @@ function ajaxPages(total,url,contentStr,target,perpage,enterpriseId){
     $("a").click(function(){
 
         var page = '';
-        if( $(this).html() == '上一页' ){
+        if( $(this).html() == '＜' ){
             page = parseInt($(".jp-current").html()) - 1;
             if( page ==  $("#" + target + " a").length - 3 ){
                 $($("#" + target + " a")[$("#" + target + " a").length - 3]).addClass("jp-current");
                 $($("#" + target + " a")[$("#" + target + " a").length - 2]).attr("class","");
             }
         }
-        else if( $(this).html() == '下一页' ){
+        else if( $(this).html() == '＞' ){
             page = parseInt($(".jp-current").html()) + 1;
             if( page ==  $("#" + target + " a").length - 2){
                 $(this).prev().addClass("jp-current");

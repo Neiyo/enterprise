@@ -74,7 +74,6 @@ function ajaxPages(url,contentStr,target,type,perpage,reason,batchId,array,callb
                 $("#"+contentStr).append(html);
             }
             jPagesGet(target,contentStr,perpage);
-            console.log(data.data.content);
             if( total < perpage ){
                 appendHtml(contentStr,type,data.data.content,total,reason,batchId,callbackChecked);
             }
@@ -171,7 +170,6 @@ function ajaxPages(url,contentStr,target,type,perpage,reason,batchId,array,callb
                         else{
                             appendHtml(contentStr,type,data.data.content,perpage,reason,batchId,callbackChecked);
                         }
-                        console.log(type);
                         if( typeof callbackChecked == 'function' && type != 'ubaosendForm'){
                             callbackChecked(page);
                         }
@@ -353,6 +351,12 @@ function get_html(type){
         html += '<abbr></abbr>';
     }
     else if( type == "baseDataform" ){
+        html += '<abbr></abbr>';
+    }
+    else if( type == "recentBillManager" ){
+        html += '<abbr></abbr>';
+    }
+    else if( type == "recentRequisition" ){
         html += '<abbr></abbr>';
     }
     html += '</dd>';
@@ -537,11 +541,14 @@ function appendHtml(str,type,data,perpage,reason,batchId,callbackChecked) {
             html += '<abbr>';
             if (typeof callbackChecked == 'function') {
                 var flag = callbackChecked();
-                if (flag) {
-                    html += '<input style="background:#eee;color:#333;" value="' + operator + '" type="button" class="inOut" />';
-                }
-                else {
-                    html += '<input value="' + operator + '" type="button" class="inOut"/>';
+                if(isTop == 1){
+                    console.log('aaa');
+                    if (flag) {
+                        html += '<input style="background:#eee;color:#333;" value="' + operator + '" type="button" class="inOut" />';
+                    }
+                    else {
+                        html += '<input value="' + operator + '" type="button" class="inOut"/>';
+                    }
                 }
             }
 
@@ -761,8 +768,12 @@ function appendHtml(str,type,data,perpage,reason,batchId,callbackChecked) {
             trHtml += '<td>' + handleUndefined(data[i].remark) + '</td>';
             trHtml += '<td>' +  handleDate_prev(new Date(data[i].createTime)) + "  " + handleDate_next(new Date(data[i].createTime)) + '</td>'
             trHtml += '<td>' + handleUndefined(data[i].typeName) + '</td>';
-            var paramJson = JSON.parse(data[i].paramJson);
-
+            try{
+                var paramJson = JSON.parse(data[i].paramJson);
+            }
+            catch(e){
+                //todo
+            }
             //修正后台返回数据顺序
             var arr = [];
             $(".dynamicHead").each(function(){
@@ -774,7 +785,6 @@ function appendHtml(str,type,data,perpage,reason,batchId,callbackChecked) {
                     }
                 }
             });
-            console.log(arr);
             for( x in arr ){
                 if( x != 'remove' ){
                     trHtml += '<td>' + arr[x] + '</td>';
@@ -791,6 +801,25 @@ function appendHtml(str,type,data,perpage,reason,batchId,callbackChecked) {
             trHtml += '<td>' + handleUndefinedZero(data[i].totalSalePrice,2) + '</td>';
             trHtml += '<td>' + handleUndefinedZero(data[i].totalPrice,2) + '</td>';
             trHtml += '</tr>';
+        }
+        else if (type == "recentBillManager") {
+            var trHtml = '<dd>';
+            trHtml += '<abbr>' +  handleUndefined(data[i].grandEnterprise) + '</abbr>';
+            trHtml += '<abbr>' + data[i].newCustomerAmount + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].expenditure)  + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].totalMarketPrice,2) + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].totalSalePrice,2) + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].totalPrice,2) + '</abbr>';
+            trHtml += '</dd>';
+        }
+        else if (type == "recentRequisition") {
+            var trHtml = '<dd>';
+            trHtml += '<abbr>' +  handleUndefined(data[i].grandEnterprise) + '</abbr>';
+            trHtml += '<abbr>' + data[i].newCustomerAmount + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].expenditure)  + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].totalMarketPrice,2) + '</abbr>';
+            trHtml += '<abbr>' + handleUndefinedZero(data[i].totalSalePrice,2) + '</abbr>';
+            trHtml += '</dd>';
         }
         html += '</dd>';
         htm += '</li>';

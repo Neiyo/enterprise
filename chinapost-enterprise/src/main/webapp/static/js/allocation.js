@@ -474,6 +474,7 @@ function ajaxPages(url,enterpriseId,contentStr,target,perpage,array){
             $("a").unbind("click");
             $("a").click(function(){
                 var page = '';
+                console.log($(this).html());
                 if( $(this).html() == '＜' ){
                     page = parseInt($(".jp-current").html()) - 1;
                     if( page ==  $("#" + target + " a").length - 3 ){

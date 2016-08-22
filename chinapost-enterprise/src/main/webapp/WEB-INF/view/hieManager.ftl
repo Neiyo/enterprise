@@ -79,15 +79,16 @@
             border:0;
         }
         .hie_list th{
+            padding-left: 20px;
             width:120px;
             height:50px;
             color: #666666;
             border-bottom:1px solid #e5e5e5;
-
+            font-weight: normal!important;
         }
 
         .hie_list td{
-            text-align:center;
+            padding-left: 20px;
             border-bottom:1px solid #e5e5e5;
             height:50px;
             font-size:12px;
@@ -526,7 +527,7 @@
 
 <div class="accoutTable">
     <table class="hie_list" border="0" cellspacing="0" cellpadding="0">
-        <thead>
+        <thead align="left">
         <tr>
             <th>下级公司</th>
             <th>登录账号</th>
@@ -537,10 +538,10 @@
             <th>机构编号</th>
             <th>网点折扣系数</th>
             <th>代客下单付款免验证</th>
-            <th>操作</th>
+            <th style="padding-left: 50px">操作</th>
         </tr>
         </thead>
-        <tbody id="itemContainer">
+        <tbody align="left" id="itemContainer">
         <#list enterprises as son>
             <tr style="height: 80px;">
                 <td class="updateName">${son.enterpriseName}</td>

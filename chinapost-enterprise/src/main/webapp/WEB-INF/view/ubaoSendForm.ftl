@@ -79,6 +79,7 @@
         height: 40px;
         border-bottom: 1px solid #e5e5e5;
         overflow: hidden;
+        text-align: left;
     }
     #holder{
         margin: 30px 0px;
@@ -181,10 +182,12 @@
                 ajaxPages("../web/api/report/getGrandHistory","itemContainer","holder","ubaosendForm",10,'','',array,function(data){
                     $(".dynamicHead").remove();
                     var paramJson = data.data.thead;
-                    paramJson.map(function(a){
-                        var html = '<th class="dynamicHead">' + a + '</th>';
-                        $("thead tr").append(html);
-                    });
+                    if( paramJson != '' ){
+                        paramJson.map(function(a){
+                            var html = '<th class="dynamicHead">' + a + '</th>';
+                            $("thead tr").append(html);
+                        });
+                    }
                 });
             }else{
                 data_type_alert("业务类型必填且结束时间必须大于开始时间","error")

@@ -64,7 +64,7 @@
             background:#24b35f;
             width:90px;
             height:38px;
-            margin-left:90px;
+            margin-left:45px;
             color:#fff;
             border:none;
             margin-top:-1px;
@@ -135,7 +135,8 @@
             display:inline-block;
             width:230px;
             height:42px;
-            text-align:center;
+            text-align:left;
+            padding-left: 10px;
         }
 
 
@@ -158,7 +159,8 @@
             vertical-align: middle;
             width:230px;
             height:120px;
-            text-align:center;
+            text-align:left;
+            padding-left: 10px;
         }
 
         .createemployee{
@@ -313,6 +315,7 @@
             width: 116px;
             text-align: center;
             position: relative;
+            left: -50px;
         }
         .employeeDetail dd abbr ul:hover{  90;
         }
@@ -364,7 +367,7 @@
 
         .updatePassword{
             width:600px;
-            height:400px;
+            height:auto;
             position:fixed;
             left:15%;
             top:15%;  C;
@@ -380,7 +383,7 @@
             background:#24b383;
             border:1ps solid transparent;
             position:absolute;
-            left:180px;
+            left:320px;
             top:30px;
             color:#fff;
             cursor:pointer;
@@ -399,7 +402,7 @@
             background:#f2f2f2;
             border:1ps solid #CCC;
             position:absolute;
-            left:320px;
+            left:180px;
             top:30px;
             cursor:pointer;
         }
@@ -411,7 +414,7 @@
             color: #fff;
         }
         #updatePasswordDetail{
-            height:200px;
+            height:150px;
             padding-left:60px;
             padding-top:30px;
         }

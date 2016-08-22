@@ -93,7 +93,7 @@
         update
         ysh_enterprise_func
         set
-        ucoin_price = ucoin_price + #{amount,jdbcType=DECIMAL}
+        undistributed_price = undistributed_price + #{amount,jdbcType=DECIMAL}
         where id = #{id,jdbcType=BIGINT}
     </update>
 

@@ -13,6 +13,7 @@
     <script src="${bath}/static/js/common.js?version=${VERSION}"></script>
     <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
     <script src="${bath}/static/js/zrj_ajaxPages.js?version=${VERSION}"></script>
+    <script src="${bath}/static/js/enterpriseInfo.js"></script>
     <style type="text/css">
         @media screen and ( max-width: 1360px) {
             body {
@@ -99,7 +100,7 @@
             display:inline-block;
             width:150px;
             height:60px;
-            text-align:center;
+            text-align:left;
             padding:15px 0px;
         }
         .itemsList dd{
@@ -110,7 +111,7 @@
         }
         .itemsList dd abbr{
             display:inline-block;
-            text-align:center;
+            text-align:left;
             width:150px;
             height:80px;
             vertical-align:middle;
@@ -194,9 +195,12 @@
         document.onkeypress = forbidBackSpace;
         //禁止后退键  作用于IE、Chrome
         document.onkeydown = forbidBackSpace;
-        var isTop = ${isTop};
+
     </script>
     <script type="text/javascript">
+        var enterpriseInfo = getCurrentEnterpriseInfo();
+        var isTop = enterpriseInfo.getIsTop();
+        var isEnd = enterpriseInfo.getIsEnd();
         $(document).ready(function(e) {
             $("input[type='text'],input[type='password']").focus(function(){
                 $(this).css("background","#f1f1f1");
@@ -220,7 +224,7 @@
 <div class="itemsButton">
     <ul>
         <li style="width: 250px"><input class="allinputButton" placeholder="货品名称" style="width: 208px" type="text" name="itemManager_Name" /></li>
-        <li style="width: 250px"><input class="allinputButton" placeholder="货品编号" style="width: 158px" type="text" name="itemManager_Number" /></li>
+        <li style="width: 250px"><input class="allinputButton" placeholder="货品编号" style="width: 218px" type="text" name="itemManager_Number" /></li>
         <#--<li><span>品牌</span>-->
             <#--<select name="itemManager_Brand">-->
                 <#--<option selected="selected">全部</option>-->
@@ -229,7 +233,7 @@
                 <#--</#list>-->
             <#--</select>-->
         <#--</li>-->
-        <li style=" width: 250px;height: 40px!important;" class="allinputButton"><span>是否上架</span>
+        <li style=" width: 250px;height: 40px!important;border-radius: 20px!important;" class="allinputButton"><span>是否上架</span>
             <select name="itemManager_Shelves">
                 <option selected="selected">全部</option>
                 <option value="1">是</option>

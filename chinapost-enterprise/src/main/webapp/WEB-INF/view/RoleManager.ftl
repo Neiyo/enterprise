@@ -96,7 +96,8 @@
             vertical-align: middle;
             width:350px;
             height:42px;
-            text-align:center;
+            text-align:left;
+            padding-left: 20px;
         }
 
         .roleDetail dd{
@@ -119,7 +120,8 @@
             position: relative;
             width:350px;
             height:80px;
-            text-align:center;
+            text-align:left;
+            padding-left: 20px;
         }
 
         .createRole{
@@ -326,7 +328,7 @@
             color:white;
             border:1px solid #ccc;
             position:absolute;
-            left:110px;
+            left:-20px;
             top:-10px;
 
         }
@@ -338,7 +340,7 @@
             width:20px;
             height:38px;
             position:absolute;
-            left:197px;
+            left:70px;
             top:-11px;
 
         }
@@ -349,10 +351,9 @@
             color:999;
             border:1px solid #999;
             position:absolute;
-            left:110px;
+            left:-20px;
             top:22px;
             display:none;
-
         }
 .show{
     display: block!important;
@@ -561,7 +562,7 @@
             <abbr>角色名称</abbr>
             <abbr>备注</abbr>
             <abbr>成员数量</abbr>
-            <abbr>操作</abbr>
+            <abbr style="padding-left: 20px">操作</abbr>
         </dt>
         <div id="itemContainer">
             <#list authWithMAmountResults as object>
@@ -607,9 +608,9 @@
     </h1>
     <ul>
         <li style="height:630px; text-align:center;">
-            <div style="padding-top:30px;">角色名称： <input type="text" style="width:400px;height:35px;border-radius: 3px;border: 1px solid black;" />
+            <div style="padding-top:30px;">角色名称： <input type="text" style="width:400px;height:35px;border-radius: 3px;border: 1px solid #999;" />
             </div>
-            <div style="margin-top:30px;">已选功能： <input readonly="readonly" type="text" id="choosenVal" style="width:400px;height:35px;border-radius: 3px;border:1px solid black;" />
+            <div style="margin-top:30px;">已选功能： <input readonly="readonly" type="text" id="choosenVal" style="width:400px;height:35px;border-radius: 3px;border:1px solid #999;" />
                 <div id="creatDetail">
                     <dl>
                         <dt><a>+</a><span><input type="checkbox" name="creatRoleFunctionDT" id="checkbox_dt"/><label for="checkbox_dt"></label></span><abbr>全部</abbr></dt>
@@ -626,7 +627,7 @@
                     </dl>
                 </div>
             </div>
-            <div style="padding-top:30px;position: relative;"><span style="height:65px;display: inline-block;vertical-align:middle;margin-top: -70px;">备注：</span><textarea style="width:400px;height:68px;margin-left:10px;border:1px solid black;border-radius: 3px;" cols="40" rows="3"></textarea>
+            <div style="padding-top:30px;position: relative;"><span style="height:65px;display: inline-block;vertical-align:middle;margin-top: -70px;">备注：</span><textarea style="width:400px;height:68px;margin-left:10px;border:1px solid #999;border-radius: 3px;" cols="40" rows="3"></textarea>
             </div>
         </li>
         <li style="height:80px; border-top:1px solid #CCC; position:relative;">

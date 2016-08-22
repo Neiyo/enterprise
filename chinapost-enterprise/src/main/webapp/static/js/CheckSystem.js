@@ -17,14 +17,21 @@ function CheckSystem(domName,str,alert){
             }
         }
         else{
-            count == 1
+            count == 1;
             $(this).next().remove();
         }
     };
-    var MainFunction = function(){
-        $(domName).blur(function(){
-            a.call(this);
-        });
+
+    //默认是blur校验
+    var MainFunction = function(fun){
+        if(typeof(fun) != 'function'){
+            $(domName).blur(function(){
+                a.call(this);
+            });
+        }
+        else{
+            fun();
+        }
     };
     var overRideMain = function(NewFunction){
         if( typeof(NewFunction) === 'function' ){
@@ -45,8 +52,9 @@ $(document).ready(function(){
     var Phone_Check = new CheckSystem(".check-phone",/^1[3|4|5|7|8]\d{9}$/,'手机号未通过校验');
     Phone_Check.doCheck();
 
-    //身份证验证
-
+    //系数验证
+    var coefficient_Check = new CheckSystem(".check-coefficient",/^0$|^[1-9][0-9]*$|^[1-9][0-9]*\.?[0-9]{2}$/,'系数输入非法');
+    coefficient_Check.doCheck();
 
     //小数点后两位
 

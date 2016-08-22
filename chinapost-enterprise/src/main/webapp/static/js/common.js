@@ -1,6 +1,14 @@
 $(document).ready(function(){
     $("input").attr("autocomplete","off");
+
+    //全局变量
 });
+
+
+
+
+
+
 function coverHtml(){
     $(parent.document.getElementById("cover")).show();
     $(parent.document.getElementById("cover2")).show();
@@ -257,7 +265,6 @@ function user_error_alert(url){
     }
     window.wxc.xcConfirm(txt, "error", option);
 }
-
 
 function handleDate_prev(time){
     var year = time.getFullYear();

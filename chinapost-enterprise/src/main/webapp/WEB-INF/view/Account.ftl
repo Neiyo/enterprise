@@ -666,7 +666,7 @@
                 <#--<option value="0" selected="selected">选择街道</option>-->
                 <#--</select>-->
                     <input type="text" name="newMemberRoadDetail" id="newMemberRoadDetail" placeholder="详细地址" />
-                    <a class="confirm">修改</a><a class="cancel">放弃</a>
+                   <a class="confirm">修改</a><a class="cancel">放弃</a>
                 </div>
             </li>
             <li><abbr>部门联系人:</abbr><input name="contactMan" maxlength="8" class="inputval" type="text" value="${enterpriseInfo.linkman}" readonly="readonly"><a class="confirm">修改</a><a class="cancel">放弃</a>

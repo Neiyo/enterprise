@@ -24,7 +24,7 @@
         <result column="addr" property="addr" jdbcType="VARCHAR"/>
         <result column="total_ucoin" property="totalUcoin" jdbcType="DECIMAL"/>
         <result column="enterprise_ucoin" property="enterpriseUcoin" jdbcType="DECIMAL"/>
-        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
         <result column="userName" property="username" jdbcType="VARCHAR"/>
         <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
@@ -76,7 +76,7 @@
     </sql>
 
     <sql id="Enterprise_Column_List">
-        account_name,username
+        enterprise_name,username
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -194,7 +194,7 @@
         chinapost_customer.create_time,
         customer_info2.total_ucoin,
         customer_info2.enterprise_ucoin,
-        ysh_enterprise_info.account_name,
+        ysh_enterprise_info.enterprise_name,
         ysh_enterprise_manager.username,
         np_customer_address.*, np_sys_province.*, np_sys_city.*, np_sys_district.*
         FROM

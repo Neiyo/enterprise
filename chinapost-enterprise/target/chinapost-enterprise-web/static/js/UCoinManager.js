@@ -4,6 +4,7 @@ $(document).ready(function(e) {
         containerID : "itemContainer"
     });
 
+    $(".detailList").draggable();
 
     $("#BudGo").click(function(){
         coverHtml();
@@ -184,6 +185,175 @@ $(document).ready(function(){
             return (result*100).toFixed(2) + '%';
         }
     });
+
+    //账单ajax账单
+    $(".requestTable ul li").click(function(){
+        var value = $(".reqOn").attr("value");
+        if( value == 0 ){
+            $(".billManager").css("display","block");
+            $(".requisition").css("display","none");
+            ajaxPages("","billManager_itemContainer","billManager_holder","recentBillManager",10,'','');
+        }
+        else if( value == 1 ){
+            $(".billManager").css("display","none");
+            $(".requisition").css("display","block");
+            ajaxPages("","requisition_itemContainer","requsition_holder","recentRequisition",10,'','');
+        }
+    });
+    $(document).on("click",".detail",function(){
+        coverHtml();
+        var val=$(this).parent().siblings(".myBillListReason").html();
+        if(val=="邮豆充值"||val=="上级财富分配"||val=="充值列表"){
+            var account=$(this).parent().siblings(".myBillListName").html();
+            var creatTime=$(this).parent().siblings(".myBillListCreattime").html();
+            var reason=$(this).parent().siblings(".myBillListReason").html();
+            var payway=$(this).parent().siblings(".myBillListPayway").html();
+            var sumMoney=$(this).parent().siblings(".myBillListMoneySum").html();
+            var sumNumber=$(this).parent().siblings(".myBillListNumSum").html();
+            var accountNumber=$(this).parent().siblings(".myBillListAccNum").html();
+            var businessType=$(this).parent().siblings(".myBillLisBusinessType").html();
+            var payTime=$(this).parent().siblings(".myBillLisPayTime").html();
+            var note=$(this).parent().siblings(".myBillListNote").html();
+            var target=$(this).parent().siblings(".myBillListTarget").html();
+
+            $(".detailList").fadeIn(500);
+            $(".detailList li[value='businessType']").hide();
+            $(".detailList li[value='note']").hide();
+            $(".firstTable").hide();
+            $(".secondTable").hide();
+
+            $("input[name='account']").val(account);
+            $("input[name='creatTime']").val(creatTime);
+            $("input[name='reason']").val(reason);
+            $("input[name='payway']").val(payway);
+            $("input[name='sumMoney']").val(sumMoney);
+            $("input[name='sumNumber']").val(sumNumber);
+            $("input[name='accountNumber']").val(accountNumber);
+            $("input[name='businessType']").val(businessType);
+            $("input[name='payTime']").val(payTime);
+            $("input[name='note']").val(note);
+            $("input[name='target']").val(target);
+
+        }else if(val=="财富分配"){
+            var account=$(this).parent().siblings(".myBillListName").html();
+            var creatTime=$(this).parent().siblings(".myBillListCreattime").html();
+            var reason=$(this).parent().siblings(".myBillListReason").html();
+            var payway=$(this).parent().siblings(".myBillListPayway").html();
+            var sumMoney=$(this).parent().siblings(".myBillListMoneySum").html();
+            var sumNumber=$(this).parent().siblings(".myBillListNumSum").html();
+            var accountNumber=$(this).parent().siblings(".myBillListAccNum").html();
+            var businessType=$(this).parent().siblings(".myBillLisBusinessType").html();
+            var payTime=$(this).parent().siblings(".myBillLisPayTime").html();
+            var note=$(this).parent().siblings(".myBillListNote").html();
+            var batchId = $(this).parent().siblings(".myBillListBatchId").html();
+
+            $(".detailList").fadeIn(500);
+
+            $(".firstTable").show();
+            $(".secondTable").hide();
+            $(".detailList li[value='businessType']").hide();
+            $(".detailList li[value='note']").hide();
+
+
+            $("input[name='account']").val(account);
+            $("input[name='creatTime']").val(creatTime);
+            $("input[name='reason']").val(reason);
+            $("input[name='payway']").val(payway);
+            $("input[name='sumMoney']").val(sumMoney);
+            $("input[name='sumNumber']").val(sumNumber);
+            $("input[name='accountNumber']").val(accountNumber);
+            $("input[name='businessType']").val(businessType);
+            $("input[name='payTime']").val(payTime);
+            $("input[name='note']").val(note);
+            $("input[name='target']").val(target);
+
+            //
+            ajaxPages("../web/api/billmanage/getAllocatByBatch","itemContainer_first","holder_first",1,5,'',batchId,'',function(){
+                if( customerNum > 1 ){
+                    $("input[name='target']").val('多人');
+                }
+                else{
+                    $("input[name='target']").val('一人');
+                }
+            });
+
+        }else if(val=="邮豆发放"){
+            var account=$(this).parent().siblings(".myBillListName").html();
+            var creatTime=$(this).parent().siblings(".myBillListCreattime").html();
+            var reason=$(this).parent().siblings(".myBillListReason").html();
+            var payway=$(this).parent().siblings(".myBillListPayway").html();
+            var sumMoney=$(this).parent().siblings(".myBillListMoneySum").html();
+            var sumNumber=$(this).parent().siblings(".myBillListNumSum").html();
+            var accountNumber=$(this).parent().siblings(".myBillListAccNum").html();
+            var businessType=$(this).parent().siblings(".myBillLisBusinessType").html();
+            var payTime=$(this).parent().siblings(".myBillLisPayTime").html();
+            var note=$(this).parent().siblings(".myBillListNote").html();
+            var batchId = $(this).parent().siblings(".myBillListBatchId").html();
+            console.log(batchId)
+            $(".detailList").fadeIn(500);
+            $(".firstTable").hide();
+            $(".secondTable").show();
+            $(".detailList li[value='businessType']").show();
+            $(".detailList li[value='note']").show();
+
+
+            $("input[name='account']").val(account);
+            $("input[name='creatTime']").val(creatTime);
+            $("input[name='reason']").val(reason);
+            $("input[name='payway']").val(payway);
+            $("input[name='sumMoney']").val(sumMoney);
+            $("input[name='sumNumber']").val(sumNumber);
+            $("input[name='accountNumber']").val(accountNumber);
+            $("input[name='businessType']").val(businessType);
+            $("input[name='payTime']").val(payTime);
+            $("input[name='note']").val(note);
+
+            //
+            ajaxPages("../web/api/billmanage/getGrandByBatch","itemContainer_second","holder_second",'bill_second',5,'',batchId,'',function(){
+                if( customerNum > 1 ){
+                    $("input[name='target']").val('多人');
+                }
+                else{
+                    $("input[name='target']").val('一人');
+                }
+            });
+        }else if(val=="邮豆扣减"){
+            var account=$(this).parent().siblings(".myBillListName").html();
+            var creatTime=$(this).parent().siblings(".myBillListCreattime").html();
+            var reason=$(this).parent().siblings(".myBillListReason").html();
+            var payway=$(this).parent().siblings(".myBillListPayway").html();
+            var sumMoney=$(this).parent().siblings(".myBillListMoneySum").html();
+            var sumNumber=$(this).parent().siblings(".myBillListNumSum").html();
+            var accountNumber=$(this).parent().siblings(".myBillListAccNum").html();
+            var businessType=$(this).parent().siblings(".myBillLisBusinessType").html();
+            var payTime=$(this).parent().siblings(".myBillLisPayTime").html();
+            var note=$(this).parent().siblings(".myBillListNote").html();
+            var target=$(this).parent().siblings(".myBillListTarget").html();
+            var targetName=$(this).parent().siblings(".myBillListTargetName").html();
+            $(".detailList").fadeIn(500);
+            $(".firstTable").hide();
+            $(".secondTable").hide();
+            $(".detailList li[value='businessType']").hide();
+            $(".detailList li[value='note']").show();
+
+
+            $("input[name='account']").val(account);
+            $("input[name='creatTime']").val(creatTime);
+            $("input[name='reason']").val(reason);
+            $("input[name='payway']").val(payway);
+            $("input[name='sumMoney']").val(sumMoney);
+            $("input[name='sumNumber']").val(sumNumber);
+            $("input[name='accountNumber']").val(accountNumber);
+            $("input[name='businessType']").val(businessType);
+            $("input[name='payTime']").val(payTime);
+            $("input[name='note']").val(note);
+            $("input[name='target']").val(target + "      " + targetName);
+        }
+    });
+    $("#xx").click(function(){
+        discoverHtml();
+        $(".detailList").fadeOut(500)
+    })
 });
 
 

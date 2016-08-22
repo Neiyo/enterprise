@@ -159,7 +159,7 @@
             vertical-align:middle;
             width:190px;
             height:40px;
-            text-align:center;
+            text-align:left;
             color:#666666;
             line-height:40px;
         }
@@ -168,7 +168,7 @@
             vertical-align:middle;
             width:190px;
             height:45px;
-            text-align:center;
+            text-align:left;
             line-height:45px;
             color:#333;
             white-space: nowrap;

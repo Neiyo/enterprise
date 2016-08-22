@@ -9,6 +9,7 @@
     <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
     <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
     <script type="text/javascript" src="${bath}/static/js/common.js"></script>
+    <script src="${bath}/static/js/pouchdb.min.js"></script>
 <style type="text/css">
     body{
         width: 100%;
@@ -29,5 +30,30 @@
 <body style="background: #edf3f8">
 <div style="margin: 20px" class="background"></div>
 <div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+<script type="text/javascript">
+    var enterpriseId = '${enterpriseId}';
+    var enterpriseName = '${enterpriseName}';
+    var accountName = '${accountName}';
+    var isTop = '${isTop}';
+    var isEnd = '${isEnd}';
+
+    if( window.sessionStorage ){
+        put('enterpriseId',enterpriseId);
+        put('enterpriseName',enterpriseName);
+        put('accountName',accountName);
+        put('isTop',isTop);
+        put('isEnd',isEnd);
+    }
+
+
+    function put(key,value){
+        sessionStorage.setItem(key,value);
+    }
+
+</script>
+<script src="${bath}/static/js/enterpriseInfo.js"></script>
+<script type="text/javascript">
+    var enterprise = getCurrentEnterpriseInfo();
+</script>
 </body>
 </html>

@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="${bath}/static/css/xcConfirm.css"/>
     <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
     <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script src="${bath}/static/js/enterpriseInfo.js"></script>
     <script type="text/javascript" src="${bath}/static/js/jPages.js"></script>
     <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
     <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
@@ -19,15 +20,12 @@
                 zoom:62.5%;
                 font-size:10px!important;
             }
-            #holder a{
-                width: 80px!important;
-            }
         }
         a{
             color: #54a6de;
         }
         .memberSearch{
-            width:1300px;
+            width:1220px;
             height:150px;
             margin-left:20px;
         }
@@ -38,6 +36,7 @@
             float:left;
             color: #666666;
             margin-top: 20px;
+            border-radius: 20px!important;
         }
         .memberSearch li input{
             width:120px;
@@ -111,7 +110,7 @@
         }
 
         .memberList{
-            width:1700px;
+            width:1800px;
             height:800px;
             overflow-y:auto;
             margin-left:20px;
@@ -119,32 +118,31 @@
             color: #666666;
         }
         .memberList dt{
-            width:1700px;
+            width:1800px;
             height:36px;
             border-bottom:1px solid #e5e5e5;
             color:#666666;
         }
         .memberList dt abbr{
             display:inline-block;
-            width:100px;
+            width:90px;
             height:36px;
-            text-align:center;
-            padding:7px 0px;
+            line-height: 36px;
+            text-align:left;
         }
         .memberList dd{
-            width:1700px;
+            width:1800px;
             height:80px;
             background:#fff;
             border-bottom:1px solid #e5e5e5;
         }
         .memberList dd abbr{
             display:inline-block;
-            text-align:center;
-            width:100px;
+            text-align:left;
+            width:90px;
             height:80px;
-            line-height: 20px;
+            line-height: 70px;
             vertical-align:middle;
-            padding:30px 0px;
             white-space: nowrap;
             overflow: hidden;
 
@@ -155,6 +153,7 @@
             width: 116px;
             text-align: center;
             position: relative;
+            top: 18px;
         }
 
         .arrow2{
@@ -312,7 +311,6 @@
             width:800px;
             height:50px;
             color:#000;
-            padding-left:10px;
             border-bottom:1px solid #f2f2f2;
             background:#FFF;
             font-weight: bold;
@@ -734,13 +732,20 @@
         }
         .memTag{
             width:200px!important;
-            padding-top:0px!important;
+            padding-top:20px!important;
+            line-height: 20px!important;
+            overflow: visible;
+            padding-left:0px!important;
+            white-space: normal!important;
         }
         .memTab{
             width:auto!important;
             height:10px!important;
             font-size:12px;
+            line-height: 20px!important;
+            padding-left:0px!important;
             display: inline!important;
+            white-space: normal!important;
         }
         .tagSpan{
             width: 230px!important;
@@ -760,14 +765,15 @@
         document.onkeypress = forbidBackSpace;
         //禁止后退键  作用于IE、Chrome
         document.onkeydown = forbidBackSpace;
-
+        var enterprise = getCurrentEnterpriseInfo();
         var isEnd = ( ${isEnd} == 1 ) ? true : false;
         var isTop = false;
-
-        var eid = ${enterpriseInfo.enterpriseId};
-        var ename = "${enterpriseInfo.enterpriseName}";
+        var flag = ( ${isTop} == 1 ) ? true : false;
+        var eid = enterprise.enterpriseId;
+        var ename = enterprise.enterpriseName;
 
         var tagList = '';
+
         $(document).ready(function(e) {
             $( ".newMember" ).draggable();
             $( ".memberDetail" ).draggable();
@@ -1162,6 +1168,9 @@
                 $(this).css("background","#fff");
                 $(this).css("border","1px solid #ccc");
             })
+            if(isEnd){
+                $(".checkdopet").hide()
+            }
         });
 
 
@@ -1177,8 +1186,8 @@
 <input type="hidden" id="cityId" value="${enterpriseInfo.getCityId()}">
 <input type="hidden" id="districtId" value="${enterpriseInfo.getDistrictId()}">
 <div class="memberSearch">
-    <ul>
-        <li style="width: 350px;"><input class="allinputButton" placeholder="查看范围" value="${enterpriseInfo.enterpriseName}" style="width: 300px" readonly="readonly" type="text" id="Dopet" data-id="null"/><input value="${enterpriseInfo.enterpriseId}" type="hidden" class="enterpriseIdChoosen"><abbr id="choose" style="background:url(${bath}/static/img/chooseinout.png) center no-repeat; color:#fff;display:inline-block;position: relative; left: -50px; top: -1px; vertical-align:middle; width: 28px; height:28px; line-height:30px; text-align:center;cursor: pointer;"></abbr></li>
+    <ul style="position: relative">
+        <li class="checkdopet" style="width: 300px;"><input class="allinputButton" placeholder="查看范围" value="${enterpriseInfo.enterpriseName}" style="width: 250px; color:#666;" readonly="readonly" type="text" id="Dopet" data-id="null"/><input value="${enterpriseInfo.enterpriseId}" type="hidden" class="enterpriseIdChoosen"><abbr id="choose" style="background:url(${bath}/static/img/chooseinout.png) center no-repeat; color:#fff;display:inline-block;position: relative; left: -50px; top: -1px; vertical-align:middle; width: 28px; height:28px; line-height:30px; text-align:center;cursor: pointer;"></abbr></li>
         <li style="width: 310px;">
             <input class="allinputButton" placeholder="身份证号" maxlength="18" style="width: 280px;" type="text" name="memberNum" />
         </li>
@@ -1222,9 +1231,8 @@
 
         </li>
         <li> <input class="allseachButton" type="button" value="搜索" id="accSearch" /></li>
-        <li style="width:500px;position: absolute; right: 5%;">
-
-            <input class="allclickButton" onclick="coverHtml()" type="button" id="accExport" value="开通新会员" />
+        <li style="width:500px;position: absolute;right: -35%;">
+            <#if isEnd == "1"><input class="allclickButton" onclick="coverHtml()" type="button" id="accExport" value="开通新会员" /></#if>
             <input class="allclickButton" style="background: #54a6de; color: #fff; height: 40px; margin-left: 20px;" type="button" id="memberOut" value="导出会员信息" />
         </li>
     </ul>
@@ -1235,7 +1243,7 @@
         var total_elements = ${total_elements_memberManager};
     </script>
     <dl>
-        <dt><abbr style="width:180px;">身份证号</abbr><abbr style="width: 115px;">姓名</abbr><abbr>性别</abbr><abbr>联系电话</abbr><abbr>手机绑定</abbr><abbr>账户邮豆</abbr><abbr>是否激活</abbr><abbr>客户经理号</abbr><abbr style="width:200px;">标签</abbr><abbr style="width: 300px;">会员联系地址</abbr><abbr style="width:300px;">操作</abbr>
+        <dt><abbr style="width:180px;">身份证号</abbr><abbr style="width: 115px;">姓名</abbr><abbr>性别</abbr><abbr style="width: 140px">联系电话</abbr><abbr>手机绑定</abbr><abbr style="width: 120px;">账户邮豆</abbr><abbr>是否激活</abbr><abbr style="width: 110px">客户经理号</abbr><abbr style="width:200px;">标签</abbr><abbr style="width: 300px;">会员联系地址</abbr><abbr style="padding-left: 38px">操作</abbr>
         </dt>
         <div id="itemContainer"></div>
         <div id="holder" class="allcpageTurnButton"></div>
@@ -1294,7 +1302,7 @@
     <h1 style="height:60px; line-height:60px; font-size:20px; padding-left:20px; border-bottom:1px solid #CCC;">会员详情<i onclick="discoverHtml()" id="xx1"></i></h1>
     <dl>
         <dt>基本信息
-            <input id="updateMember" type="button" value="编辑" />
+            <#if isEnd == "1"><input id="updateMember" type="button" value="编辑" /></#if>
         </dt>
         <dd style="position:relative;">
             <div style="width:150px; height:150px; position:absolute; left:10px; top:10px;"><img id="imgurl" src="${bath}/static/img/look.png" width="150" height="150" /></div>
@@ -1311,7 +1319,7 @@
                 <li><span>性别:</span><input type="text" name="menberSex" readonly="readonly" /></li>
                 <li><span>客户经理号:</span><input type="text" name="menberManId" readonly="readonly" /></li>
                 <li class="tagLiDetail"><span>标签:</span>
-                    <span class="tagSpan">
+                    <span style=" white-space: normal!important;" class="tagSpan">
                         <#list tagList as object>
                             <input class="tag" disabled="disabled" type="checkbox" value="${object.tagId}" title="${object.tagDesc}">${object.tagName}</input>
                         </#list>
@@ -1324,8 +1332,10 @@
         <dd style="margin:20px 0px; padding-left:30px;">
             <span>账户邮豆:</span><input type="text" name="menberUcoin" readonly="readonly" />
             <input type="hidden" name="EnterpriseMenberUcoin" readonly="readonly" />
-            <input id="UcoinSend" type="button" value="邮豆发放" />
-            <input id="updateUcoin" type="button" value="邮豆扣减" />
+            <#if isEnd == "1">
+                <input id="UcoinSend" type="button" value="邮豆发放" />
+                <input id="updateUcoin" type="button" value="邮豆扣减" />
+            </#if>
         </dd>
         <dt>账户信息
         </dt>

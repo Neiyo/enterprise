@@ -12,6 +12,7 @@
     <script type="text/javascript" src="${bath}/static/js/xcConfirm.js"></script>
     <script type="text/javascript" src="${bath}/static/js/common.js?version=${VERSION}"></script>
     <script type="text/javascript" src="${bath}/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="${bath}/static/js/zrj_ajaxPages.js"></script>
     <script>
         //wealth_do   已分配
         //wealth_undo 未分配
@@ -26,6 +27,9 @@
                 font-size: 10px !important;
             }
 
+        }
+        body{
+            height:90%!important;
         }
         .Ucoin{
             width:700px;
@@ -331,7 +335,7 @@
         .billManager dd abbr{
             display:inline-block;
             vertical-align: middle;
-            width:250px;
+            width:200px;
             height:45px;
             text-align:center;
             line-height:45px;
@@ -350,7 +354,114 @@
             vertical-align: middle;
             overflow: hidden;
         }
+        .detailList{
+            width:880px;
+            height:auto;
+            overflow:hidden;
+            background:#FFF;
+            z-index:2;
+            position:absolute;
+            left:15%;
+            top:15%;
+            display:none;
+        }
+        .header{
+            height:70px;
+            line-height:70px;
+            padding-left:15px;
+            font-size:22px;
+            color:#333;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        #xx{
+            display:inline-block;
+            vertical-align:middle;
+            width:25px;
+            height:25px;
+            background:url(${bath}/static/img/XX.png) center no-repeat;
+            cursor:pointer;
+        }
+        .maindetail{
+            height:auto;
+            overflow:hidden;
+        }
+        .maindetail h2{
+            width:835px;
+            margin-left:15px;
+            height:40px;
+            line-height:40px;
+            background:#edf3f8;
+            padding-left:15px;
+            font-size:16px;
+            color:#000;
+            margin-top: 15px;
 
+        }
+        .maindetail	ul{
+            width:835px;
+            height:230px;
+            margin-left:20px;
+            margin-top:20px;
+        }
+        .maindetail	ul li{
+            float:left;
+            width:350px;
+            margin:5px 5px 5px 0px;
+            height:40px;
+        }
+        .maindetail	ul li span {
+            display: inline-block;
+            vertical-align: middle;
+            width: 100px;
+            overflow: hidden;
+        }
+        .maindetail	ul li input{
+            border-style:none;
+            background:#FFF;
+            margin-left:20px;
+        }
+        .firstTable{
+            width:835px;
+            height:auto;
+            overflow:hidden;
+            margin-left:20px;
+            display:block;
+        }
+        .firstTable dl{
+            width:835px;
+        }
+        .firstTable dl dt{
+            width:835px;
+            height:35px;
+            text-align:center;
+            color:#666666;
+            background:#edf3f8;
+            line-height:35px;
+        }
+        .firstTable dl dt abbr{
+            display:inline-block;
+            vertical-align:middle;
+            width:400px;
+            height:35px;
+        }
+        .firstTable dl dd{
+            width:835px;
+            height:50px;
+            text-align:center;
+            background:#fff;
+            border-bottom:1px solid #ccc;
+            line-height:50px;
+        }
+        .firstTable dl dd abbr{
+            display:inline-block;
+            vertical-align:middle;
+            width:400px;
+            height:50px;
+        }
+
+        #holder_first{
+            margin:20px 0px;
+        }
     </style>
     <#--<script src="${bath}/static/js/excel.js"></script>-->
     <script type="text/javascript">
@@ -461,13 +572,10 @@
             <dt>
                 <abbr>支付时间</abbr><abbr>交易单号</abbr><abbr>账单状态</abbr><abbr>总金额</abbr><abbr>总笔数</abbr><abbr>操作</abbr>
             </dt>
-            <dd>
-
-            </dd>
             <div id="billManager_itemContainer"></div>
             <div class="allcpageTurnButton" id="billManager_holder"></div>
         </dl>
-        <dl class="requisition">
+        <dl class="requisition" style="display: none;">
             <dt>
                 <abbr>创建时间</abbr><abbr>单据编号</abbr><abbr>单据状态</abbr><abbr>申请金额</abbr><abbr>申请原因</abbr>
             </dt>
@@ -495,7 +603,7 @@
     <ul>
         <li style=" margin-left:40px;">下级公司:
             <ul id="CashAssign">
-                    <li><input type="checkbox" value="${enterpriseId}" class="CashChkbox" /><abbr>${enterpriseName}:</abbr><input maxlength="8" type="text" name="CashName" class="Cashtext" placeholder="分配金额" /></li>
+                    <#--<li><input type="checkbox" value="${enterpriseId}" class="CashChkbox" /><abbr>${enterpriseName}:</abbr><input maxlength="8" type="text" name="CashName" class="Cashtext" placeholder="分配金额" /></li>-->
                 <#list SonWealthResult as son>
                     <li><input type="checkbox" value="${son.id}" class="CashChkbox" /><abbr>${son.name}:</abbr><input maxlength="8" type="text" name="CashName" class="Cashtext" placeholder="分配金额" /></li>
                 </#list>
@@ -516,6 +624,49 @@
         </ul>
     </div>
 <div id="cover1"  style="width: 100%; height: 100%; z-index: 1; background: #000; display: none; opacity:0.5;position:fixed; left: 0px; top: 0px;"></div>
+</div>
+<input value="aaaaaaaaaaaaaaaaaaaaaaaaa" type="button" class="detail">
+<div class="detailList allpop">
+    <h1 class="header">账单详情<i id="xx"></i></h1>
+    <div class="maindetail">
+        <h2>交易成功</h2>
+        <ul>
+            <li><span>所属账号:</span><input type="text" readonly="readonly" name="account" /></li>
+            <li style="width: 450px;"><span>交易对象:</span><input style="width: 250px" type="text" readonly="readonly" name="target" /></li>
+            <li><span>账单类型:</span><input type="text" readonly="readonly" name="reason" /></li>
+            <li><span>支付方式:</span><input type="text" readonly="readonly" name="payway" /></li>
+            <li><span>总金额:</span><input type="text" readonly="readonly" name="sumMoney" /></li>
+            <li><span>总笔数:</span><input type="text" readonly="readonly" name="sumNumber" /></li>
+            <li><span>支付时间:</span><input type="text" readonly="readonly" name="creatTime" /></li>
+            <li><span>交易单号:</span><input type="text" readonly="readonly" name="accountNumber" /></li>
+            <li value="businessType"><span>业务类型:</span><input type="text" readonly="readonly" name="businessType" /></li>
+            <li value="note"><span>备注:</span><input type="text" readonly="readonly" name="note" /></li>
+        </ul>
+    </div>
+    <div class="firstTable">
+        <dl>
+            <dt>
+                <abbr>对象账号</abbr>
+                <abbr>分配金额</abbr>
+            </dt>
+            <div id="itemContainer_first"></div>
+            <div class="allcpageTurnButton" id="holder_first"></div>
+        </dl>
+
+    </div>
+    <div class="secondTable">
+        <dl>
+            <dt>
+                <abbr>发放对象</abbr>
+                <abbr>姓名</abbr>
+                <abbr>发放金额</abbr>
+            </dt>
+            <div id="itemContainer_second"></div>
+            <div class="allcpageTurnButton" id="holder_second"></div>
+        </dl>
+
+    </div>
+
 </div>
 </body>
 

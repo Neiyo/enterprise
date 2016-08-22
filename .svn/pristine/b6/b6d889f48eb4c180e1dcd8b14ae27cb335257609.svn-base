@@ -1,0 +1,20 @@
+function getCurrentEnterpriseInfo(){
+    if( window.sessionStorage ){
+        var _enterpriseId = getItem("enterpriseId");
+        var _enterpriseName = getItem("enterpriseName");
+        var _accountName = getItem("accountName");
+        var _isTop = getItem("isTop");
+        var _isEnd = getItem("isEnd");
+        return {
+            enterpriseId:_enterpriseId,
+            enterpriseName:_enterpriseName,
+            accountName:_accountName,
+            isTop:_isTop,
+            isEnd:_isEnd
+        }
+    }
+}
+
+function getItem(key){
+    return sessionStorage.getItem(key);
+}

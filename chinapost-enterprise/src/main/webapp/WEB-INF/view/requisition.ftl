@@ -154,7 +154,7 @@
             display:inline-block;
             width:250px;
             height:40px;
-            text-align:center;
+            text-align:left;
             color:#666666;
             line-height:40px;
         }
@@ -163,7 +163,7 @@
             vertical-align: middle;
             width:250px;
             height:45px;
-            text-align:center;
+            text-align:left;
             line-height:45px;
             color:#333;
             vertical-align: middle;
@@ -191,7 +191,7 @@
         .myRequestTodo dt abbr{
             display:inline-block;
             width:230px;
-            text-align:center;
+            text-align:left;
             color:#666666;
             line-height:40px;
         }
@@ -199,7 +199,7 @@
             display:inline-block;
             width:230px;
             height:45px;
-            text-align:center;
+            text-align:left;
             line-height:45px;
             color:#333;
             vertical-align: middle;
@@ -232,7 +232,7 @@
             display:inline-block;
             width:250px;
             height:40px;
-            text-align:center;
+            text-align:left;
             color:#666666;
             line-height:40px;
         }
@@ -240,7 +240,7 @@
             display:inline-block;
             width:250px;
             height:45px;
-            text-align:center;
+            text-align:left;
             line-height:45px;
             color:#333;
             overflow: hidden;

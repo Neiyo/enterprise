@@ -63,6 +63,7 @@
     }
     .table_listReduce th, .table_listReduce td{
         height: 40px;
+        text-align: left;
         border-bottom: 1px solid #e5e5e5;
     }
     #holder{
@@ -95,6 +96,7 @@
     }
     .table_listReduceDetail th, .table_listReduceDetail td{
         height: 40px;
+        text-align: left;
         border-bottom: 1px solid #e5e5e5;
     }
 </style>
@@ -139,7 +141,7 @@
 
     <div class="allpop" id="userDetailListReduce">
         <h1>会员邮豆消耗明细<i></i></h1>
-        <div style="margin-left: 20px; margin-top: 20px"><input type="button" id="outExcel" value="导出表格" class="allclickButton"> </div>
+        <div style="margin-left: 20px; margin-top: 20px;height: 50px"><input style="float: right;margin-right: 70px"  type="button" id="outExcel" value="导出表格" class="allclickButton"> </div>
         <table class="table_listReduceDetail" cellpadding="0" cellspacing="0">
             <thead>
             <tr>

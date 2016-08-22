@@ -60,6 +60,7 @@
     }
     .table_listBase th, .table_listBase td{
         height: 40px;
+        text-align: left;
         border-bottom: 1px solid #e5e5e5;
     }
     #holder{

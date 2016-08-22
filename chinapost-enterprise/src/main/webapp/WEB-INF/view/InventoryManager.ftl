@@ -146,7 +146,7 @@
             display:inline-block;
             width:150px;
             height:50px;
-            text-align:center;
+            text-align:left;
             padding:15px 0px;
         }
         .invenList dd{
@@ -157,7 +157,7 @@
         }
         .invenList dd abbr{
             display:inline-block;
-            text-align:center;
+            text-align:left;
             width:150px;
             height:80px;
             vertical-align:middle;
@@ -603,7 +603,7 @@
             <input class="allseachButton" type="button" value="搜索" id="search"/>
             <input class="allseachButton"  style="display: none;" type="button" value="搜索" id="search2"/>
         </li>
-        <li style="width:800px; margin-top:20px;">
+        <li style="width:1000px; margin-top:20px;">
 
             <#if isTop == true>
             <input class="allclickButton"  type="button" value="添加货品" id="invenAdd" />

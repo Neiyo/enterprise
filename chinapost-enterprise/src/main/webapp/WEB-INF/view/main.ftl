@@ -57,6 +57,7 @@
 </style>
     <!--[if !IE]><!--> <script type="text/javascript" src="${bath}/static/js/jquery-2.2.0.min.js"></script> <!--<![endif]-->
     <!--[if lt IE 9]> <script src="${bath}/static/js/jquery-1.9.1.js"></script> <![endif]-->
+    <script src="${bath}/static/js/pouchdb.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $(".users").mouseover(function(){

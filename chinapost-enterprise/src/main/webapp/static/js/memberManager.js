@@ -1,6 +1,5 @@
 $(document).ready(function(){
     var fileName = '';
-
     var idCard_search = '';
     var linkPhone_search = '';
     var name_search = '';
@@ -719,13 +718,13 @@ function appendHtml(str,pageIndex,totalPage,data,perpage){
             if( handleUndefined(data[i].createTime) != '' ){
                 createTime = handleDate_prev(new Date(data[i].createTime)) + "  " + handleDate_next(new Date(data[i].createTime));
             }
-            html += '<abbr class="memTel">' + handleUndefined(phoneNo) + '</abbr>';
+            html += '<abbr style="width: 140px" class="memTel">' + handleUndefined(phoneNo) + '</abbr>';
             html += '<abbr class="memTelBinding">' + handleUndefined(mobileChecked) + '</abbr>';
-            html += '<abbr class="memUcoin">' + handleUndefined(data[i].totalUcoin) + '</abbr>';
+            html += '<abbr style="width: 120px" class="memUcoin">' + handleUndefined(data[i].totalUcoin) + '</abbr>';
             html += '<abbr class="memActive">' + handleUndefined(isActive) + '</abbr>';
-            html += '<abbr class="memManagerId">' + handleUndefined(managerNo) + '</abbr>';
+            html += '<abbr style="width: 120px" class="memManagerId">' + handleUndefined(managerNo) + '</abbr>';
             html += "<input class='memDeliver' value='" + JSON.stringify(data[i].deliverInfos) + "' type='hidden'>";
-            html += "<input class='memCreator' value='" + handleUndefined(data[i].accountName) + "' type='hidden'>";
+            html += "<input class='memCreator' value='" + handleUndefined(data[i].enterpriseName) + "' type='hidden'>";
             html += "<input class='memCreateTime' value='" + createTime + "' type='hidden'>";
             html += "<input class='lastLoginTime' value='" + lastLoginDate + "' type='hidden'>";
             html += '<input class="memPId" value="' + handleUndefined(data[i].provinceId) + '" type="hidden">';
@@ -756,13 +755,18 @@ function appendHtml(str,pageIndex,totalPage,data,perpage){
             //    html += '<abbr class="memLastTime"></abbr>';
             //}
             html += '<abbr style="width:300px;">';
-            html += '<ul class="select2"> <i value="0" class="arrow2"></i>';
+            html += '<ul class="select2">'
+            if(isEnd) {
+                html += '<i value="0" class="arrow2"></i>';
+            }
             html += '<li onclick="coverHtml()" class="checkDateil allSelectButton">查看详情</li>';
+            if(isEnd){
             if( isActive != '已激活' ){
                 html += '<section onclick="coverHtml()" class="activeAcc allSelectButton">激活账户</section>';
             }
             else if ( isActive == '已激活' ){
                 html += '<section onclick="coverHtml()" class="resetPword allSelectButton">重置密码</section>';
+            }
             }
             html += '</ul>';
         $("#"+ str).append(html);
